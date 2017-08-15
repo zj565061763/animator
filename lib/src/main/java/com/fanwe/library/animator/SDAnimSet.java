@@ -212,7 +212,7 @@ public class SDAnimSet extends SDAnim
     //----------extend start----------
 
     /**
-     * 使用target的截图ImageView来执行动画
+     * 对target截图然后设置给ImageView，让ImageView镜像在android.R.id.content的FrameLayout里面执行动画
      */
     public void startAsPop()
     {
