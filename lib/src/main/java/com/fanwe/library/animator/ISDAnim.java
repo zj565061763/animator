@@ -5,7 +5,7 @@ import android.animation.TimeInterpolator;
 import android.view.View;
 
 /**
- * Created by Administrator on 2017/5/10.
+ * 动画接口
  */
 public interface ISDAnim
 {

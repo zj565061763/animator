@@ -1,9 +1,8 @@
 package com.fanwe.library.animator;
 
 /**
- * Created by Administrator on 2017/5/10.
+ * 属性动画接口
  */
-
 public interface ISDPropertyAnim extends ISDAnim
 {
     String X = "x";

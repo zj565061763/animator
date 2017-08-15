@@ -250,7 +250,7 @@ public class SDAnim implements ISDPropertyAnim, Cloneable
     }
 
     @Override
-    public ISDPropertyAnim rotationX(float... values)
+    public SDAnim rotationX(float... values)
     {
         mAnimator.setPropertyName(ROTATION_X);
         mAnimator.setFloatValues(values);
@@ -259,7 +259,7 @@ public class SDAnim implements ISDPropertyAnim, Cloneable
     }
 
     @Override
-    public ISDPropertyAnim rotationY(float... values)
+    public SDAnim rotationY(float... values)
     {
         mAnimator.setPropertyName(ROTATION_Y);
         mAnimator.setFloatValues(values);
@@ -316,20 +316,6 @@ public class SDAnim implements ISDPropertyAnim, Cloneable
     {
         setInterpolator(new LinearInterpolator());
         return this;
-    }
-
-    /**
-     * 用setDuration(long duration)实现
-     *
-     * @param duration
-     * @return
-     */
-    @Deprecated
-    public static ValueAnimator stop(long duration)
-    {
-        ValueAnimator anim = ValueAnimator.ofFloat(0f, 1f);
-        anim.setDuration(duration);
-        return anim;
     }
 
     /**
@@ -559,7 +545,7 @@ public class SDAnim implements ISDPropertyAnim, Cloneable
     }
 
     /**
-     * 设置对齐方式，仅移动到某个指定的view的时候此设置有效
+     * 设置对齐方式，仅对{@link #moveToX(View...)}和{@link #moveToY(View...)}有效
      *
      * @param alignType
      * @return
@@ -575,7 +561,13 @@ public class SDAnim implements ISDPropertyAnim, Cloneable
 
     public enum AlignType
     {
+        /**
+         * View左上角对齐
+         */
         TopLeft,
+        /**
+         * View中间对齐
+         */
         Center
     }
 
