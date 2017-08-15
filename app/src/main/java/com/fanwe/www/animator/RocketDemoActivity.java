@@ -3,7 +3,6 @@ package com.fanwe.www.animator;
 import android.animation.Animator;
 import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ImageView;
@@ -35,23 +34,19 @@ public class RocketDemoActivity extends AppCompatActivity
         tv_number = (TextView) findViewById(R.id.tv_number);
         iv_rocket = (ImageView) findViewById(R.id.iv_rocket);
         iv_rocket_smoke = (ImageView) findViewById(R.id.iv_rocket_smoke);
-
-
-        new Handler().postDelayed(new Runnable()
-        {
-            @Override
-            public void run()
-            {
-                startRocket();
-            }
-        }, 3000);
     }
 
+    private SDAnimSet mAnimSet;
     private int number = 3;
 
-    private void startRocket()
+    public void onclickStartRocket(View v)
     {
-        SDAnimSet.from(fl_rocket_root)
+        if (mAnimSet != null && mAnimSet.getSet().isStarted())
+        {
+            return;
+        }
+
+        mAnimSet = SDAnimSet.from(fl_rocket_root)
                 //火箭淡入
                 .alpha(0, 1f).setDuration(1000)
                 .delay(500)
@@ -65,6 +60,13 @@ public class RocketDemoActivity extends AppCompatActivity
                     {
                         super.onAnimationStart(animation);
                         tv_number.setText(String.valueOf(number));
+                    }
+
+                    @Override
+                    public void onAnimationEnd(Animator animation)
+                    {
+                        super.onAnimationEnd(animation);
+                        number = 3;
                     }
 
                     @Override
@@ -102,8 +104,8 @@ public class RocketDemoActivity extends AppCompatActivity
                 .with(iv_rocket_smoke).alpha(0, 1f).setDuration(3000).setStartDelay(500)
                 //烟雾淡出
                 .next().alpha(1f, 0).setDuration(500)
-                .addListener(new OnEndInvisible(iv_rocket_smoke))
-                .start();
+                .addListener(new OnEndInvisible(iv_rocket_smoke));
+        mAnimSet.start();
 
     }
 
