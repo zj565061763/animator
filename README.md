@@ -1,0 +1,2 @@
+# Animator
+对ObjectAnimator和AnimatorSet进行封装，提供链式调用的库，并且解决View执行移动动画的时候无法超出父容器限制的问题
