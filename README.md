@@ -44,4 +44,5 @@ public void onClickBtnAnimInside(View v)
 ```
 ## 火箭动画demo
 效果图：<br>
+git太大了有点卡，具体可以看demo<br>
 ![](http://thumbsnap.com/i/cD2NW5lZ.gif?0815)<br>
