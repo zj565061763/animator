@@ -17,15 +17,14 @@ public class MainActivity extends AppCompatActivity
 
     }
 
-
     public void onClickSimpleDemo(View v)
     {
         startActivity(new Intent(this, SimpleDemoActivity.class));
     }
 
-    public void onClickBtnAnimInside(View v)
+    public void onClickRocketDemo(View v)
     {
-
+        startActivity(new Intent(this, RocketDemoActivity.class));
     }
 
 }

@@ -14,6 +14,7 @@
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Simple_Demo_Activity"/>
+        android:onClick="onClickRocketDemo"
+        android:text="Rocket_Demo_Activity"/>
 
 </LinearLayout>
