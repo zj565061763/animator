@@ -1,4 +1,5 @@
 apply plugin: 'com.android.library'
+apply plugin: 'com.novoda.bintray-release'
 
 android {
     compileSdkVersion 25
@@ -16,8 +17,30 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
+    lintOptions {
+        checkReleaseBuilds false
+        abortOnError false
+    }
 }
 
 dependencies {
     compile 'com.fanwe.android:poper:1.0.1'
+}
+
+publish {
+    userOrg = 'zj565061763'
+    groupId = 'com.fanwe.android'
+    artifactId = 'libCore'
+    publishVersion = '1.0.0'
+    desc = 'fanwe android animator library'
+    website = 'https://github.com/zj565061763/Animator'
+}
+
+tasks.withType(Javadoc) {
+    options {
+        encoding "UTF-8"
+        charSet 'UTF-8'
+        failOnError false
+    }
 }
