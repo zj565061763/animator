@@ -42,4 +42,6 @@ public void onClickBtnAnimInside(View v)
             .startAsPop();
 }
 ```
-
+## 火箭动画demo
+效果图：<br>
+![](http://thumbsnap.com/i/cD2NW5lZ.gif?0815)<br>
