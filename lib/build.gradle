@@ -8,8 +8,8 @@ android {
     defaultConfig {
         minSdkVersion 15
         targetSdkVersion 25
-        versionCode 17081501
-        versionName "1.0.0"
+        versionCode 17083101
+        versionName "1.0.1"
     }
     buildTypes {
         release {
@@ -32,9 +32,9 @@ publish {
     userOrg = 'zj565061763'
     groupId = 'com.fanwe.android'
     artifactId = 'animator'
-    publishVersion = '1.0.0'
+    publishVersion = '1.0.1'
     desc = 'fanwe android animator library'
-    website = 'https://github.com/zj565061763/Animator'
+    website = 'https://github.com/zj565061763/animator'
 }
 
 tasks.withType(Javadoc) {
