@@ -8,8 +8,8 @@ android {
     defaultConfig {
         minSdkVersion 15
         targetSdkVersion 25
-        versionCode 17090501
-        versionName "1.0.3"
+        versionCode 17090502
+        versionName "1.0.4"
     }
     buildTypes {
         release {
@@ -25,14 +25,14 @@ android {
 }
 
 dependencies {
-    compile 'com.fanwe.android:poper:1.0.5'
+    compile 'com.fanwe.android:poper:1.0.6'
 }
 
 publish {
     userOrg = 'zj565061763'
     groupId = 'com.fanwe.android'
     artifactId = 'animator'
-    publishVersion = '1.0.3'
+    publishVersion = '1.0.4'
     desc = 'fanwe android animator library'
     website = 'https://github.com/zj565061763/animator'
 }
