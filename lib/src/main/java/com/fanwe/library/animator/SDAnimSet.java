@@ -249,8 +249,10 @@ public class SDAnimSet extends SDAnim
             {
                 if (target.getContext() instanceof Activity)
                 {
-                    SDPopImageView popView = new SDPopImageView(target);
-                    popView.getPoper().attach(true);
+                    SDPopImageView popView = new SDPopImageView(target.getContext());
+                    popView.setDrawingCacheView(target);
+                    popView.getPoper().setTarget(target).attach(true).setTarget(null);
+                    
                     animator.setTarget(popView);
 
                     mapTargetPoper.put(target, popView);
