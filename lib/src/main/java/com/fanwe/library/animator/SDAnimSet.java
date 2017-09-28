@@ -22,7 +22,7 @@ import android.animation.TimeInterpolator;
 import android.app.Activity;
 import android.view.View;
 
-import com.fanwe.library.poper.view.SDPopImageView;
+import com.fanwe.lib.poper.view.SDPopImageView;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -252,7 +252,7 @@ public class SDAnimSet extends SDAnim
                     SDPopImageView popView = new SDPopImageView(target.getContext());
                     popView.setDrawingCacheView(target);
                     popView.getPoper().setTarget(target).attach(true).setTarget(null);
-                    
+
                     animator.setTarget(popView);
 
                     mapTargetPoper.put(target, popView);
