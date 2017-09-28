@@ -8,10 +8,10 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.fanwe.library.animator.SDAnimSet;
-import com.fanwe.library.animator.listener.OnEndInvisible;
-import com.fanwe.library.animator.listener.OnEndReset;
-import com.fanwe.library.animator.listener.SDAnimatorListener;
+import com.fanwe.lib.animator.SDAnimSet;
+import com.fanwe.lib.animator.listener.OnEndInvisible;
+import com.fanwe.lib.animator.listener.OnEndReset;
+import com.fanwe.lib.animator.listener.SDAnimatorListener;
 
 /**
  * Created by Administrator on 2017/8/15.

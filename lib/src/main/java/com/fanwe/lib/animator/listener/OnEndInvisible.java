@@ -13,24 +13,22 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.fanwe.library.animator.listener;
+package com.fanwe.lib.animator.listener;
 
 import android.animation.Animator;
 import android.view.View;
-import android.view.ViewGroup;
-import android.view.ViewParent;
 
 /**
- * 动画结束移除view
+ * 动画结束设置view为View.INVISIBLE
  */
-public class OnEndRemoveView extends SDAnimatorListener
+public class OnEndInvisible extends SDAnimatorListener
 {
-    public OnEndRemoveView()
+    public OnEndInvisible()
     {
         super();
     }
 
-    public OnEndRemoveView(View target)
+    public OnEndInvisible(View target)
     {
         super(target);
     }
@@ -41,16 +39,9 @@ public class OnEndRemoveView extends SDAnimatorListener
         super.onAnimationEnd(animation);
 
         final View target = getTarget();
-        if (target != null)
+        if (target != null && target.getVisibility() != View.INVISIBLE)
         {
-            try
-            {
-                final ViewParent viewParent = target.getParent();
-                ((ViewGroup) viewParent).removeView(target);
-            } catch (Exception e)
-            {
-                e.printStackTrace();
-            }
+            target.setVisibility(View.INVISIBLE);
         }
     }
 }

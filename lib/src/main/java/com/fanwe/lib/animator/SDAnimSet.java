@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.fanwe.library.animator;
+package com.fanwe.lib.animator;
 
 import android.animation.Animator;
 import android.animation.AnimatorSet;

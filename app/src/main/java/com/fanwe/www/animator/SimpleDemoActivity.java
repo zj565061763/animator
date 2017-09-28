@@ -5,11 +5,11 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
-import com.fanwe.library.animator.SDAnim;
-import com.fanwe.library.animator.SDAnimSet;
-import com.fanwe.library.animator.listener.OnEndRemoveView;
-import com.fanwe.library.animator.listener.OnEndReset;
-import com.fanwe.library.animator.listener.SDAnimatorListener;
+import com.fanwe.lib.animator.SDAnim;
+import com.fanwe.lib.animator.SDAnimSet;
+import com.fanwe.lib.animator.listener.OnEndRemoveView;
+import com.fanwe.lib.animator.listener.OnEndReset;
+import com.fanwe.lib.animator.listener.SDAnimatorListener;
 
 public class SimpleDemoActivity extends AppCompatActivity
 {

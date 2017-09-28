@@ -13,22 +13,22 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.fanwe.library.animator.listener;
+package com.fanwe.lib.animator.listener;
 
 import android.animation.Animator;
 import android.view.View;
 
 /**
- * 动画结束设置view为View.INVISIBLE
+ * 动画结束重置view
  */
-public class OnEndInvisible extends SDAnimatorListener
+public class OnEndReset extends SDAnimatorListener
 {
-    public OnEndInvisible()
+    public OnEndReset()
     {
         super();
     }
 
-    public OnEndInvisible(View target)
+    public OnEndReset(View target)
     {
         super(target);
     }
@@ -39,9 +39,16 @@ public class OnEndInvisible extends SDAnimatorListener
         super.onAnimationEnd(animation);
 
         final View target = getTarget();
-        if (target != null && target.getVisibility() != View.INVISIBLE)
+        if (target != null)
         {
-            target.setVisibility(View.INVISIBLE);
+            target.setAlpha(1.0f);
+            target.setRotation(0.0f);
+            target.setRotationX(0.0f);
+            target.setRotationY(0.0f);
+            target.setTranslationX(0.0f);
+            target.setTranslationY(0.0f);
+            target.setScaleX(1.0f);
+            target.setScaleY(1.0f);
         }
     }
 }
