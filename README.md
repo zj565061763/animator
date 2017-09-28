@@ -2,7 +2,19 @@
 对ObjectAnimator和AnimatorSet进行封装，可以链式调用，提供的with()和next()方法可以方便的指定动画的顺序，并且解决View执行移动动画的时候无法超出父容器限制的问题
 
 ## Gradle
-`compile 'com.fanwe.android:animator:1.0.5'`
+```
+allprojects {
+    repositories {
+        ...
+        maven { url 'https://jitpack.io' }
+    }
+}
+
+dependencies {
+        compile 'com.github.zj565061763:animator:1.0.6'
+}
+
+```
 
 ## 简单demo
 效果图：<br>
