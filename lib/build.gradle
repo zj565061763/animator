@@ -11,7 +11,7 @@ android {
         minSdkVersion 15
         targetSdkVersion 22
         versionCode 20171103
-        versionName "1.0.8"
+        versionName "1.0.9"
     }
     buildTypes {
         release {
@@ -27,5 +27,5 @@ android {
 }
 
 dependencies {
-    compile 'com.github.zj565061763:poper:1.0.13'
+    compile 'com.github.zj565061763:poper:1.0.14'
 }
