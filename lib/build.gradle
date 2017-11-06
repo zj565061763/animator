@@ -27,5 +27,5 @@ android {
 }
 
 dependencies {
-    compile 'com.github.zj565061763:poper:1.0.17'
+    compile 'com.github.zj565061763:poper:1.0.18'
 }
