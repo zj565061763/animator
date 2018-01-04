@@ -37,6 +37,7 @@ public class FAnimatorSet extends FAnimator
     private FAnimatorSet mCurrent;
 
     private FAnimatorSet mParent;
+    private boolean mIsParent;
 
     public FAnimatorSet(View target)
     {
@@ -46,6 +47,7 @@ public class FAnimatorSet extends FAnimator
 
         mCurrent = this;
         mParent = null;
+        mIsParent = true;
     }
 
     private FAnimatorSet()
@@ -85,7 +87,7 @@ public class FAnimatorSet extends FAnimator
 
     private void setParent(FAnimatorSet parent)
     {
-        this.mParent = parent;
+        mParent = parent;
     }
 
     private void setCurrent(FAnimatorSet anim)
