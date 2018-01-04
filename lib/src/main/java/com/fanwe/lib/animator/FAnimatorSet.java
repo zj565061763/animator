@@ -34,18 +34,20 @@ public class FAnimatorSet extends FAnimator
 {
     //parent only
     private AnimatorSet mAnimatorSet;
-    private FAnimatorSet mCurrentAnim;
+    private FAnimatorSet mCurrent;
 
-    private FAnimatorSet mParentAnim;
-    private AnimType mAnimType;
+    private FAnimatorSet mParent;
+    private AnimatorType mAnimatorType;
 
     public FAnimatorSet(View target)
     {
         super(target);
-        mAnimType = AnimType.Parent;
+        mAnimatorType = AnimatorType.Parent;
+
         mAnimatorSet = new AnimatorSet();
         mAnimatorSet.play(get());
-        mCurrentAnim = this;
+
+        mCurrent = this;
     }
 
     private FAnimatorSet()
@@ -74,45 +76,45 @@ public class FAnimatorSet extends FAnimator
             target = this.getTarget();
             if (target == null)
             {
-                if (mParentAnim != null)
+                if (mParent != null)
                 {
-                    target = mParentAnim.getTarget();
+                    target = mParent.getTarget();
                 }
             }
             anim.setTarget(target);
         }
     }
 
-    private void setParentAnim(FAnimatorSet parentAnim)
+    private void setParent(FAnimatorSet parent)
     {
-        this.mParentAnim = parentAnim;
+        this.mParent = parent;
     }
 
-    private void setCurrentAnim(FAnimatorSet anim)
+    private void setCurrent(FAnimatorSet anim)
     {
-        if (mParentAnim != null)
+        if (mParent != null)
         {
-            mParentAnim.setCurrentAnim(anim);
+            mParent.setCurrent(anim);
         } else
         {
             // 只有parent会触发这里
             if (this != anim)
             {
-                anim.setParentAnim(this);
+                anim.setParent(this);
             }
-            this.mCurrentAnim = anim;
+            this.mCurrent = anim;
         }
     }
 
-    private FAnimatorSet getCurrentAnim()
+    private FAnimatorSet getCurrent()
     {
-        if (mParentAnim != null)
+        if (mParent != null)
         {
-            return mParentAnim.getCurrentAnim();
+            return mParent.getCurrent();
         } else
         {
             // 只有parent会触发这里
-            return this.mCurrentAnim;
+            return this.mCurrent;
         }
     }
 
@@ -147,11 +149,11 @@ public class FAnimatorSet extends FAnimator
 
     private FAnimatorSet withInternal(FAnimatorSet with)
     {
-        with.mAnimType = AnimType.With;
+        with.mAnimatorType = AnimatorType.With;
         initNewAnim(with);
-        FAnimator current = getCurrentAnim();
+        FAnimator current = getCurrent();
         getSet().play(current.get()).with(with.get());
-        setCurrentAnim(with);
+        setCurrent(with);
         return with;
     }
 
@@ -180,11 +182,11 @@ public class FAnimatorSet extends FAnimator
 
     private FAnimatorSet nextInternal(FAnimatorSet next)
     {
-        next.mAnimType = AnimType.Next;
+        next.mAnimatorType = AnimatorType.Next;
         initNewAnim(next);
-        FAnimator current = getCurrentAnim();
+        FAnimator current = getCurrent();
         getSet().play(next.get()).after(current.get());
-        setCurrentAnim(next);
+        setCurrent(next);
         return next;
     }
 
@@ -215,9 +217,9 @@ public class FAnimatorSet extends FAnimator
      */
     public AnimatorSet getSet()
     {
-        if (mParentAnim != null)
+        if (mParent != null)
         {
-            return mParentAnim.getSet();
+            return mParent.getSet();
         } else
         {
             return mAnimatorSet;
@@ -442,7 +444,7 @@ public class FAnimatorSet extends FAnimator
     {
         FAnimatorSet clone = (FAnimatorSet) super.clone();
         clone.mAnimatorSet = null;
-        clone.mCurrentAnim = null;
+        clone.mCurrent = null;
         return clone;
     }
 
@@ -488,7 +490,7 @@ public class FAnimatorSet extends FAnimator
         return (FAnimatorSet) super.setAlignType(alignType);
     }
 
-    public enum AnimType
+    public enum AnimatorType
     {
         Parent, With, Next
     }
