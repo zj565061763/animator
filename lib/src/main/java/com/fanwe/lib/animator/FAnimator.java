@@ -31,7 +31,7 @@ import com.fanwe.lib.animator.listener.OnStartVisible;
 /**
  * 对ObjectAnimator进行封装提供更方便的调用方法
  */
-public class SDAnim implements ISDPropertyAnim, Cloneable
+public class FAnimator implements FIPropertyAnimator, Cloneable
 {
     private ObjectAnimator mAnimator = new ObjectAnimator();
 
@@ -39,7 +39,7 @@ public class SDAnim implements ISDPropertyAnim, Cloneable
     private int[] mTempLocation;
     private AlignType mAlignType = AlignType.TopLeft;
 
-    public SDAnim(View target)
+    public FAnimator(View target)
     {
         setTarget(target);
         setDefaultValues();
@@ -57,14 +57,14 @@ public class SDAnim implements ISDPropertyAnim, Cloneable
      * @param target
      * @return
      */
-    public static SDAnim from(View target)
+    public static FAnimator from(View target)
     {
-        SDAnim anim = new SDAnim(target);
+        FAnimator anim = new FAnimator(target);
         return anim;
     }
 
     @Override
-    public SDAnim setTarget(View target)
+    public FAnimator setTarget(View target)
     {
         mAnimator.setTarget(target);
         return this;
@@ -77,7 +77,7 @@ public class SDAnim implements ISDPropertyAnim, Cloneable
     }
 
     @Override
-    public SDAnim setDuration(long duration)
+    public FAnimator setDuration(long duration)
     {
         mAnimator.setDuration(duration);
         return this;
@@ -90,7 +90,7 @@ public class SDAnim implements ISDPropertyAnim, Cloneable
     }
 
     @Override
-    public SDAnim setRepeatCount(int count)
+    public FAnimator setRepeatCount(int count)
     {
         if (count < 0)
         {
@@ -109,7 +109,7 @@ public class SDAnim implements ISDPropertyAnim, Cloneable
     }
 
     @Override
-    public SDAnim setInterpolator(TimeInterpolator interpolator)
+    public FAnimator setInterpolator(TimeInterpolator interpolator)
     {
         mAnimator.setInterpolator(interpolator);
         return this;
@@ -122,7 +122,7 @@ public class SDAnim implements ISDPropertyAnim, Cloneable
     }
 
     @Override
-    public SDAnim setStartDelay(long delay)
+    public FAnimator setStartDelay(long delay)
     {
         mAnimator.setStartDelay(delay);
         return this;
@@ -135,7 +135,7 @@ public class SDAnim implements ISDPropertyAnim, Cloneable
     }
 
     @Override
-    public SDAnim addListener(Animator.AnimatorListener listener)
+    public FAnimator addListener(Animator.AnimatorListener listener)
     {
         if (listener != null)
         {
@@ -159,14 +159,14 @@ public class SDAnim implements ISDPropertyAnim, Cloneable
     }
 
     @Override
-    public SDAnim removeListener(Animator.AnimatorListener listener)
+    public FAnimator removeListener(Animator.AnimatorListener listener)
     {
         mAnimator.removeListener(listener);
         return this;
     }
 
     @Override
-    public SDAnim clearListener()
+    public FAnimator clearListener()
     {
         if (mAnimator.getListeners() != null)
         {
@@ -200,7 +200,7 @@ public class SDAnim implements ISDPropertyAnim, Cloneable
     }
 
     @Override
-    public SDAnim x(float... values)
+    public FAnimator x(float... values)
     {
         mAnimator.setPropertyName(X);
         mAnimator.setFloatValues(values);
@@ -208,7 +208,7 @@ public class SDAnim implements ISDPropertyAnim, Cloneable
     }
 
     @Override
-    public SDAnim y(float... values)
+    public FAnimator y(float... values)
     {
         mAnimator.setPropertyName(Y);
         mAnimator.setFloatValues(values);
@@ -216,7 +216,7 @@ public class SDAnim implements ISDPropertyAnim, Cloneable
     }
 
     @Override
-    public SDAnim translationX(float... values)
+    public FAnimator translationX(float... values)
     {
         mAnimator.setPropertyName(TRANSLATION_X);
         mAnimator.setFloatValues(values);
@@ -224,7 +224,7 @@ public class SDAnim implements ISDPropertyAnim, Cloneable
     }
 
     @Override
-    public SDAnim translationY(float... values)
+    public FAnimator translationY(float... values)
     {
         mAnimator.setPropertyName(TRANSLATION_Y);
         mAnimator.setFloatValues(values);
@@ -232,7 +232,7 @@ public class SDAnim implements ISDPropertyAnim, Cloneable
     }
 
     @Override
-    public SDAnim alpha(float... values)
+    public FAnimator alpha(float... values)
     {
         mAnimator.setPropertyName(ALPHA);
         mAnimator.setFloatValues(values);
@@ -240,7 +240,7 @@ public class SDAnim implements ISDPropertyAnim, Cloneable
     }
 
     @Override
-    public SDAnim scaleX(float... values)
+    public FAnimator scaleX(float... values)
     {
         mAnimator.setPropertyName(SCALE_X);
         mAnimator.setFloatValues(values);
@@ -248,7 +248,7 @@ public class SDAnim implements ISDPropertyAnim, Cloneable
     }
 
     @Override
-    public SDAnim scaleY(float... values)
+    public FAnimator scaleY(float... values)
     {
         mAnimator.setPropertyName(SCALE_Y);
         mAnimator.setFloatValues(values);
@@ -256,7 +256,7 @@ public class SDAnim implements ISDPropertyAnim, Cloneable
     }
 
     @Override
-    public SDAnim rotation(float... values)
+    public FAnimator rotation(float... values)
     {
         mAnimator.setPropertyName(ROTATION);
         mAnimator.setFloatValues(values);
@@ -265,7 +265,7 @@ public class SDAnim implements ISDPropertyAnim, Cloneable
     }
 
     @Override
-    public SDAnim rotationX(float... values)
+    public FAnimator rotationX(float... values)
     {
         mAnimator.setPropertyName(ROTATION_X);
         mAnimator.setFloatValues(values);
@@ -274,7 +274,7 @@ public class SDAnim implements ISDPropertyAnim, Cloneable
     }
 
     @Override
-    public SDAnim rotationY(float... values)
+    public FAnimator rotationY(float... values)
     {
         mAnimator.setPropertyName(ROTATION_Y);
         mAnimator.setFloatValues(values);
@@ -294,7 +294,7 @@ public class SDAnim implements ISDPropertyAnim, Cloneable
      *
      * @return
      */
-    public SDAnim setDecelerate()
+    public FAnimator setDecelerate()
     {
         setInterpolator(new DecelerateInterpolator());
         return this;
@@ -305,7 +305,7 @@ public class SDAnim implements ISDPropertyAnim, Cloneable
      *
      * @return
      */
-    public SDAnim setAccelerate()
+    public FAnimator setAccelerate()
     {
         setInterpolator(new AccelerateInterpolator());
         return this;
@@ -316,7 +316,7 @@ public class SDAnim implements ISDPropertyAnim, Cloneable
      *
      * @return
      */
-    public SDAnim setAccelerateDecelerate()
+    public FAnimator setAccelerateDecelerate()
     {
         setInterpolator(new AccelerateDecelerateInterpolator());
         return this;
@@ -327,7 +327,7 @@ public class SDAnim implements ISDPropertyAnim, Cloneable
      *
      * @return
      */
-    public SDAnim setLinear()
+    public FAnimator setLinear()
     {
         setInterpolator(new LinearInterpolator());
         return this;
@@ -354,11 +354,11 @@ public class SDAnim implements ISDPropertyAnim, Cloneable
     }
 
     @Override
-    public SDAnim clone()
+    public FAnimator clone()
     {
         try
         {
-            SDAnim clone = (SDAnim) super.clone();
+            FAnimator clone = (FAnimator) super.clone();
             clone.setAnimator(mAnimator.clone());
             clone.clearListener();
             clone.addListener(new OnStartVisible());
@@ -404,7 +404,7 @@ public class SDAnim implements ISDPropertyAnim, Cloneable
      * @param values
      * @return
      */
-    public SDAnim moveToX(float... values)
+    public FAnimator moveToX(float... values)
     {
         if (values != null && values.length > 0)
         {
@@ -429,7 +429,7 @@ public class SDAnim implements ISDPropertyAnim, Cloneable
      * @param values
      * @return
      */
-    public SDAnim moveToY(float... values)
+    public FAnimator moveToY(float... values)
     {
         if (values != null && values.length > 0)
         {
@@ -455,7 +455,7 @@ public class SDAnim implements ISDPropertyAnim, Cloneable
      * @param views
      * @return
      */
-    public SDAnim moveToX(View... views)
+    public FAnimator moveToX(View... views)
     {
         if (views != null && views.length > 0)
         {
@@ -486,7 +486,7 @@ public class SDAnim implements ISDPropertyAnim, Cloneable
      * @param views
      * @return
      */
-    public SDAnim moveToY(View... views)
+    public FAnimator moveToY(View... views)
     {
         if (views != null && views.length > 0)
         {
@@ -517,7 +517,7 @@ public class SDAnim implements ISDPropertyAnim, Cloneable
      * @param views
      * @return
      */
-    public SDAnim scaleX(View... views)
+    public FAnimator scaleX(View... views)
     {
         if (views != null && views.length > 0)
         {
@@ -541,7 +541,7 @@ public class SDAnim implements ISDPropertyAnim, Cloneable
      * @param views
      * @return
      */
-    public SDAnim scaleY(View... views)
+    public FAnimator scaleY(View... views)
     {
         if (views != null && views.length > 0)
         {
@@ -565,7 +565,7 @@ public class SDAnim implements ISDPropertyAnim, Cloneable
      * @param alignType
      * @return
      */
-    public SDAnim setAlignType(AlignType alignType)
+    public FAnimator setAlignType(AlignType alignType)
     {
         if (alignType != null)
         {

@@ -22,7 +22,7 @@ import android.animation.TimeInterpolator;
 import android.app.Activity;
 import android.view.View;
 
-import com.fanwe.lib.poper.view.SDPopImageView;
+import com.fanwe.lib.poper.view.FPopImageView;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -30,16 +30,16 @@ import java.util.HashMap;
 /**
  * 对AnimatorSet进行封装提供一系列可以同时或者连续执行的动画集合
  */
-public class SDAnimSet extends SDAnim
+public class FAnimatorSet extends FAnimator
 {
     //parent only
     private AnimatorSet mAnimatorSet;
-    private SDAnimSet mCurrentAnim;
+    private FAnimatorSet mCurrentAnim;
 
-    private SDAnimSet mParentAnim;
+    private FAnimatorSet mParentAnim;
     private AnimType mAnimType;
 
-    public SDAnimSet(View target)
+    public FAnimatorSet(View target)
     {
         super(target);
         mAnimType = AnimType.Parent;
@@ -48,7 +48,7 @@ public class SDAnimSet extends SDAnim
         mCurrentAnim = this;
     }
 
-    private SDAnimSet()
+    private FAnimatorSet()
     {
         super(null);
     }
@@ -59,13 +59,13 @@ public class SDAnimSet extends SDAnim
      * @param target
      * @return
      */
-    public static SDAnimSet from(View target)
+    public static FAnimatorSet from(View target)
     {
-        SDAnimSet animSet = new SDAnimSet(target);
+        FAnimatorSet animSet = new FAnimatorSet(target);
         return animSet;
     }
 
-    private void initNewAnim(SDAnimSet anim)
+    private void initNewAnim(FAnimatorSet anim)
     {
         //如果target为空，设置默认target
         View target = anim.getTarget();
@@ -83,12 +83,12 @@ public class SDAnimSet extends SDAnim
         }
     }
 
-    private void setParentAnim(SDAnimSet parentAnim)
+    private void setParentAnim(FAnimatorSet parentAnim)
     {
         this.mParentAnim = parentAnim;
     }
 
-    private void setCurrentAnim(SDAnimSet anim)
+    private void setCurrentAnim(FAnimatorSet anim)
     {
         if (mParentAnim != null)
         {
@@ -104,7 +104,7 @@ public class SDAnimSet extends SDAnim
         }
     }
 
-    private SDAnimSet getCurrentAnim()
+    private FAnimatorSet getCurrentAnim()
     {
         if (mParentAnim != null)
         {
@@ -116,9 +116,9 @@ public class SDAnimSet extends SDAnim
         }
     }
 
-    private SDAnimSet newInstance()
+    private FAnimatorSet newInstance()
     {
-        SDAnimSet animSet = new SDAnimSet();
+        FAnimatorSet animSet = new FAnimatorSet();
         return animSet;
     }
 
@@ -127,7 +127,7 @@ public class SDAnimSet extends SDAnim
      *
      * @return 新动画
      */
-    public SDAnimSet with()
+    public FAnimatorSet with()
     {
         return with(null);
     }
@@ -138,18 +138,18 @@ public class SDAnimSet extends SDAnim
      * @param target 新动画要执行的View对象，如果为null，则沿用当前动画的View对象
      * @return 新动画
      */
-    public SDAnimSet with(View target)
+    public FAnimatorSet with(View target)
     {
-        SDAnimSet with = newInstance();
+        FAnimatorSet with = newInstance();
         with.setTarget(target);
         return withInternal(with);
     }
 
-    private SDAnimSet withInternal(SDAnimSet with)
+    private FAnimatorSet withInternal(FAnimatorSet with)
     {
         with.mAnimType = AnimType.With;
         initNewAnim(with);
-        SDAnim current = getCurrentAnim();
+        FAnimator current = getCurrentAnim();
         getSet().play(current.get()).with(with.get());
         setCurrentAnim(with);
         return with;
@@ -160,7 +160,7 @@ public class SDAnimSet extends SDAnim
      *
      * @return 新动画
      */
-    public SDAnimSet next()
+    public FAnimatorSet next()
     {
         return next(null);
     }
@@ -171,18 +171,18 @@ public class SDAnimSet extends SDAnim
      * @param target 新动画要执行的View对象，如果为null，则沿用当前动画的View对象
      * @return 新动画
      */
-    public SDAnimSet next(View target)
+    public FAnimatorSet next(View target)
     {
-        SDAnimSet next = newInstance();
+        FAnimatorSet next = newInstance();
         next.setTarget(target);
         return nextInternal(next);
     }
 
-    private SDAnimSet nextInternal(SDAnimSet next)
+    private FAnimatorSet nextInternal(FAnimatorSet next)
     {
         next.mAnimType = AnimType.Next;
         initNewAnim(next);
-        SDAnim current = getCurrentAnim();
+        FAnimator current = getCurrentAnim();
         getSet().play(next.get()).after(current.get());
         setCurrentAnim(next);
         return next;
@@ -194,9 +194,9 @@ public class SDAnimSet extends SDAnim
      * @param time 延迟多少毫秒
      * @return 延迟动画
      */
-    public SDAnimSet delay(long time)
+    public FAnimatorSet delay(long time)
     {
-        SDAnimSet delay = null;
+        FAnimatorSet delay = null;
         if (isEmptyProperty())
         {
             delay = this;
@@ -237,7 +237,7 @@ public class SDAnimSet extends SDAnim
         {
             return;
         }
-        final HashMap<View, SDPopImageView> mapTargetPoper = new HashMap<>();
+        final HashMap<View, FPopImageView> mapTargetPoper = new HashMap<>();
         for (Animator animator : listChild)
         {
             View target = (View) ((ObjectAnimator) animator).getTarget();
@@ -249,7 +249,7 @@ public class SDAnimSet extends SDAnim
             {
                 if (target.getContext() instanceof Activity)
                 {
-                    SDPopImageView popView = new SDPopImageView(target.getContext());
+                    FPopImageView popView = new FPopImageView(target.getContext());
                     popView.setDrawingCacheView(target);
                     popView.getPoper().setTarget(target).attach(true).setTarget(null);
 
@@ -270,7 +270,7 @@ public class SDAnimSet extends SDAnim
      *
      * @return
      */
-    public SDAnimSet withClone()
+    public FAnimatorSet withClone()
     {
         return withClone(null);
     }
@@ -281,11 +281,11 @@ public class SDAnimSet extends SDAnim
      * @param target
      * @return
      */
-    public SDAnimSet withClone(View target)
+    public FAnimatorSet withClone(View target)
     {
-        SDAnimSet clone = clone();
+        FAnimatorSet clone = clone();
         clone.setTarget(target);
-        SDAnimSet with = withInternal(clone);
+        FAnimatorSet with = withInternal(clone);
         return with;
     }
 
@@ -306,186 +306,186 @@ public class SDAnimSet extends SDAnim
     }
 
     @Override
-    public SDAnimSet setTarget(View target)
+    public FAnimatorSet setTarget(View target)
     {
-        return (SDAnimSet) super.setTarget(target);
+        return (FAnimatorSet) super.setTarget(target);
     }
 
     @Override
-    public SDAnimSet setDuration(long duration)
+    public FAnimatorSet setDuration(long duration)
     {
-        return (SDAnimSet) super.setDuration(duration);
+        return (FAnimatorSet) super.setDuration(duration);
     }
 
     @Override
-    public SDAnimSet setRepeatCount(int count)
+    public FAnimatorSet setRepeatCount(int count)
     {
-        return (SDAnimSet) super.setRepeatCount(count);
+        return (FAnimatorSet) super.setRepeatCount(count);
     }
 
     @Override
-    public SDAnimSet setInterpolator(TimeInterpolator interpolator)
+    public FAnimatorSet setInterpolator(TimeInterpolator interpolator)
     {
-        return (SDAnimSet) super.setInterpolator(interpolator);
+        return (FAnimatorSet) super.setInterpolator(interpolator);
     }
 
     @Override
-    public SDAnimSet setStartDelay(long delay)
+    public FAnimatorSet setStartDelay(long delay)
     {
-        return (SDAnimSet) super.setStartDelay(delay);
+        return (FAnimatorSet) super.setStartDelay(delay);
     }
 
     @Override
-    public SDAnimSet addListener(Animator.AnimatorListener listener)
+    public FAnimatorSet addListener(Animator.AnimatorListener listener)
     {
-        return (SDAnimSet) super.addListener(listener);
+        return (FAnimatorSet) super.addListener(listener);
     }
 
     @Override
-    public SDAnimSet removeListener(Animator.AnimatorListener listener)
+    public FAnimatorSet removeListener(Animator.AnimatorListener listener)
     {
-        return (SDAnimSet) super.removeListener(listener);
+        return (FAnimatorSet) super.removeListener(listener);
     }
 
     @Override
-    public SDAnimSet clearListener()
+    public FAnimatorSet clearListener()
     {
-        return (SDAnimSet) super.clearListener();
+        return (FAnimatorSet) super.clearListener();
     }
 
     @Override
-    public SDAnimSet x(float... values)
+    public FAnimatorSet x(float... values)
     {
-        return (SDAnimSet) super.x(values);
+        return (FAnimatorSet) super.x(values);
     }
 
     @Override
-    public SDAnimSet y(float... values)
+    public FAnimatorSet y(float... values)
     {
-        return (SDAnimSet) super.y(values);
+        return (FAnimatorSet) super.y(values);
     }
 
     @Override
-    public SDAnimSet translationX(float... values)
+    public FAnimatorSet translationX(float... values)
     {
-        return (SDAnimSet) super.translationX(values);
+        return (FAnimatorSet) super.translationX(values);
     }
 
     @Override
-    public SDAnimSet translationY(float... values)
+    public FAnimatorSet translationY(float... values)
     {
-        return (SDAnimSet) super.translationY(values);
+        return (FAnimatorSet) super.translationY(values);
     }
 
     @Override
-    public SDAnimSet alpha(float... values)
+    public FAnimatorSet alpha(float... values)
     {
-        return (SDAnimSet) super.alpha(values);
+        return (FAnimatorSet) super.alpha(values);
     }
 
     @Override
-    public SDAnimSet scaleX(float... values)
+    public FAnimatorSet scaleX(float... values)
     {
-        return (SDAnimSet) super.scaleX(values);
+        return (FAnimatorSet) super.scaleX(values);
     }
 
     @Override
-    public SDAnimSet scaleY(float... values)
+    public FAnimatorSet scaleY(float... values)
     {
-        return (SDAnimSet) super.scaleY(values);
+        return (FAnimatorSet) super.scaleY(values);
     }
 
     @Override
-    public SDAnimSet rotation(float... values)
+    public FAnimatorSet rotation(float... values)
     {
-        return (SDAnimSet) super.rotation(values);
+        return (FAnimatorSet) super.rotation(values);
     }
 
     @Override
-    public SDAnimSet rotationX(float... values)
+    public FAnimatorSet rotationX(float... values)
     {
-        return (SDAnimSet) super.rotationX(values);
+        return (FAnimatorSet) super.rotationX(values);
     }
 
     @Override
-    public SDAnimSet rotationY(float... values)
+    public FAnimatorSet rotationY(float... values)
     {
-        return (SDAnimSet) super.rotationY(values);
+        return (FAnimatorSet) super.rotationY(values);
     }
 
     @Override
-    public SDAnimSet setDecelerate()
+    public FAnimatorSet setDecelerate()
     {
-        return (SDAnimSet) super.setDecelerate();
+        return (FAnimatorSet) super.setDecelerate();
     }
 
     @Override
-    public SDAnimSet setAccelerate()
+    public FAnimatorSet setAccelerate()
     {
-        return (SDAnimSet) super.setAccelerate();
+        return (FAnimatorSet) super.setAccelerate();
     }
 
     @Override
-    public SDAnimSet setAccelerateDecelerate()
+    public FAnimatorSet setAccelerateDecelerate()
     {
-        return (SDAnimSet) super.setAccelerateDecelerate();
+        return (FAnimatorSet) super.setAccelerateDecelerate();
     }
 
     @Override
-    public SDAnimSet setLinear()
+    public FAnimatorSet setLinear()
     {
-        return (SDAnimSet) super.setLinear();
+        return (FAnimatorSet) super.setLinear();
     }
 
     @Override
-    public SDAnimSet clone()
+    public FAnimatorSet clone()
     {
-        SDAnimSet clone = (SDAnimSet) super.clone();
+        FAnimatorSet clone = (FAnimatorSet) super.clone();
         clone.mAnimatorSet = null;
         clone.mCurrentAnim = null;
         return clone;
     }
 
     @Override
-    public SDAnimSet moveToX(float... values)
+    public FAnimatorSet moveToX(float... values)
     {
-        return (SDAnimSet) super.moveToX(values);
+        return (FAnimatorSet) super.moveToX(values);
     }
 
     @Override
-    public SDAnimSet moveToX(View... views)
+    public FAnimatorSet moveToX(View... views)
     {
-        return (SDAnimSet) super.moveToX(views);
+        return (FAnimatorSet) super.moveToX(views);
     }
 
     @Override
-    public SDAnimSet moveToY(float... values)
+    public FAnimatorSet moveToY(float... values)
     {
-        return (SDAnimSet) super.moveToY(values);
+        return (FAnimatorSet) super.moveToY(values);
     }
 
     @Override
-    public SDAnimSet moveToY(View... views)
+    public FAnimatorSet moveToY(View... views)
     {
-        return (SDAnimSet) super.moveToY(views);
+        return (FAnimatorSet) super.moveToY(views);
     }
 
     @Override
-    public SDAnimSet scaleX(View... views)
+    public FAnimatorSet scaleX(View... views)
     {
-        return (SDAnimSet) super.scaleX(views);
+        return (FAnimatorSet) super.scaleX(views);
     }
 
     @Override
-    public SDAnimSet scaleY(View... views)
+    public FAnimatorSet scaleY(View... views)
     {
-        return (SDAnimSet) super.scaleY(views);
+        return (FAnimatorSet) super.scaleY(views);
     }
 
     @Override
-    public SDAnimSet setAlignType(AlignType alignType)
+    public FAnimatorSet setAlignType(AlignType alignType)
     {
-        return (SDAnimSet) super.setAlignType(alignType);
+        return (FAnimatorSet) super.setAlignType(alignType);
     }
 
     public enum AnimType

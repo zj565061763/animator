@@ -22,7 +22,7 @@ import android.view.View;
 /**
  * 动画接口
  */
-public interface ISDAnim
+public interface FIAnimator
 {
     /**
      * 设置要执行动画的view
@@ -30,7 +30,7 @@ public interface ISDAnim
      * @param target
      * @return
      */
-    ISDAnim setTarget(View target);
+    FIAnimator setTarget(View target);
 
     /**
      * 获得执行动画的view
@@ -45,7 +45,7 @@ public interface ISDAnim
      * @param duration 毫秒
      * @return
      */
-    ISDAnim setDuration(long duration);
+    FIAnimator setDuration(long duration);
 
     /**
      * 获得动画时长
@@ -60,7 +60,7 @@ public interface ISDAnim
      * @param count 如果count小于0则无限重复
      * @return
      */
-    ISDAnim setRepeatCount(int count);
+    FIAnimator setRepeatCount(int count);
 
     /**
      * 获得重复次数
@@ -75,7 +75,7 @@ public interface ISDAnim
      * @param interpolator
      * @return
      */
-    ISDAnim setInterpolator(TimeInterpolator interpolator);
+    FIAnimator setInterpolator(TimeInterpolator interpolator);
 
     /**
      * 获得插值器
@@ -90,7 +90,7 @@ public interface ISDAnim
      * @param delay 毫秒
      * @return
      */
-    ISDAnim setStartDelay(long delay);
+    FIAnimator setStartDelay(long delay);
 
     /**
      * 获得动画延迟多久开始执行
@@ -105,21 +105,21 @@ public interface ISDAnim
      * @param listener
      * @return
      */
-    ISDAnim addListener(Animator.AnimatorListener listener);
+    FIAnimator addListener(Animator.AnimatorListener listener);
 
     /**
      * 移除动画监听
      *
      * @param listener
      */
-    ISDAnim removeListener(Animator.AnimatorListener listener);
+    FIAnimator removeListener(Animator.AnimatorListener listener);
 
     /**
      * 清空监听
      *
      * @return
      */
-    ISDAnim clearListener();
+    FIAnimator clearListener();
 
     /**
      * 开始执行动画

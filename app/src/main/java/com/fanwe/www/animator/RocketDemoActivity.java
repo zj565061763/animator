@@ -8,7 +8,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.fanwe.lib.animator.SDAnimSet;
+import com.fanwe.lib.animator.FAnimatorSet;
 import com.fanwe.lib.animator.listener.OnEndInvisible;
 import com.fanwe.lib.animator.listener.OnEndReset;
 import com.fanwe.lib.animator.listener.SDAnimatorListener;
@@ -36,7 +36,7 @@ public class RocketDemoActivity extends AppCompatActivity
         iv_rocket_smoke = (ImageView) findViewById(R.id.iv_rocket_smoke);
     }
 
-    private SDAnimSet mAnimSet;
+    private FAnimatorSet mAnimSet;
     private int number = 3;
 
     public void onclickStartRocket(View v)
@@ -46,7 +46,7 @@ public class RocketDemoActivity extends AppCompatActivity
             return;
         }
 
-        mAnimSet = SDAnimSet.from(fl_rocket_root)
+        mAnimSet = FAnimatorSet.from(fl_rocket_root)
                 //火箭淡入
                 .alpha(0, 1f).setDuration(1000)
                 .delay(500)

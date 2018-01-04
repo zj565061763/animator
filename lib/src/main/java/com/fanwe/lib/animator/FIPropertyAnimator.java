@@ -18,7 +18,7 @@ package com.fanwe.lib.animator;
 /**
  * 属性动画接口
  */
-public interface ISDPropertyAnim extends ISDAnim
+public interface FIPropertyAnimator extends FIAnimator
 {
     String X = "x";
     String Y = "y";
@@ -37,7 +37,7 @@ public interface ISDPropertyAnim extends ISDAnim
      * @param values
      * @return
      */
-    ISDPropertyAnim x(float... values);
+    FIPropertyAnimator x(float... values);
 
     /**
      * 设置y坐标（相对于父容器）
@@ -45,7 +45,7 @@ public interface ISDPropertyAnim extends ISDAnim
      * @param values
      * @return
      */
-    ISDPropertyAnim y(float... values);
+    FIPropertyAnimator y(float... values);
 
     /**
      * 设置x方向相对于当前位置的偏移量
@@ -53,7 +53,7 @@ public interface ISDPropertyAnim extends ISDAnim
      * @param values
      * @return
      */
-    ISDPropertyAnim translationX(float... values);
+    FIPropertyAnimator translationX(float... values);
 
     /**
      * 设置y方向相对于当前位置的偏移量
@@ -61,7 +61,7 @@ public interface ISDPropertyAnim extends ISDAnim
      * @param values
      * @return
      */
-    ISDPropertyAnim translationY(float... values);
+    FIPropertyAnimator translationY(float... values);
 
     /**
      * 设置透明度
@@ -69,7 +69,7 @@ public interface ISDPropertyAnim extends ISDAnim
      * @param values
      * @return
      */
-    ISDPropertyAnim alpha(float... values);
+    FIPropertyAnimator alpha(float... values);
 
     /**
      * 设置缩放x
@@ -77,7 +77,7 @@ public interface ISDPropertyAnim extends ISDAnim
      * @param values
      * @return
      */
-    ISDPropertyAnim scaleX(float... values);
+    FIPropertyAnimator scaleX(float... values);
 
     /**
      * 设置缩放y
@@ -85,7 +85,7 @@ public interface ISDPropertyAnim extends ISDAnim
      * @param values
      * @return
      */
-    ISDPropertyAnim scaleY(float... values);
+    FIPropertyAnimator scaleY(float... values);
 
     /**
      * 设置绕z轴方向旋转角度（大于0顺时针，小于0逆时针）
@@ -93,7 +93,7 @@ public interface ISDPropertyAnim extends ISDAnim
      * @param values
      * @return
      */
-    ISDPropertyAnim rotation(float... values);
+    FIPropertyAnimator rotation(float... values);
 
     /**
      * 设置绕x轴方向旋转角度
@@ -101,7 +101,7 @@ public interface ISDPropertyAnim extends ISDAnim
      * @param values
      * @return
      */
-    ISDPropertyAnim rotationX(float... values);
+    FIPropertyAnimator rotationX(float... values);
 
     /**
      * 设置绕y轴方向旋转角度
@@ -109,7 +109,7 @@ public interface ISDPropertyAnim extends ISDAnim
      * @param values
      * @return
      */
-    ISDPropertyAnim rotationY(float... values);
+    FIPropertyAnimator rotationY(float... values);
 
 
     /**
