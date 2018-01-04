@@ -21,7 +21,7 @@ import android.view.View;
 /**
  * 动画结束重置view
  */
-public class OnEndReset extends SDAnimatorListener
+public class OnEndReset extends FAnimatorListener
 {
     public OnEndReset()
     {

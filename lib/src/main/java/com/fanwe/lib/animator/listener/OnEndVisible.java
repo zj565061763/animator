@@ -21,7 +21,7 @@ import android.view.View;
 /**
  * 动画结束设置view可见
  */
-public class OnEndVisible extends SDAnimatorListener
+public class OnEndVisible extends FAnimatorListener
 {
     public OnEndVisible()
     {

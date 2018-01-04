@@ -21,7 +21,7 @@ import android.view.View;
 /**
  * 动画开始设置view为View.GONE
  */
-public class OnStartGone extends SDAnimatorListener
+public class OnStartGone extends FAnimatorListener
 {
     public OnStartGone()
     {

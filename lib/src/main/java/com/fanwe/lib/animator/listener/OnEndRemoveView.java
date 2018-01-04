@@ -23,7 +23,7 @@ import android.view.ViewParent;
 /**
  * 动画结束移除view
  */
-public class OnEndRemoveView extends SDAnimatorListener
+public class OnEndRemoveView extends FAnimatorListener
 {
     public OnEndRemoveView()
     {

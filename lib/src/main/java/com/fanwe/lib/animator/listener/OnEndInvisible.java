@@ -21,7 +21,7 @@ import android.view.View;
 /**
  * 动画结束设置view为View.INVISIBLE
  */
-public class OnEndInvisible extends SDAnimatorListener
+public class OnEndInvisible extends FAnimatorListener
 {
     public OnEndInvisible()
     {

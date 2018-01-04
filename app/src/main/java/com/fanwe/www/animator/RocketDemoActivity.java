@@ -11,7 +11,7 @@ import android.widget.TextView;
 import com.fanwe.lib.animator.FAnimatorSet;
 import com.fanwe.lib.animator.listener.OnEndInvisible;
 import com.fanwe.lib.animator.listener.OnEndReset;
-import com.fanwe.lib.animator.listener.SDAnimatorListener;
+import com.fanwe.lib.animator.listener.FAnimatorListener;
 
 /**
  * Created by Administrator on 2017/8/15.
@@ -53,7 +53,7 @@ public class RocketDemoActivity extends AppCompatActivity
                 //数字倒数
                 .with(tv_number).scaleX(1f, 0f).setRepeatCount(2).setDuration(1000)
                 .withClone().scaleY(1f, 0f)
-                .addListener(new SDAnimatorListener()
+                .addListener(new FAnimatorListener()
                 {
                     @Override
                     public void onAnimationStart(Animator animation)
@@ -82,7 +82,7 @@ public class RocketDemoActivity extends AppCompatActivity
                 .setDuration(3000).setAccelerate()
                 .addListener(new OnEndInvisible(fl_rocket_root)) //动画结束隐藏fl_rocket_root
                 .addListener(new OnEndReset(fl_rocket_root)) //动画结束重置fl_rocket_root
-                .addListener(new SDAnimatorListener()
+                .addListener(new FAnimatorListener()
                 {
                     @Override
                     public void onAnimationStart(Animator animation)

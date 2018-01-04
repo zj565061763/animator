@@ -21,7 +21,7 @@ import android.view.View;
 /**
  * 动画结束设置view为View.GONE
  */
-public class OnEndGone extends SDAnimatorListener
+public class OnEndGone extends FAnimatorListener
 {
     public OnEndGone()
     {

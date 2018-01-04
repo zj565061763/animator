@@ -21,7 +21,7 @@ import android.view.View;
 /**
  * 动画开始设置view可见
  */
-public class OnStartVisible extends SDAnimatorListener
+public class OnStartVisible extends FAnimatorListener
 {
     public OnStartVisible()
     {

@@ -22,20 +22,20 @@ import android.view.View;
 
 import java.lang.ref.WeakReference;
 
-public abstract class SDAnimatorListener extends AnimatorListenerAdapter
+public abstract class FAnimatorListener extends AnimatorListenerAdapter
 {
     private WeakReference<View> mTarget;
 
-    public SDAnimatorListener()
+    public FAnimatorListener()
     {
     }
 
-    public SDAnimatorListener(View target)
+    public FAnimatorListener(View target)
     {
         setTarget(target);
     }
 
-    public SDAnimatorListener setTarget(View target)
+    public FAnimatorListener setTarget(View target)
     {
         if (target != null)
         {

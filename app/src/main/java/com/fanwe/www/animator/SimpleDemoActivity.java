@@ -9,7 +9,7 @@ import com.fanwe.lib.animator.FAnimator;
 import com.fanwe.lib.animator.FAnimatorSet;
 import com.fanwe.lib.animator.listener.OnEndRemoveView;
 import com.fanwe.lib.animator.listener.OnEndReset;
-import com.fanwe.lib.animator.listener.SDAnimatorListener;
+import com.fanwe.lib.animator.listener.FAnimatorListener;
 
 public class SimpleDemoActivity extends AppCompatActivity
 {
@@ -51,7 +51,7 @@ public class SimpleDemoActivity extends AppCompatActivity
                 .moveToX(v, view_target_1, view_target_2, view_target_3).setDuration(2000) //依次移动x到v, view_target_1, view_target_2, view_target_3
                 .withClone().moveToY(v, view_target_1, view_target_2, view_target_3) //依次移动y到v, view_target_1, view_target_2, view_target_3
                 .delay(1000)
-                .addListener(new SDAnimatorListener()
+                .addListener(new FAnimatorListener()
                 {
                     @Override
                     public void onAnimationEnd(Animator animation)

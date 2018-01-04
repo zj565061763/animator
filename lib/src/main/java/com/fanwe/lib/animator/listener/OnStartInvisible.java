@@ -21,7 +21,7 @@ import android.view.View;
 /**
  * 动画开始设置view为View.INVISIBLE
  */
-public class OnStartInvisible extends SDAnimatorListener
+public class OnStartInvisible extends FAnimatorListener
 {
     public OnStartInvisible()
     {
