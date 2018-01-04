@@ -11,7 +11,7 @@
 ```java
 public void onClickBtnAnim(View v)
 {
-    FAnimatorSet.from(v)
+    new FAnimatorSet(v)
             .setAlignType(FAnimator.AlignType.Center) //设置要移动到的目标view和动画view的对齐方式
             .moveToX(v, view_target_1, view_target_2, view_target_3).setDuration(2000)//依次移动x到v, view_target_1, view_target_2, view_target_3
             .withClone().moveToY(v, view_target_1, view_target_2, view_target_3) //依次移动y到v, view_target_1, view_target_2, view_target_3
@@ -27,7 +27,7 @@ public void onClickBtnAnim(View v)
  */
 public void onClickBtnAnimInside(View v)
 {
-    FAnimatorSet.from(v)
+    new FAnimatorSet(v)
             .setAlignType(FAnimator.AlignType.Center) //设置要移动到的目标view和动画view的对齐方式
             .moveToX(v, view_target_1, view_target_2, view_target_3).setDuration(2000) //依次移动x到v, view_target_1, view_target_2, view_target_3
             .withClone().moveToY(v, view_target_1, view_target_2, view_target_3) //依次移动y到v, view_target_1, view_target_2, view_target_3
@@ -51,7 +51,7 @@ git太大了有点卡，具体可以看demo<br>
 ![](http://thumbsnap.com/i/cD2NW5lZ.gif?0815)<br>
 
 ```java
-FAnimatorSet.from(fl_rocket_root)
+new FAnimatorSet(v)
         //火箭淡入
         .alpha(0, 1f).setDuration(1000)
         .delay(500)
