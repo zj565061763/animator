@@ -11,8 +11,8 @@
 ```java
 public void onClickBtnAnim(View v)
 {
-    SDAnimSet.from(v)
-            .setAlignType(SDAnim.AlignType.Center) //设置要移动到的目标view和动画view的对齐方式
+    FAnimatorSet.from(v)
+            .setAlignType(FAnimator.AlignType.Center) //设置要移动到的目标view和动画view的对齐方式
             .moveToX(v, view_target_1, view_target_2, view_target_3).setDuration(2000)//依次移动x到v, view_target_1, view_target_2, view_target_3
             .withClone().moveToY(v, view_target_1, view_target_2, view_target_3) //依次移动y到v, view_target_1, view_target_2, view_target_3
             .delay(1000)
@@ -27,12 +27,12 @@ public void onClickBtnAnim(View v)
  */
 public void onClickBtnAnimInside(View v)
 {
-    SDAnimSet.from(v)
-            .setAlignType(SDAnim.AlignType.Center) //设置要移动到的目标view和动画view的对齐方式
+    FAnimatorSet.from(v)
+            .setAlignType(FAnimator.AlignType.Center) //设置要移动到的目标view和动画view的对齐方式
             .moveToX(v, view_target_1, view_target_2, view_target_3).setDuration(2000) //依次移动x到v, view_target_1, view_target_2, view_target_3
             .withClone().moveToY(v, view_target_1, view_target_2, view_target_3) //依次移动y到v, view_target_1, view_target_2, view_target_3
             .delay(1000)
-            .addListener(new SDAnimatorListener()
+            .addListener(new FAnimatorListener()
             {
                 @Override
                 public void onAnimationEnd(Animator animation)
@@ -51,14 +51,14 @@ git太大了有点卡，具体可以看demo<br>
 ![](http://thumbsnap.com/i/cD2NW5lZ.gif?0815)<br>
 
 ```java
-SDAnimSet.from(fl_rocket_root)
+FAnimatorSet.from(fl_rocket_root)
         //火箭淡入
         .alpha(0, 1f).setDuration(1000)
         .delay(500)
         //数字倒数
         .with(tv_number).scaleX(1f, 0f).setRepeatCount(2).setDuration(1000)
         .withClone().scaleY(1f, 0f)
-        .addListener(new SDAnimatorListener()
+        .addListener(new FAnimatorListener()
         {
             @Override
             public void onAnimationStart(Animator animation)
@@ -87,7 +87,7 @@ SDAnimSet.from(fl_rocket_root)
         .setDuration(3000).setAccelerate()
         .addListener(new OnEndInvisible(fl_rocket_root)) //动画结束隐藏fl_rocket_root
         .addListener(new OnEndReset(fl_rocket_root)) //动画结束重置fl_rocket_root
-        .addListener(new SDAnimatorListener()
+        .addListener(new FAnimatorListener()
         {
             @Override
             public void onAnimationStart(Animator animation)
