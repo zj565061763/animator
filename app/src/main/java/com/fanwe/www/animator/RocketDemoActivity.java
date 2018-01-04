@@ -9,9 +9,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.fanwe.lib.animator.FAnimatorSet;
+import com.fanwe.lib.animator.listener.FAnimatorListener;
 import com.fanwe.lib.animator.listener.OnEndInvisible;
 import com.fanwe.lib.animator.listener.OnEndReset;
-import com.fanwe.lib.animator.listener.FAnimatorListener;
 
 /**
  * Created by Administrator on 2017/8/15.
@@ -24,6 +24,9 @@ public class RocketDemoActivity extends AppCompatActivity
     private ImageView iv_rocket;
     private ImageView iv_rocket_smoke;
 
+    private FAnimatorSet mAnimatorSet;
+    private int mNumber = 3;
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -31,24 +34,21 @@ public class RocketDemoActivity extends AppCompatActivity
         setContentView(R.layout.activity_rocket_demo);
 
         fl_rocket_root = findViewById(R.id.fl_rocket_root);
-        tv_number = (TextView) findViewById(R.id.tv_number);
-        iv_rocket = (ImageView) findViewById(R.id.iv_rocket);
-        iv_rocket_smoke = (ImageView) findViewById(R.id.iv_rocket_smoke);
+        tv_number = findViewById(R.id.tv_number);
+        iv_rocket = findViewById(R.id.iv_rocket);
+        iv_rocket_smoke = findViewById(R.id.iv_rocket_smoke);
     }
-
-    private FAnimatorSet mAnimSet;
-    private int number = 3;
 
     public void onclickStartRocket(View v)
     {
-        if (mAnimSet != null && mAnimSet.getSet().isStarted())
+        if (mAnimatorSet != null && mAnimatorSet.getSet().isStarted())
         {
             return;
         }
 
-        mAnimSet = FAnimatorSet.from(fl_rocket_root)
-                //火箭淡入
-                .alpha(0, 1f).setDuration(1000)
+        mAnimatorSet = new FAnimatorSet(fl_rocket_root);
+        //火箭淡入
+        mAnimatorSet.alpha(0, 1f).setDuration(1000)
                 .delay(500)
                 //数字倒数
                 .with(tv_number).scaleX(1f, 0f).setRepeatCount(2).setDuration(1000)
@@ -59,22 +59,22 @@ public class RocketDemoActivity extends AppCompatActivity
                     public void onAnimationStart(Animator animation)
                     {
                         super.onAnimationStart(animation);
-                        tv_number.setText(String.valueOf(number));
+                        tv_number.setText(String.valueOf(mNumber));
                     }
 
                     @Override
                     public void onAnimationEnd(Animator animation)
                     {
                         super.onAnimationEnd(animation);
-                        number = 3;
+                        mNumber = 3;
                     }
 
                     @Override
                     public void onAnimationRepeat(Animator animation)
                     {
                         super.onAnimationRepeat(animation);
-                        number--;
-                        tv_number.setText(String.valueOf(number));
+                        mNumber--;
+                        tv_number.setText(String.valueOf(mNumber));
                     }
                 })
                 //火箭起飞
@@ -105,7 +105,7 @@ public class RocketDemoActivity extends AppCompatActivity
                 //烟雾淡出
                 .next().alpha(1f, 0).setDuration(500)
                 .addListener(new OnEndInvisible(iv_rocket_smoke));
-        mAnimSet.start();
+        mAnimatorSet.start();
 
     }
 

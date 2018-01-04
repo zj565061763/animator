@@ -41,26 +41,10 @@ public class FAnimator implements FIPropertyAnimator, Cloneable
 
     public FAnimator(View target)
     {
-        setTarget(target);
-        setDefaultValues();
-        addListener(new OnStartVisible());
-    }
-
-    private void setDefaultValues()
-    {
         mAnimator.setFloatValues(0);
-    }
 
-    /**
-     * 快速创建对象方法
-     *
-     * @param target
-     * @return
-     */
-    public static FAnimator from(View target)
-    {
-        FAnimator anim = new FAnimator(target);
-        return anim;
+        setTarget(target);
+        addListener(new OnStartVisible());
     }
 
     @Override

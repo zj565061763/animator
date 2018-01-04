@@ -53,18 +53,6 @@ public class FAnimatorSet extends FAnimator
         super(null);
     }
 
-    /**
-     * 快速创建对象方法
-     *
-     * @param target
-     * @return
-     */
-    public static FAnimatorSet from(View target)
-    {
-        FAnimatorSet animSet = new FAnimatorSet(target);
-        return animSet;
-    }
-
     private void initNewAnim(FAnimatorSet anim)
     {
         //如果target为空，设置默认target
