@@ -37,13 +37,10 @@ public class FAnimatorSet extends FAnimator
     private FAnimatorSet mCurrent;
 
     private FAnimatorSet mParent;
-    private AnimatorType mAnimatorType;
 
     public FAnimatorSet(View target)
     {
         super(target);
-        mAnimatorType = AnimatorType.Parent;
-
         mAnimatorSet = new AnimatorSet();
         mAnimatorSet.play(get());
 
@@ -150,7 +147,6 @@ public class FAnimatorSet extends FAnimator
 
     private FAnimatorSet withInternal(FAnimatorSet with)
     {
-        with.mAnimatorType = AnimatorType.With;
         initNewAnim(with);
         FAnimator current = getCurrent();
         getSet().play(current.get()).with(with.get());
@@ -183,7 +179,6 @@ public class FAnimatorSet extends FAnimator
 
     private FAnimatorSet nextInternal(FAnimatorSet next)
     {
-        next.mAnimatorType = AnimatorType.Next;
         initNewAnim(next);
         FAnimator current = getCurrent();
         getSet().play(next.get()).after(current.get());
@@ -489,10 +484,5 @@ public class FAnimatorSet extends FAnimator
     public FAnimatorSet setAlignType(AlignType alignType)
     {
         return (FAnimatorSet) super.setAlignType(alignType);
-    }
-
-    public enum AnimatorType
-    {
-        Parent, With, Next
     }
 }
