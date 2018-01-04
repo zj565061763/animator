@@ -48,6 +48,7 @@ public class FAnimatorSet extends FAnimator
         mAnimatorSet.play(get());
 
         mCurrent = this;
+        mParent = null;
     }
 
     private FAnimatorSet()
