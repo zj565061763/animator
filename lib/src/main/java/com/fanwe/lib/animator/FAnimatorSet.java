@@ -102,7 +102,7 @@ public class FAnimatorSet extends FAnimator
             {
                 anim.setParent(this);
             }
-            this.mCurrent = anim;
+            mCurrent = anim;
         }
     }
 
@@ -114,7 +114,7 @@ public class FAnimatorSet extends FAnimator
         } else
         {
             // 只有parent会触发这里
-            return this.mCurrent;
+            return mCurrent;
         }
     }
 
