@@ -37,7 +37,6 @@ public class FAnimatorSet extends FAnimator
     private FAnimatorSet mCurrent;
 
     private FAnimatorSet mParent;
-    private boolean mIsParent;
 
     public FAnimatorSet(View target)
     {
@@ -47,7 +46,6 @@ public class FAnimatorSet extends FAnimator
 
         mCurrent = this;
         mParent = null;
-        mIsParent = true;
     }
 
     private FAnimatorSet()
@@ -98,11 +96,8 @@ public class FAnimatorSet extends FAnimator
         } else
         {
             // 只有parent会触发这里
-            if (this != anim)
-            {
-                anim.setParent(this);
-            }
             mCurrent = anim;
+            anim.setParent(this);
         }
     }
 
