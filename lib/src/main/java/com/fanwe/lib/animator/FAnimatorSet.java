@@ -20,9 +20,8 @@ import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.animation.TimeInterpolator;
 import android.app.Activity;
+import android.content.Context;
 import android.view.View;
-
-import com.fanwe.lib.poper.view.FPopImageView;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -220,7 +219,7 @@ public class FAnimatorSet extends FAnimator
         {
             return;
         }
-        final HashMap<View, FPopImageView> mapTargetPoper = new HashMap<>();
+        final HashMap<View, PopImageView> mapTargetPoper = new HashMap<>();
         for (Animator animator : listChild)
         {
             View target = (View) ((ObjectAnimator) animator).getTarget();
@@ -230,15 +229,15 @@ public class FAnimatorSet extends FAnimator
             }
             if (!mapTargetPoper.containsKey(target))
             {
-                if (target.getContext() instanceof Activity)
+                final Context context = target.getContext();
+                if (context instanceof Activity)
                 {
-                    FPopImageView popView = new FPopImageView(target.getContext());
-                    popView.setDrawingCacheView(target);
-                    popView.getPoper().setTarget(target).attach(true).setTarget(null);
+                    PopImageView imageView = new PopImageView(context);
+                    imageView.setDrawingCacheView(target);
+                    imageView.attachTarget(target);
 
-                    animator.setTarget(popView);
-
-                    mapTargetPoper.put(target, popView);
+                    animator.setTarget(imageView);
+                    mapTargetPoper.put(target, imageView);
                 }
             } else
             {

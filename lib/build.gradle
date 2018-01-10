@@ -25,9 +25,7 @@ android {
 }
 
 dependencies {
-    compile 'com.github.zj565061763:poper:1.0.23'
 }
-
 
 // 指定编码
 tasks.withType(Javadoc) {
