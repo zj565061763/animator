@@ -22,6 +22,7 @@ import android.animation.TimeInterpolator;
 import android.app.Activity;
 import android.content.Context;
 import android.view.View;
+import android.widget.ImageView;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -219,7 +220,7 @@ public class FAnimatorSet extends FAnimator
         {
             return;
         }
-        final HashMap<View, PopImageView> mapTargetPoper = new HashMap<>();
+        final HashMap<View, ImageView> mapTargetPoper = new HashMap<>();
         for (Animator animator : listChild)
         {
             View target = (View) ((ObjectAnimator) animator).getTarget();
