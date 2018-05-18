@@ -1,6 +1,5 @@
 package com.fanwe.www.animator;
 
-import android.animation.ObjectAnimator;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -99,8 +98,6 @@ public class SimpleDemoActivity extends AppCompatActivity
          * 注意：如果调用此方法的话，要记得在最后的动画结束后移除镜像ImageView，除非业务需求就是不移除
          */
         animatorSet.startAsPop();
-
-        ObjectAnimator objectAnimator = animatorSet.get(); // 也可以得到原生的动画对象
     }
 
     /**
