@@ -220,15 +220,17 @@ public class FAnimatorSet extends FAnimator
         {
             return;
         }
-        final HashMap<View, ImageView> mapTargetPoper = new HashMap<>();
+        final HashMap<View, ImageView> mapCache = new HashMap<>();
         for (Animator animator : listChild)
         {
-            View target = (View) ((ObjectAnimator) animator).getTarget();
+            final View target = (View) ((ObjectAnimator) animator).getTarget();
             if (target == null)
             {
                 continue;
             }
-            if (!mapTargetPoper.containsKey(target))
+
+            final ImageView cache = mapCache.get(target);
+            if (cache == null)
             {
                 final Context context = target.getContext();
                 if (context instanceof Activity)
@@ -238,11 +240,11 @@ public class FAnimatorSet extends FAnimator
                     imageView.attachTarget(target);
 
                     animator.setTarget(imageView);
-                    mapTargetPoper.put(target, imageView);
+                    mapCache.put(target, imageView);
                 }
             } else
             {
-                animator.setTarget(mapTargetPoper.get(target));
+                animator.setTarget(cache);
             }
         }
         start();

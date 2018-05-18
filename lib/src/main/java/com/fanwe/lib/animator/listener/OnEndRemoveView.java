@@ -18,7 +18,6 @@ package com.fanwe.lib.animator.listener;
 import android.animation.Animator;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewParent;
 
 /**
  * 动画结束移除view
@@ -40,17 +39,13 @@ public class OnEndRemoveView extends FAnimatorListener
     {
         super.onAnimationEnd(animation);
 
-        final View target = getTarget();
-        if (target != null)
+        try
         {
-            try
-            {
-                final ViewParent viewParent = target.getParent();
-                ((ViewGroup) viewParent).removeView(target);
-            } catch (Exception e)
-            {
-                e.printStackTrace();
-            }
+            final View target = getTarget();
+            ((ViewGroup) target.getParent()).removeView(target);
+        } catch (Exception e)
+        {
+            e.printStackTrace();
         }
     }
 }
