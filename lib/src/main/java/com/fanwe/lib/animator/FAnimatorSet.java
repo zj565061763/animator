@@ -412,21 +412,21 @@ public class FAnimatorSet extends FAnimator
     }
 
     @Override
-    public FAnimatorSet moveToX(View... views)
-    {
-        return (FAnimatorSet) super.moveToX(views);
-    }
-
-    @Override
     public FAnimatorSet moveToY(float... values)
     {
         return (FAnimatorSet) super.moveToY(values);
     }
 
     @Override
-    public FAnimatorSet moveToY(View... views)
+    public FAnimatorSet moveToX(AlignType alignType, View... views)
     {
-        return (FAnimatorSet) super.moveToY(views);
+        return (FAnimatorSet) super.moveToX(alignType, views);
+    }
+
+    @Override
+    public FAnimatorSet moveToY(AlignType alignType, View... views)
+    {
+        return (FAnimatorSet) super.moveToY(alignType, views);
     }
 
     @Override
@@ -439,11 +439,5 @@ public class FAnimatorSet extends FAnimator
     public FAnimatorSet scaleY(View... views)
     {
         return (FAnimatorSet) super.scaleY(views);
-    }
-
-    @Override
-    public FAnimatorSet setAlignType(AlignType alignType)
-    {
-        return (FAnimatorSet) super.setAlignType(alignType);
     }
 }

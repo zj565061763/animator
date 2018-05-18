@@ -34,9 +34,6 @@ public class FAnimator implements PropertyAnimator, Cloneable
 {
     private ObjectAnimator mAnimator = new ObjectAnimator();
 
-    private int[] mTargetLocation;
-    private int[] mTempLocation;
-    private AlignType mAlignType = AlignType.TopLeft;
 
     public FAnimator(View target)
     {
@@ -306,11 +303,13 @@ public class FAnimator implements PropertyAnimator, Cloneable
 
     //----------extend start----------
 
-    private void updateTargetLocation()
+    private int[] mTargetLocation;
+    private int[] mTempLocation;
+
+    private void saveTargetLocation()
     {
         final View target = getTarget();
         if (target == null) return;
-
         if (mTargetLocation == null) mTargetLocation = new int[]{0, 0};
         target.getLocationOnScreen(mTargetLocation);
     }
@@ -318,7 +317,6 @@ public class FAnimator implements PropertyAnimator, Cloneable
     private void updateTempLocation(View view)
     {
         if (view == null) return;
-
         if (mTempLocation == null) mTempLocation = new int[]{0, 0};
         view.getLocationOnScreen(mTempLocation);
     }
@@ -333,13 +331,11 @@ public class FAnimator implements PropertyAnimator, Cloneable
     {
         if (values != null && values.length > 0)
         {
-            updateTargetLocation();
-
+            saveTargetLocation();
             final float[] realValues = new float[values.length];
             for (int i = 0; i < values.length; i++)
             {
-                final float real = (values[i] - mTargetLocation[0]) + getTarget().getTranslationX();
-                realValues[i] = real;
+                realValues[i] = (values[i] - mTargetLocation[0]) + getTarget().getTranslationX();
             }
             return translationX(realValues);
         } else
@@ -358,28 +354,25 @@ public class FAnimator implements PropertyAnimator, Cloneable
     {
         if (values != null && values.length > 0)
         {
-            updateTargetLocation();
-
+            saveTargetLocation();
             final float[] realValues = new float[values.length];
             for (int i = 0; i < values.length; i++)
             {
-                final float real = (values[i] - mTargetLocation[1]) + getTarget().getTranslationY();
-                realValues[i] = real;
+                realValues[i] = (values[i] - mTargetLocation[1]) + getTarget().getTranslationY();
             }
-            return translationY(realValues);
-        } else
-        {
-            return translationY(values);
+            translationY(realValues);
         }
+        return this;
     }
 
     /**
      * 移动到view的屏幕x坐标
      *
+     * @param alignType
      * @param views
      * @return
      */
-    public FAnimator moveToX(View... views)
+    public FAnimator moveToX(AlignType alignType, View... views)
     {
         if (views != null && views.length > 0)
         {
@@ -390,26 +383,25 @@ public class FAnimator implements PropertyAnimator, Cloneable
                 updateTempLocation(view);
                 values[i] = mTempLocation[0];
 
-                if (mAlignType == AlignType.Center)
+                if (alignType == AlignType.Center)
                 {
                     final int delta = view.getWidth() / 2 - getTarget().getWidth() / 2;
                     values[i] = mTempLocation[0] + delta;
                 }
             }
-            return moveToX(values);
-        } else
-        {
-            return this;
+            moveToX(values);
         }
+        return this;
     }
 
     /**
      * 移动到view的屏幕y坐标
      *
+     * @param alignType
      * @param views
      * @return
      */
-    public FAnimator moveToY(View... views)
+    public FAnimator moveToY(AlignType alignType, View... views)
     {
         if (views != null && views.length > 0)
         {
@@ -420,17 +412,15 @@ public class FAnimator implements PropertyAnimator, Cloneable
                 updateTempLocation(view);
                 values[i] = mTempLocation[1];
 
-                if (mAlignType == AlignType.Center)
+                if (alignType == AlignType.Center)
                 {
                     final int delta = view.getHeight() / 2 - getTarget().getHeight() / 2;
                     values[i] = mTempLocation[1] + delta;
                 }
             }
-            return moveToY(values);
-        } else
-        {
-            return this;
+            moveToY(values);
         }
+        return this;
     }
 
     /**
@@ -448,11 +438,9 @@ public class FAnimator implements PropertyAnimator, Cloneable
             {
                 values[i] = ((float) views[i].getWidth()) / ((float) getTarget().getWidth());
             }
-            return scaleX(values);
-        } else
-        {
-            return this;
+            scaleX(values);
         }
+        return this;
     }
 
     /**
@@ -470,23 +458,8 @@ public class FAnimator implements PropertyAnimator, Cloneable
             {
                 values[i] = ((float) views[i].getHeight()) / ((float) getTarget().getHeight());
             }
-            return scaleY(values);
-        } else
-        {
-            return this;
+            scaleY(values);
         }
-    }
-
-    /**
-     * 设置对齐方式，仅对{@link #moveToX(View...)}和{@link #moveToY(View...)}有效
-     *
-     * @param alignType
-     * @return
-     */
-    public FAnimator setAlignType(AlignType alignType)
-    {
-        if (alignType == null) throw new NullPointerException("alignType is null");
-        mAlignType = alignType;
         return this;
     }
 
