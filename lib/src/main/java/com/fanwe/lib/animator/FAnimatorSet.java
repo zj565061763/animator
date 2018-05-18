@@ -65,12 +65,26 @@ public class FAnimatorSet extends FAnimator
     private void setCurrent(NodeAnimator current)
     {
         if (current == null) throw new NullPointerException("current is null");
+
+        checkCurrentAnimator();
         mCurrent = current;
 
         if (mIsDebug)
         {
             if (mListNode == null) mListNode = new ArrayList<>();
             mListNode.add(current);
+        }
+    }
+
+    private void checkCurrentAnimator()
+    {
+        if (mCurrent != null && mCurrent.isEmptyProperty())
+        {
+            final NodeAnimator.NodeType type = mCurrent.mNodeType;
+            if (type != NodeAnimator.NodeType.Delay)
+            {
+                throw new RuntimeException("Animator's property is empty");
+            }
         }
     }
 
@@ -258,6 +272,8 @@ public class FAnimatorSet extends FAnimator
                 Log.i(FAnimatorSet.class.getSimpleName(), sb.toString());
             }
         }
+
+        checkCurrentAnimator();
         getSet().start();
     }
 
