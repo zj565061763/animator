@@ -34,11 +34,9 @@ public class FAnimator implements PropertyAnimator, Cloneable
 {
     private ObjectAnimator mAnimator = new ObjectAnimator();
 
-
     public FAnimator(View target)
     {
         mAnimator.setFloatValues(0);
-
         setTarget(target);
         addListener(new OnStartVisible());
     }
