@@ -32,55 +32,28 @@ import java.util.HashMap;
  */
 public class FAnimatorSet extends FAnimator
 {
-    //parent only
-    private AnimatorSet mAnimatorSet;
-    private FAnimatorSet mCurrent;
-
-    private FAnimatorSet mParent;
+    private final AnimatorSet mAnimatorSet = new AnimatorSet();
+    private FNodeAnimator mCurrent;
 
     public FAnimatorSet(View target)
     {
         super(target);
-        mAnimatorSet = new AnimatorSet();
-        mAnimatorSet.play(get());
-
-        mCurrent = this;
-        mParent = null;
+        mAnimatorSet.play(getCurrent().get());
     }
 
-    private FAnimatorSet()
+    private FNodeAnimator getCurrent()
     {
-        super(null);
-    }
-
-    private void setParent(FAnimatorSet parent)
-    {
-        mParent = parent;
-    }
-
-    private void setCurrent(FAnimatorSet anim)
-    {
-        if (mParent != null)
+        if (mCurrent == null)
         {
-            mParent.setCurrent(anim);
-        } else
-        {
-            // 只有parent会触发这里
-            mCurrent = anim;
-            anim.setParent(this);
+            setCurrent(new FNodeAnimator(null, FNodeAnimator.NodeType.Head));
         }
+        return mCurrent;
     }
 
-    private FAnimatorSet getCurrent()
+    private void setCurrent(FNodeAnimator current)
     {
-        if (mParent != null)
-        {
-            return mParent.getCurrent();
-        } else
-        {
-            // 只有parent会触发这里
-            return mCurrent;
-        }
+        if (current == null) throw new NullPointerException("current is null");
+        mCurrent = current;
     }
 
     /**
@@ -101,18 +74,27 @@ public class FAnimatorSet extends FAnimator
      */
     public FAnimatorSet with(View target)
     {
-        final FAnimatorSet with = new FAnimatorSet();
-        with.setTarget(target);
-        return withInternal(with);
+        return withInternal(new FNodeAnimator(target, FNodeAnimator.NodeType.With));
     }
 
-    private FAnimatorSet withInternal(FAnimatorSet with)
+    /**
+     * 在{@link #with()}方法的基础上会保留当前动画的参数设置
+     *
+     * @return
+     */
+    public FAnimatorSet withClone()
     {
-        initNewAnim(with);
-        FAnimator current = getCurrent();
-        getSet().play(current.get()).with(with.get());
-        setCurrent(with);
-        return with;
+        FNodeAnimator clone = (FNodeAnimator) getCurrent().clone();
+        withInternal(clone);
+        return this;
+    }
+
+    private FAnimatorSet withInternal(FNodeAnimator animator)
+    {
+        initNodeAnim(animator);
+        getSet().play(getCurrent().get()).with(animator.get());
+        setCurrent(animator);
+        return this;
     }
 
     /**
@@ -133,34 +115,23 @@ public class FAnimatorSet extends FAnimator
      */
     public FAnimatorSet next(View target)
     {
-        final FAnimatorSet next = new FAnimatorSet();
-        next.setTarget(target);
-        return nextInternal(next);
+        return nextInternal(new FNodeAnimator(target, FNodeAnimator.NodeType.Next));
     }
 
-    private FAnimatorSet nextInternal(FAnimatorSet next)
+    private FAnimatorSet nextInternal(FNodeAnimator animator)
     {
-        initNewAnim(next);
-        FAnimator current = getCurrent();
-        getSet().play(next.get()).after(current.get());
-        setCurrent(next);
-        return next;
+        initNodeAnim(animator);
+        getSet().play(animator.get()).after(getCurrent().get());
+        setCurrent(animator);
+        return this;
     }
 
-    private void initNewAnim(FAnimatorSet anim)
+    private void initNodeAnim(FAnimator anim)
     {
-        View target = anim.getTarget();
+        final View target = anim.getTarget();
         if (target == null)
         {
-            target = this.getTarget();
-            if (target == null)
-            {
-                if (mParent != null)
-                {
-                    target = mParent.getTarget();
-                }
-            }
-            anim.setTarget(target);
+            anim.setTarget(getCurrent().getTarget());
         }
     }
 
@@ -172,16 +143,10 @@ public class FAnimatorSet extends FAnimator
      */
     public FAnimatorSet delay(long time)
     {
-        FAnimatorSet delay = null;
-        if (isEmptyProperty())
-        {
-            delay = this;
-        } else
-        {
-            delay = next();
-        }
-        delay.setDuration(time);
-        return delay;
+        final FNodeAnimator animator = new FNodeAnimator(null, FNodeAnimator.NodeType.Delay);
+        animator.setDuration(time);
+        nextInternal(animator);
+        return this;
     }
 
     /**
@@ -191,13 +156,7 @@ public class FAnimatorSet extends FAnimator
      */
     public AnimatorSet getSet()
     {
-        if (mParent != null)
-        {
-            return mParent.getSet();
-        } else
-        {
-            return mAnimatorSet;
-        }
+        return mAnimatorSet;
     }
 
     //----------extend start----------
@@ -243,30 +202,6 @@ public class FAnimatorSet extends FAnimator
         start();
     }
 
-    /**
-     * 在{@link #with()}方法的基础上会保留当前动画的参数设置
-     *
-     * @return
-     */
-    public FAnimatorSet withClone()
-    {
-        return withClone(null);
-    }
-
-    /**
-     * 在{@link #with(View)}方法的基础上会保留当前动画的参数设置
-     *
-     * @param target
-     * @return
-     */
-    public FAnimatorSet withClone(View target)
-    {
-        FAnimatorSet clone = clone();
-        clone.setTarget(target);
-        FAnimatorSet with = withInternal(clone);
-        return with;
-    }
-
     //----------extend end----------
 
     // override
@@ -286,153 +221,174 @@ public class FAnimatorSet extends FAnimator
     @Override
     public FAnimatorSet setTarget(View target)
     {
-        return (FAnimatorSet) super.setTarget(target);
+        getCurrent().setTarget(target);
+        return this;
     }
 
     @Override
     public FAnimatorSet setDuration(long duration)
     {
-        return (FAnimatorSet) super.setDuration(duration);
+        getCurrent().setDuration(duration);
+        return this;
     }
 
     @Override
     public FAnimatorSet setRepeatCount(int count)
     {
-        return (FAnimatorSet) super.setRepeatCount(count);
+        getCurrent().setRepeatCount(count);
+        return this;
     }
 
     @Override
     public FAnimatorSet setInterpolator(TimeInterpolator interpolator)
     {
-        return (FAnimatorSet) super.setInterpolator(interpolator);
+        getCurrent().setInterpolator(interpolator);
+        return this;
     }
 
     @Override
     public FAnimatorSet setStartDelay(long delay)
     {
-        return (FAnimatorSet) super.setStartDelay(delay);
+        getCurrent().setStartDelay(delay);
+        return this;
     }
 
     @Override
     public FAnimatorSet addListener(Animator.AnimatorListener listener)
     {
-        return (FAnimatorSet) super.addListener(listener);
+        getCurrent().addListener(listener);
+        return this;
     }
 
     @Override
     public FAnimatorSet removeListener(Animator.AnimatorListener listener)
     {
-        return (FAnimatorSet) super.removeListener(listener);
+        getCurrent().removeListener(listener);
+        return this;
     }
 
     @Override
     public FAnimatorSet clearListener()
     {
-        return (FAnimatorSet) super.clearListener();
+        getCurrent().clearListener();
+        return this;
     }
 
     @Override
     public FAnimatorSet x(float... values)
     {
-        return (FAnimatorSet) super.x(values);
+        getCurrent().x(values);
+        return this;
     }
 
     @Override
     public FAnimatorSet y(float... values)
     {
-        return (FAnimatorSet) super.y(values);
+        getCurrent().y(values);
+        return this;
     }
 
     @Override
     public FAnimatorSet translationX(float... values)
     {
-        return (FAnimatorSet) super.translationX(values);
+        getCurrent().translationX(values);
+        return this;
     }
 
     @Override
     public FAnimatorSet translationY(float... values)
     {
-        return (FAnimatorSet) super.translationY(values);
+        getCurrent().translationY(values);
+        return this;
     }
 
     @Override
     public FAnimatorSet alpha(float... values)
     {
-        return (FAnimatorSet) super.alpha(values);
+        getCurrent().alpha(values);
+        return this;
     }
 
     @Override
     public FAnimatorSet scaleX(float... values)
     {
-        return (FAnimatorSet) super.scaleX(values);
+        getCurrent().scaleX(values);
+        return this;
     }
 
     @Override
     public FAnimatorSet scaleY(float... values)
     {
-        return (FAnimatorSet) super.scaleY(values);
+        getCurrent().scaleY(values);
+        return this;
     }
 
     @Override
     public FAnimatorSet rotation(float... values)
     {
-        return (FAnimatorSet) super.rotation(values);
+        getCurrent().rotation(values);
+        return this;
     }
 
     @Override
     public FAnimatorSet rotationX(float... values)
     {
-        return (FAnimatorSet) super.rotationX(values);
+        getCurrent().rotationX(values);
+        return this;
     }
 
     @Override
     public FAnimatorSet rotationY(float... values)
     {
-        return (FAnimatorSet) super.rotationY(values);
-    }
-
-    @Override
-    public FAnimatorSet clone()
-    {
-        FAnimatorSet clone = (FAnimatorSet) super.clone();
-        clone.mAnimatorSet = null;
-        clone.mCurrent = null;
-        return clone;
+        getCurrent().rotationY(values);
+        return this;
     }
 
     @Override
     public FAnimatorSet moveToX(float... values)
     {
-        return (FAnimatorSet) super.moveToX(values);
+        getCurrent().moveToX(values);
+        return this;
     }
 
     @Override
     public FAnimatorSet moveToY(float... values)
     {
-        return (FAnimatorSet) super.moveToY(values);
+        getCurrent().moveToY(values);
+        return this;
     }
 
     @Override
     public FAnimatorSet moveToX(AlignType alignType, View... views)
     {
-        return (FAnimatorSet) super.moveToX(alignType, views);
+        getCurrent().moveToX(alignType, views);
+        return this;
     }
 
     @Override
     public FAnimatorSet moveToY(AlignType alignType, View... views)
     {
-        return (FAnimatorSet) super.moveToY(alignType, views);
+        getCurrent().moveToY(alignType, views);
+        return this;
     }
 
     @Override
     public FAnimatorSet scaleX(View... views)
     {
-        return (FAnimatorSet) super.scaleX(views);
+        getCurrent().scaleX(views);
+        return this;
     }
 
     @Override
     public FAnimatorSet scaleY(View... views)
     {
-        return (FAnimatorSet) super.scaleY(views);
+        getCurrent().scaleY(views);
+        return this;
+    }
+
+    @Override
+    public FAnimatorSet clone()
+    {
+        throw new UnsupportedOperationException("clone() is not supported here");
     }
 }
