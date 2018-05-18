@@ -35,10 +35,10 @@ import java.util.List;
 public class FAnimatorSet extends FAnimator
 {
     private final AnimatorSet mAnimatorSet = new AnimatorSet();
-    private FNodeAnimator mCurrent;
+    private NodeAnimator mCurrent;
 
     private final boolean mIsDebug;
-    private List<FNodeAnimator> mListNode;
+    private List<NodeAnimator> mListNode;
 
     public FAnimatorSet()
     {
@@ -51,19 +51,20 @@ public class FAnimatorSet extends FAnimator
         mAnimatorSet.play(getCurrent().get());
     }
 
-    private FNodeAnimator getCurrent()
+    private NodeAnimator getCurrent()
     {
         if (mCurrent == null)
         {
-            setCurrent(new FNodeAnimator(FNodeAnimator.NodeType.Head));
+            setCurrent(new NodeAnimator(NodeAnimator.NodeType.Head));
         }
         return mCurrent;
     }
 
-    private void setCurrent(FNodeAnimator current)
+    private void setCurrent(NodeAnimator current)
     {
         if (current == null) throw new NullPointerException("current is null");
         mCurrent = current;
+
         if (mIsDebug)
         {
             if (mListNode == null) mListNode = new ArrayList<>();
@@ -89,7 +90,7 @@ public class FAnimatorSet extends FAnimator
      */
     public FAnimatorSet with(View target)
     {
-        final FNodeAnimator animator = new FNodeAnimator(FNodeAnimator.NodeType.With);
+        final NodeAnimator animator = new NodeAnimator(NodeAnimator.NodeType.With);
         animator.setTarget(target);
         return withInternal(animator);
     }
@@ -101,12 +102,13 @@ public class FAnimatorSet extends FAnimator
      */
     public FAnimatorSet withClone()
     {
-        FNodeAnimator clone = (FNodeAnimator) getCurrent().clone();
+        NodeAnimator clone = (NodeAnimator) getCurrent().clone();
+        clone.mNodeType = NodeAnimator.NodeType.With;
         withInternal(clone);
         return this;
     }
 
-    private FAnimatorSet withInternal(FNodeAnimator animator)
+    private FAnimatorSet withInternal(NodeAnimator animator)
     {
         initNodeAnim(animator);
         getSet().play(getCurrent().get()).with(animator.get());
@@ -132,12 +134,12 @@ public class FAnimatorSet extends FAnimator
      */
     public FAnimatorSet next(View target)
     {
-        final FNodeAnimator animator = new FNodeAnimator(FNodeAnimator.NodeType.Next);
+        final NodeAnimator animator = new NodeAnimator(NodeAnimator.NodeType.Next);
         animator.setTarget(target);
         return nextInternal(animator);
     }
 
-    private FAnimatorSet nextInternal(FNodeAnimator animator)
+    private FAnimatorSet nextInternal(NodeAnimator animator)
     {
         initNodeAnim(animator);
         getSet().play(animator.get()).after(getCurrent().get());
@@ -162,7 +164,7 @@ public class FAnimatorSet extends FAnimator
      */
     public FAnimatorSet delay(long time)
     {
-        final FNodeAnimator animator = new FNodeAnimator(FNodeAnimator.NodeType.Delay);
+        final NodeAnimator animator = new NodeAnimator(NodeAnimator.NodeType.Delay);
         animator.setDuration(time);
         nextInternal(animator);
         return this;
@@ -232,13 +234,13 @@ public class FAnimatorSet extends FAnimator
         {
             if (mListNode != null)
             {
-                final StringBuilder sb = new StringBuilder("\r\n");
-                for (FNodeAnimator item : mListNode)
+                final StringBuilder sb = new StringBuilder("----------");
+                for (NodeAnimator item : mListNode)
                 {
-                    switch (item.getNodeType())
+                    switch (item.mNodeType)
                     {
                         case Head:
-                            sb.append("Head:").append(item.getTag()).append("-----");
+                            sb.append("\r\n").append("Head:").append(item.getTag());
                             break;
                         case Next:
                             sb.append("\r\n").append("Next:").append(item.getTag());

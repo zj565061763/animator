@@ -48,7 +48,7 @@ public class RocketDemoActivity extends AppCompatActivity
         }
 
         mAnimatorSet = new FAnimatorSet(true);
-        mAnimatorSet.setTarget(fl_rocket_root).alpha(0, 1f).setDuration(1000).setTag("火箭淡入")
+        mAnimatorSet.setTarget(fl_rocket_root).alpha(0, 1f).setDuration(500).setTag("火箭淡入")
                 .delay(500).setTag("延迟500毫秒")
                 .next(tv_number).scaleX(1f, 0f).setRepeatCount(2).setDuration(1000).setTag("开始数字缩放X")
                 .withClone().scaleY(1f, 0f).setTag("开始数字缩放Y")
