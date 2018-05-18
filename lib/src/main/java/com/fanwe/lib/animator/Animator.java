@@ -21,7 +21,7 @@ import android.view.View;
 /**
  * 动画接口
  */
-public interface Animator
+public interface Animator<T extends Animator>
 {
     /**
      * 设置要执行动画的view
@@ -29,7 +29,7 @@ public interface Animator
      * @param target
      * @return
      */
-    Animator setTarget(View target);
+    T setTarget(View target);
 
     /**
      * 获得执行动画的view
@@ -44,7 +44,7 @@ public interface Animator
      * @param duration 毫秒
      * @return
      */
-    Animator setDuration(long duration);
+    T setDuration(long duration);
 
     /**
      * 获得动画时长
@@ -59,7 +59,7 @@ public interface Animator
      * @param count 如果count小于0则无限重复
      * @return
      */
-    Animator setRepeatCount(int count);
+    T setRepeatCount(int count);
 
     /**
      * 获得重复次数
@@ -74,7 +74,7 @@ public interface Animator
      * @param interpolator
      * @return
      */
-    Animator setInterpolator(TimeInterpolator interpolator);
+    T setInterpolator(TimeInterpolator interpolator);
 
     /**
      * 获得插值器
@@ -89,7 +89,7 @@ public interface Animator
      * @param delay 毫秒
      * @return
      */
-    Animator setStartDelay(long delay);
+    T setStartDelay(long delay);
 
     /**
      * 获得动画延迟多久开始执行
@@ -104,21 +104,21 @@ public interface Animator
      * @param listener
      * @return
      */
-    Animator addListener(android.animation.Animator.AnimatorListener listener);
+    T addListener(android.animation.Animator.AnimatorListener listener);
 
     /**
      * 移除动画监听
      *
      * @param listener
      */
-    Animator removeListener(android.animation.Animator.AnimatorListener listener);
+    T removeListener(android.animation.Animator.AnimatorListener listener);
 
     /**
      * 清空监听
      *
      * @return
      */
-    Animator clearListener();
+    T clearListener();
 
     /**
      * 开始执行动画

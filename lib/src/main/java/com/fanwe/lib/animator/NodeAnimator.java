@@ -1,16 +1,31 @@
 package com.fanwe.lib.animator;
 
-class NodeAnimator extends FAnimator
+public final class NodeAnimator extends BaseAnimator<NodeAnimator>
 {
-    NodeType mNodeType;
+    int mType;
+    private final AnimatorSet mAnimatorSet;
 
-    public NodeAnimator(NodeType nodeType)
+    NodeAnimator(int type, AnimatorSet animatorSet)
     {
-        mNodeType = nodeType;
+        mType = type;
+        mAnimatorSet = animatorSet;
     }
 
-    public enum NodeType
+    public int getType()
     {
-        Head, With, Next, Delay
+        return mType;
+    }
+
+    public AnimatorSet set()
+    {
+        return mAnimatorSet;
+    }
+
+    public static class Type
+    {
+        public static final int HEAD = 0;
+        public static final int WITH = 1;
+        public static final int NEXT = 2;
+        public static final int DELAY = 3;
     }
 }

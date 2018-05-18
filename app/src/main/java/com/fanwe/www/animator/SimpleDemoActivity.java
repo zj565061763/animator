@@ -4,7 +4,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
-import com.fanwe.lib.animator.FAnimatorSet;
+import com.fanwe.lib.animator.FFAnimatorSet;
 import com.fanwe.lib.animator.aligner.XCenterAligner;
 import com.fanwe.lib.animator.aligner.YCenterAligner;
 import com.fanwe.lib.animator.listener.OnEndRemoveView;
@@ -37,9 +37,9 @@ public class SimpleDemoActivity extends AppCompatActivity
 
     public void onClickBtnAnim(View v)
     {
-        final FAnimatorSet animatorSet = new FAnimatorSet();
+        final FFAnimatorSet animatorSet = new FFAnimatorSet();
 
-        animatorSet
+        animatorSet.getCurrent()
 
                 /**
                  * 设置要执行动画的view
@@ -60,7 +60,7 @@ public class SimpleDemoActivity extends AppCompatActivity
                  * next()：内部生成一个新动画，新动画在上一个动画执行结束后开始执行
                  * delay()：内部其实就是一个next()动画
                  */
-                .withClone()
+                .set().withClone()
 
                 /**
                  * 设置动画view的y方向要移动到哪些view的位置
@@ -69,7 +69,7 @@ public class SimpleDemoActivity extends AppCompatActivity
                 .moveToY(mYCenterAligner, v, view_target_1, view_target_2, view_target_3)
 
                 // 延迟1000毫秒
-                .delay(1000)
+                .set().delay(1000)
 
                 /**
                  * 添加一个动画监听
@@ -102,11 +102,11 @@ public class SimpleDemoActivity extends AppCompatActivity
 
     public void onClickBtnAnimInside(View v)
     {
-        new FAnimatorSet(true).setTarget(v)
+        new FFAnimatorSet(true).getCurrent().setTarget(v)
                 .moveToX(mXCenterAligner, v, view_target_1, view_target_2, view_target_3).setDuration(2000).setTag("x移动")
-                .withClone().moveToY(mYCenterAligner, v, view_target_1, view_target_2, view_target_3).setTag("y移动")
-                .delay(1000).setTag("延迟1000毫秒")
+                .set().withClone().moveToY(mYCenterAligner, v, view_target_1, view_target_2, view_target_3).setTag("y移动")
+                .set().delay(1000).setTag("延迟1000毫秒")
                 .addListener(new OnEndRemoveView()) //动画完成后移除view
-                .startAsPop();
+                .set().startAsPop();
     }
 }
