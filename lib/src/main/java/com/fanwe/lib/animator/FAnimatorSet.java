@@ -268,6 +268,12 @@ public class FAnimatorSet extends FAnimator
     }
 
     @Override
+    public ObjectAnimator get()
+    {
+        throw new UnsupportedOperationException("get() is not supported here, see the getSet()");
+    }
+
+    @Override
     public FAnimatorSet setTarget(View target)
     {
         getCurrent().setTarget(target);
