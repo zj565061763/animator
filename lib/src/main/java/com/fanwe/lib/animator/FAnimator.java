@@ -282,23 +282,6 @@ public class FAnimator implements IPropertyAnimator, Cloneable
         mAnimator = animator;
     }
 
-    @Override
-    public FAnimator clone()
-    {
-        try
-        {
-            FAnimator clone = (FAnimator) super.clone();
-            clone.setAnimator(mAnimator.clone());
-            clone.clearListener();
-            clone.addListener(new OnStartVisible());
-            return clone;
-        } catch (Exception e)
-        {
-            e.printStackTrace();
-        }
-        return null;
-    }
-
     //----------extend start----------
 
     private int[] mTargetLocation;
@@ -459,6 +442,23 @@ public class FAnimator implements IPropertyAnimator, Cloneable
             scaleY(values);
         }
         return this;
+    }
+
+    @Override
+    public FAnimator clone()
+    {
+        try
+        {
+            FAnimator clone = (FAnimator) super.clone();
+            clone.setAnimator(mAnimator.clone());
+            clone.clearListener();
+            clone.addListener(new OnStartVisible());
+            return clone;
+        } catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     public enum AlignType
