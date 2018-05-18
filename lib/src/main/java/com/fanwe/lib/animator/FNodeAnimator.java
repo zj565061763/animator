@@ -1,14 +1,11 @@
 package com.fanwe.lib.animator;
 
-import android.view.View;
-
-public class FNodeAnimator extends FAnimator
+class FNodeAnimator extends FAnimator
 {
     private final NodeType mNodeType;
 
-    FNodeAnimator(View target, NodeType nodeType)
+    public FNodeAnimator(NodeType nodeType)
     {
-        super(target);
         mNodeType = nodeType;
     }
 

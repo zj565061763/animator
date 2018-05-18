@@ -33,12 +33,12 @@ import java.util.ArrayList;
 public class FAnimator implements IPropertyAnimator, Cloneable
 {
     private ObjectAnimator mAnimator = new ObjectAnimator();
+    private String mTag;
 
-    public FAnimator(View target)
+    public FAnimator()
     {
         mAnimator.setFloatValues(0);
-        setTarget(target);
-        addListener(new OnStartVisible());
+        mAnimator.addListener(new OnStartVisible());
     }
 
     @Override
@@ -271,17 +271,6 @@ public class FAnimator implements IPropertyAnimator, Cloneable
         return mAnimator;
     }
 
-    /**
-     * 设置ObjectAnimator对象
-     *
-     * @param animator
-     */
-    public void setAnimator(ObjectAnimator animator)
-    {
-        if (animator == null) throw new NullPointerException("animator is null");
-        mAnimator = animator;
-    }
-
     //----------extend start----------
 
     private int[] mTargetLocation;
@@ -444,13 +433,36 @@ public class FAnimator implements IPropertyAnimator, Cloneable
         return this;
     }
 
+    /**
+     * 设置tag
+     *
+     * @param tag
+     * @return
+     */
+    public FAnimator setTag(String tag)
+    {
+        mTag = tag;
+        return this;
+    }
+
+    /**
+     * 返回设置的tag{@link #setTag(String)}
+     *
+     * @return
+     */
+    public String getTag()
+    {
+        if (mTag == null) mTag = "";
+        return mTag;
+    }
+
     @Override
     public FAnimator clone()
     {
         try
         {
             FAnimator clone = (FAnimator) super.clone();
-            clone.setAnimator(mAnimator.clone());
+            clone.mAnimator = mAnimator.clone();
             clone.clearListener();
             clone.addListener(new OnStartVisible());
             return clone;

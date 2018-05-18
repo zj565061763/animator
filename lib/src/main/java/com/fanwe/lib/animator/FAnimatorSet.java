@@ -21,11 +21,13 @@ import android.animation.ObjectAnimator;
 import android.animation.TimeInterpolator;
 import android.app.Activity;
 import android.content.Context;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * 对AnimatorSet进行封装提供一系列可以同时或者连续执行的动画集合
@@ -35,9 +37,17 @@ public class FAnimatorSet extends FAnimator
     private final AnimatorSet mAnimatorSet = new AnimatorSet();
     private FNodeAnimator mCurrent;
 
-    public FAnimatorSet(View target)
+    private final boolean mIsDebug;
+    private List<FNodeAnimator> mListNode;
+
+    public FAnimatorSet()
     {
-        super(target);
+        this(false);
+    }
+
+    public FAnimatorSet(boolean isDebug)
+    {
+        mIsDebug = isDebug;
         mAnimatorSet.play(getCurrent().get());
     }
 
@@ -45,7 +55,7 @@ public class FAnimatorSet extends FAnimator
     {
         if (mCurrent == null)
         {
-            setCurrent(new FNodeAnimator(null, FNodeAnimator.NodeType.Head));
+            setCurrent(new FNodeAnimator(FNodeAnimator.NodeType.Head));
         }
         return mCurrent;
     }
@@ -54,6 +64,11 @@ public class FAnimatorSet extends FAnimator
     {
         if (current == null) throw new NullPointerException("current is null");
         mCurrent = current;
+        if (mIsDebug)
+        {
+            if (mListNode == null) mListNode = new ArrayList<>();
+            mListNode.add(current);
+        }
     }
 
     /**
@@ -74,7 +89,9 @@ public class FAnimatorSet extends FAnimator
      */
     public FAnimatorSet with(View target)
     {
-        return withInternal(new FNodeAnimator(target, FNodeAnimator.NodeType.With));
+        final FNodeAnimator animator = new FNodeAnimator(FNodeAnimator.NodeType.With);
+        animator.setTarget(target);
+        return withInternal(animator);
     }
 
     /**
@@ -115,7 +132,9 @@ public class FAnimatorSet extends FAnimator
      */
     public FAnimatorSet next(View target)
     {
-        return nextInternal(new FNodeAnimator(target, FNodeAnimator.NodeType.Next));
+        final FNodeAnimator animator = new FNodeAnimator(FNodeAnimator.NodeType.Next);
+        animator.setTarget(target);
+        return nextInternal(animator);
     }
 
     private FAnimatorSet nextInternal(FNodeAnimator animator)
@@ -143,7 +162,7 @@ public class FAnimatorSet extends FAnimator
      */
     public FAnimatorSet delay(long time)
     {
-        final FNodeAnimator animator = new FNodeAnimator(null, FNodeAnimator.NodeType.Delay);
+        final FNodeAnimator animator = new FNodeAnimator(FNodeAnimator.NodeType.Delay);
         animator.setDuration(time);
         nextInternal(animator);
         return this;
@@ -209,6 +228,32 @@ public class FAnimatorSet extends FAnimator
     @Override
     public void start()
     {
+        if (mIsDebug)
+        {
+            if (mListNode != null)
+            {
+                final StringBuilder sb = new StringBuilder("\r\n");
+                for (FNodeAnimator item : mListNode)
+                {
+                    switch (item.getNodeType())
+                    {
+                        case Head:
+                            sb.append("Head:").append(item.getTag()).append("-----");
+                            break;
+                        case Next:
+                            sb.append("\r\n").append("Next:").append(item.getTag());
+                            break;
+                        case With:
+                            sb.append(" With:").append(item.getTag());
+                            break;
+                        case Delay:
+                            sb.append("\r\n").append("Delay:").append(item.getTag());
+                            break;
+                    }
+                }
+                Log.i(FAnimatorSet.class.getSimpleName(), sb.toString());
+            }
+        }
         getSet().start();
     }
 
@@ -383,6 +428,13 @@ public class FAnimatorSet extends FAnimator
     public FAnimatorSet scaleY(View... views)
     {
         getCurrent().scaleY(views);
+        return this;
+    }
+
+    @Override
+    public FAnimatorSet setTag(String tag)
+    {
+        getCurrent().setTag(tag);
         return this;
     }
 

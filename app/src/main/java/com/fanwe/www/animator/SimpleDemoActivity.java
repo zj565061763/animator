@@ -27,7 +27,7 @@ public class SimpleDemoActivity extends AppCompatActivity
 
     public void onClickBtnAnim(View v)
     {
-        new FAnimatorSet(v)
+        new FAnimatorSet().setTarget(v)
                 .moveToX(FAnimator.AlignType.Center, v, view_target_1, view_target_2, view_target_3).setDuration(2000)//依次移动x到v, view_target_1, view_target_2, view_target_3
                 .withClone().moveToY(FAnimator.AlignType.Center, v, view_target_1, view_target_2, view_target_3) //依次移动y到v, view_target_1, view_target_2, view_target_3
                 .delay(1000)
@@ -42,7 +42,7 @@ public class SimpleDemoActivity extends AppCompatActivity
      */
     public void onClickBtnAnimInside(View v)
     {
-        new FAnimatorSet(v)
+        new FAnimatorSet().setTarget(v)
                 .moveToX(FAnimator.AlignType.Center, v, view_target_1, view_target_2, view_target_3).setDuration(2000) //依次移动x到v, view_target_1, view_target_2, view_target_3
                 .withClone().moveToY(FAnimator.AlignType.Center, v, view_target_1, view_target_2, view_target_3) //依次移动y到v, view_target_1, view_target_2, view_target_3
                 .delay(1000)

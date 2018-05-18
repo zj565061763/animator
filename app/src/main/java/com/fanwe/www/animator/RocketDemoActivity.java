@@ -47,13 +47,11 @@ public class RocketDemoActivity extends AppCompatActivity
             return;
         }
 
-        mAnimatorSet = new FAnimatorSet(fl_rocket_root);
-        //火箭淡入
-        mAnimatorSet.alpha(0, 1f).setDuration(1000)
-                .delay(500)
-                //数字倒数
-                .with(tv_number).scaleX(1f, 0f).setRepeatCount(2).setDuration(1000)
-                .withClone().scaleY(1f, 0f)
+        mAnimatorSet = new FAnimatorSet(true);
+        mAnimatorSet.setTarget(fl_rocket_root).alpha(0, 1f).setDuration(1000).setTag("火箭淡入")
+                .delay(500).setTag("延迟500毫秒")
+                .next(tv_number).scaleX(1f, 0f).setRepeatCount(2).setDuration(1000).setTag("开始数字缩放X")
+                .withClone().scaleY(1f, 0f).setTag("开始数字缩放Y")
                 .addListener(new FAnimatorListener()
                 {
                     @Override
@@ -78,8 +76,7 @@ public class RocketDemoActivity extends AppCompatActivity
                         tv_number.setText(String.valueOf(mNumber));
                     }
                 })
-                //火箭起飞
-                .next(fl_rocket_root).translationY(0, -getResources().getDisplayMetrics().heightPixels)
+                .next(fl_rocket_root).translationY(0, -getResources().getDisplayMetrics().heightPixels).setTag("火箭起飞")
                 .setDuration(3000).setInterpolator(new AccelerateInterpolator())
                 .addListener(new OnEndInvisible(fl_rocket_root)) //动画结束隐藏fl_rocket_root
                 .addListener(new OnEndReset(fl_rocket_root)) //动画结束重置fl_rocket_root
@@ -101,10 +98,8 @@ public class RocketDemoActivity extends AppCompatActivity
                         animationDrawable.stop(); //停止火箭喷火动画
                     }
                 })
-                //烟雾淡入
-                .with(iv_rocket_smoke).alpha(0, 1f).setDuration(3000).setStartDelay(500)
-                //烟雾淡出
-                .next().alpha(1f, 0).setDuration(500)
+                .with(iv_rocket_smoke).alpha(0, 1f).setDuration(3000).setStartDelay(500).setTag("烟雾淡入")
+                .next().alpha(1f, 0).setDuration(500).setTag("烟雾淡出")
                 .addListener(new OnEndInvisible(iv_rocket_smoke));
         mAnimatorSet.start();
 
