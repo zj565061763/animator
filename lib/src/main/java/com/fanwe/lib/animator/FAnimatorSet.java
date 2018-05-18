@@ -101,12 +101,6 @@ public class FAnimatorSet extends FAnimator
         }
     }
 
-    private FAnimatorSet newInstance()
-    {
-        FAnimatorSet animSet = new FAnimatorSet();
-        return animSet;
-    }
-
     /**
      * 返回和当前动画共同执行的新动画
      *
@@ -125,7 +119,7 @@ public class FAnimatorSet extends FAnimator
      */
     public FAnimatorSet with(View target)
     {
-        FAnimatorSet with = newInstance();
+        final FAnimatorSet with = new FAnimatorSet();
         with.setTarget(target);
         return withInternal(with);
     }
@@ -157,7 +151,7 @@ public class FAnimatorSet extends FAnimator
      */
     public FAnimatorSet next(View target)
     {
-        FAnimatorSet next = newInstance();
+        final FAnimatorSet next = new FAnimatorSet();
         next.setTarget(target);
         return nextInternal(next);
     }
