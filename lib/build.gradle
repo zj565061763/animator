@@ -32,3 +32,10 @@ publish {
     desc = 'fanwe android animator library'
     website = 'https://github.com/zj565061763/animator'
 }
+
+tasks.withType(Javadoc) {
+    options {
+        encoding "UTF-8"
+        charSet 'UTF-8'
+    }
+}
