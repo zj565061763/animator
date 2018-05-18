@@ -15,6 +15,8 @@
  */
 package com.fanwe.lib.animator;
 
+import android.animation.ObjectAnimator;
+
 /**
  * 属性动画接口
  */
@@ -117,4 +119,11 @@ public interface PropertyAnimator extends Animator
      * @return
      */
     boolean isEmptyProperty();
+
+    /**
+     * 转为{@link ObjectAnimator}
+     *
+     * @return
+     */
+    ObjectAnimator toObjectAnimator();
 }

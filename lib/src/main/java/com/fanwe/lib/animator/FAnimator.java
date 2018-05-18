@@ -32,41 +32,43 @@ import java.util.List;
 /**
  * 对ObjectAnimator进行封装提供更方便的调用方法
  */
-public class FAnimator implements PropertyAnimator, Cloneable
+public class FAnimator implements SimplePropertyAnimator, Cloneable
 {
-    private ObjectAnimator mAnimator = new ObjectAnimator();
+    private ObjectAnimator mObjectAnimator = new ObjectAnimator();
     private String mTag;
 
     public FAnimator()
     {
-        mAnimator.setFloatValues(0);
-        mAnimator.addListener(new OnStartVisible());
+        mObjectAnimator.setFloatValues(0);
+        mObjectAnimator.addListener(new OnStartVisible());
     }
+
+    //---------- Animator Start ----------
 
     @Override
     public FAnimator setTarget(View target)
     {
-        mAnimator.setTarget(target);
+        mObjectAnimator.setTarget(target);
         return this;
     }
 
     @Override
     public View getTarget()
     {
-        return (View) mAnimator.getTarget();
+        return (View) mObjectAnimator.getTarget();
     }
 
     @Override
     public FAnimator setDuration(long duration)
     {
-        mAnimator.setDuration(duration);
+        mObjectAnimator.setDuration(duration);
         return this;
     }
 
     @Override
     public long getDuration()
     {
-        return mAnimator.getDuration();
+        return mObjectAnimator.getDuration();
     }
 
     @Override
@@ -74,10 +76,10 @@ public class FAnimator implements PropertyAnimator, Cloneable
     {
         if (count < 0)
         {
-            mAnimator.setRepeatCount(ValueAnimator.INFINITE);
+            mObjectAnimator.setRepeatCount(ValueAnimator.INFINITE);
         } else
         {
-            mAnimator.setRepeatCount(count);
+            mObjectAnimator.setRepeatCount(count);
         }
         return this;
     }
@@ -85,33 +87,33 @@ public class FAnimator implements PropertyAnimator, Cloneable
     @Override
     public int getRepeatCount()
     {
-        return mAnimator.getRepeatCount();
+        return mObjectAnimator.getRepeatCount();
     }
 
     @Override
     public FAnimator setInterpolator(TimeInterpolator interpolator)
     {
-        mAnimator.setInterpolator(interpolator);
+        mObjectAnimator.setInterpolator(interpolator);
         return this;
     }
 
     @Override
     public TimeInterpolator getInterpolator()
     {
-        return mAnimator.getInterpolator();
+        return mObjectAnimator.getInterpolator();
     }
 
     @Override
     public FAnimator setStartDelay(long delay)
     {
-        mAnimator.setStartDelay(delay);
+        mObjectAnimator.setStartDelay(delay);
         return this;
     }
 
     @Override
     public long getStartDelay()
     {
-        return mAnimator.getStartDelay();
+        return mObjectAnimator.getStartDelay();
     }
 
     @Override
@@ -121,7 +123,7 @@ public class FAnimator implements PropertyAnimator, Cloneable
         {
             if (!containsListener(listener))
             {
-                mAnimator.addListener(listener);
+                mObjectAnimator.addListener(listener);
             }
         }
         return this;
@@ -129,7 +131,7 @@ public class FAnimator implements PropertyAnimator, Cloneable
 
     private boolean containsListener(Animator.AnimatorListener listener)
     {
-        final ArrayList<Animator.AnimatorListener> list = mAnimator.getListeners();
+        final ArrayList<Animator.AnimatorListener> list = mObjectAnimator.getListeners();
         if (list == null) return false;
         return list.contains(listener);
     }
@@ -137,14 +139,14 @@ public class FAnimator implements PropertyAnimator, Cloneable
     @Override
     public FAnimator removeListener(Animator.AnimatorListener listener)
     {
-        mAnimator.removeListener(listener);
+        mObjectAnimator.removeListener(listener);
         return this;
     }
 
     @Override
     public FAnimator clearListener()
     {
-        final ArrayList<Animator.AnimatorListener> list = mAnimator.getListeners();
+        final ArrayList<Animator.AnimatorListener> list = mObjectAnimator.getListeners();
         if (list != null) list.clear();
         return this;
     }
@@ -152,88 +154,92 @@ public class FAnimator implements PropertyAnimator, Cloneable
     @Override
     public void start()
     {
-        mAnimator.start();
+        mObjectAnimator.start();
     }
 
     @Override
     public boolean isRunning()
     {
-        return mAnimator.isRunning();
+        return mObjectAnimator.isRunning();
     }
 
     @Override
     public boolean isStarted()
     {
-        return mAnimator.isStarted();
+        return mObjectAnimator.isStarted();
     }
 
     @Override
     public void cancel()
     {
-        mAnimator.cancel();
+        mObjectAnimator.cancel();
     }
+
+    //---------- Animator End ----------
+
+    //---------- PropertyAnimator Start ----------
 
     @Override
     public FAnimator x(float... values)
     {
-        mAnimator.setPropertyName(X);
-        mAnimator.setFloatValues(values);
+        mObjectAnimator.setPropertyName(X);
+        mObjectAnimator.setFloatValues(values);
         return this;
     }
 
     @Override
     public FAnimator y(float... values)
     {
-        mAnimator.setPropertyName(Y);
-        mAnimator.setFloatValues(values);
+        mObjectAnimator.setPropertyName(Y);
+        mObjectAnimator.setFloatValues(values);
         return this;
     }
 
     @Override
     public FAnimator translationX(float... values)
     {
-        mAnimator.setPropertyName(TRANSLATION_X);
-        mAnimator.setFloatValues(values);
+        mObjectAnimator.setPropertyName(TRANSLATION_X);
+        mObjectAnimator.setFloatValues(values);
         return this;
     }
 
     @Override
     public FAnimator translationY(float... values)
     {
-        mAnimator.setPropertyName(TRANSLATION_Y);
-        mAnimator.setFloatValues(values);
+        mObjectAnimator.setPropertyName(TRANSLATION_Y);
+        mObjectAnimator.setFloatValues(values);
         return this;
     }
 
     @Override
     public FAnimator alpha(float... values)
     {
-        mAnimator.setPropertyName(ALPHA);
-        mAnimator.setFloatValues(values);
+        mObjectAnimator.setPropertyName(ALPHA);
+        mObjectAnimator.setFloatValues(values);
         return this;
     }
 
     @Override
     public FAnimator scaleX(float... values)
     {
-        mAnimator.setPropertyName(SCALE_X);
-        mAnimator.setFloatValues(values);
+        mObjectAnimator.setPropertyName(SCALE_X);
+        mObjectAnimator.setFloatValues(values);
         return this;
     }
 
     @Override
     public FAnimator scaleY(float... values)
     {
-        mAnimator.setPropertyName(SCALE_Y);
-        mAnimator.setFloatValues(values);
+        mObjectAnimator.setPropertyName(SCALE_Y);
+        mObjectAnimator.setFloatValues(values);
         return this;
     }
 
     @Override
     public FAnimator rotation(float... values)
     {
-        mAnimator.setPropertyName(ROTATION);
-        mAnimator.setFloatValues(values);
+        mObjectAnimator.setPropertyName(ROTATION);
+        mObjectAnimator.setFloatValues(values);
         setInterpolator(new LinearInterpolator());
         return this;
     }
@@ -241,8 +247,8 @@ public class FAnimator implements PropertyAnimator, Cloneable
     @Override
     public FAnimator rotationX(float... values)
     {
-        mAnimator.setPropertyName(ROTATION_X);
-        mAnimator.setFloatValues(values);
+        mObjectAnimator.setPropertyName(ROTATION_X);
+        mObjectAnimator.setFloatValues(values);
         setInterpolator(new LinearInterpolator());
         return this;
     }
@@ -250,8 +256,8 @@ public class FAnimator implements PropertyAnimator, Cloneable
     @Override
     public FAnimator rotationY(float... values)
     {
-        mAnimator.setPropertyName(ROTATION_Y);
-        mAnimator.setFloatValues(values);
+        mObjectAnimator.setPropertyName(ROTATION_Y);
+        mObjectAnimator.setFloatValues(values);
         setInterpolator(new LinearInterpolator());
         return this;
     }
@@ -259,21 +265,75 @@ public class FAnimator implements PropertyAnimator, Cloneable
     @Override
     public boolean isEmptyProperty()
     {
-        final String propertyName = mAnimator.getPropertyName();
+        final String propertyName = mObjectAnimator.getPropertyName();
         return TextUtils.isEmpty(propertyName) || "null".equals(propertyName);
     }
 
-    /**
-     * 获得内部包装的ObjectAnimator对象
-     *
-     * @return
-     */
-    public ObjectAnimator get()
+    @Override
+    public ObjectAnimator toObjectAnimator()
     {
-        return mAnimator;
+        return mObjectAnimator;
     }
 
-    //----------extend start----------
+    //---------- PropertyAnimator End ----------
+
+    //---------- SimplePropertyAnimator Start ----------
+
+    @Override
+    public FAnimator moveToX(float... values)
+    {
+        moveTo(Coordinate.X, values);
+        return this;
+    }
+
+    @Override
+    public FAnimator moveToY(float... values)
+    {
+        moveTo(Coordinate.Y, values);
+        return this;
+    }
+
+    @Override
+    public FAnimator moveToX(Aligner aligner, View... views)
+    {
+        moveTo(Coordinate.X, aligner, views);
+        return this;
+    }
+
+    @Override
+    public FAnimator moveToY(Aligner aligner, View... views)
+    {
+        moveTo(Coordinate.Y, aligner, views);
+        return this;
+    }
+
+    @Override
+    public FAnimator scaleX(View... views)
+    {
+        scale(Coordinate.X, views);
+        return this;
+    }
+
+    @Override
+    public FAnimator scaleY(View... views)
+    {
+        scale(Coordinate.Y, views);
+        return this;
+    }
+
+    @Override
+    public FAnimator setTag(String tag)
+    {
+        mTag = tag;
+        return this;
+    }
+
+    @Override
+    public String getTag()
+    {
+        if (mTag == null) mTag = "";
+        return mTag;
+    }
 
     private int[] mTargetLocation;
     private int[] mTempLocation;
@@ -384,109 +444,12 @@ public class FAnimator implements PropertyAnimator, Cloneable
         }
     }
 
-    /**
-     * 移动到屏幕x坐标
-     *
-     * @param values
-     * @return
-     */
-    public FAnimator moveToX(float... values)
-    {
-        moveTo(Coordinate.X, values);
-        return this;
-    }
-
-    /**
-     * 移动到屏幕y坐标
-     *
-     * @param values
-     * @return
-     */
-    public FAnimator moveToY(float... values)
-    {
-        moveTo(Coordinate.Y, values);
-        return this;
-    }
-
-    /**
-     * 移动到view的屏幕x坐标
-     *
-     * @param aligner
-     * @param views
-     * @return
-     */
-    public FAnimator moveToX(Aligner aligner, View... views)
-    {
-        moveTo(Coordinate.X, aligner, views);
-        return this;
-    }
-
-    /**
-     * 移动到view的屏幕y坐标
-     *
-     * @param aligner
-     * @param views
-     * @return
-     */
-    public FAnimator moveToY(Aligner aligner, View... views)
-    {
-        moveTo(Coordinate.Y, aligner, views);
-        return this;
-    }
-
-    /**
-     * 缩放x到views的宽度
-     *
-     * @param views
-     * @return
-     */
-    public FAnimator scaleX(View... views)
-    {
-        scale(Coordinate.X, views);
-        return this;
-    }
-
-    /**
-     * 缩放y到views的高度
-     *
-     * @param views
-     * @return
-     */
-    public FAnimator scaleY(View... views)
-    {
-        scale(Coordinate.Y, views);
-        return this;
-    }
-
-    /**
-     * 设置tag
-     *
-     * @param tag
-     * @return
-     */
-    public FAnimator setTag(String tag)
-    {
-        mTag = tag;
-        return this;
-    }
-
-    /**
-     * 返回设置的tag{@link #setTag(String)}
-     *
-     * @return
-     */
-    public String getTag()
-    {
-        if (mTag == null) mTag = "";
-        return mTag;
-    }
-
     private enum Coordinate
     {
         X, Y
     }
 
-    //----------extend end----------
+    //---------- SimplePropertyAnimator End ----------
 
     @Override
     public FAnimator clone()
@@ -494,7 +457,7 @@ public class FAnimator implements PropertyAnimator, Cloneable
         try
         {
             FAnimator clone = (FAnimator) super.clone();
-            clone.mAnimator = mAnimator.clone();
+            clone.mObjectAnimator = mObjectAnimator.clone();
             clone.clearListener();
             clone.addListener(new OnStartVisible());
             return clone;

@@ -50,40 +50,56 @@ public class FAnimatorSet extends FAnimator
     public FAnimatorSet(boolean isDebug)
     {
         mIsDebug = isDebug;
-        mAnimatorSet.play(getCurrent().get());
+        getCurrent();
     }
 
     private NodeAnimator getCurrent()
     {
         if (mCurrent == null)
         {
-            setCurrent(new NodeAnimator(NodeAnimator.NodeType.Head));
+            mCurrent = new NodeAnimator(NodeAnimator.NodeType.Head);
+            addNodeIfNeed(mCurrent);
         }
         return mCurrent;
     }
 
     private void setCurrent(NodeAnimator current)
     {
-        if (current == null) throw new NullPointerException("current is null");
+        if (mCurrent == null)
+            throw new UnsupportedOperationException("Head animator is not created yet");
+        if (current == null)
+            throw new NullPointerException("current is null");
+        checkEmptyProperty(mCurrent);
 
-        checkCurrentAnimator();
         mCurrent = current;
+        addNodeIfNeed(current);
+    }
 
+    private void addNodeIfNeed(NodeAnimator animator)
+    {
         if (mIsDebug)
         {
             if (mListNode == null) mListNode = new ArrayList<>();
-            mListNode.add(current);
+            mListNode.add(animator);
         }
     }
 
-    private void checkCurrentAnimator()
+    private static void checkEmptyProperty(NodeAnimator animator)
     {
-        if (mCurrent != null && mCurrent.isEmptyProperty())
+        if (animator.isEmptyProperty() && animator.mNodeType != NodeAnimator.NodeType.Delay)
         {
-            final NodeAnimator.NodeType type = mCurrent.mNodeType;
-            if (type != NodeAnimator.NodeType.Delay)
+            throw new RuntimeException("Animator's property is empty");
+        }
+    }
+
+    private void initHeadNodeIfNeed()
+    {
+        final NodeAnimator current = getCurrent();
+        if (current.mNodeType == NodeAnimator.NodeType.Head)
+        {
+            if (mAnimatorSet.getChildAnimations().isEmpty())
             {
-                throw new RuntimeException("Animator's property is empty");
+                mAnimatorSet.play(current.toObjectAnimator());
             }
         }
     }
@@ -127,7 +143,7 @@ public class FAnimatorSet extends FAnimator
     private FAnimatorSet withInternal(NodeAnimator animator)
     {
         initNodeAnim(animator);
-        getSet().play(getCurrent().get()).with(animator.get());
+        getSet().play(getCurrent().toObjectAnimator()).with(animator.toObjectAnimator());
         setCurrent(animator);
         return this;
     }
@@ -158,13 +174,14 @@ public class FAnimatorSet extends FAnimator
     private FAnimatorSet nextInternal(NodeAnimator animator)
     {
         initNodeAnim(animator);
-        getSet().play(animator.get()).after(getCurrent().get());
+        getSet().play(animator.toObjectAnimator()).after(getCurrent().toObjectAnimator());
         setCurrent(animator);
         return this;
     }
 
     private void initNodeAnim(FAnimator anim)
     {
+        initHeadNodeIfNeed();
         final View target = anim.getTarget();
         if (target == null)
         {
@@ -273,7 +290,7 @@ public class FAnimatorSet extends FAnimator
             }
         }
 
-        checkCurrentAnimator();
+        checkEmptyProperty(mCurrent);
         getSet().start();
     }
 
@@ -281,12 +298,6 @@ public class FAnimatorSet extends FAnimator
     public void cancel()
     {
         getSet().cancel();
-    }
-
-    @Override
-    public ObjectAnimator get()
-    {
-        throw new UnsupportedOperationException("get() is not supported here, see the getSet()");
     }
 
     @Override
@@ -413,6 +424,12 @@ public class FAnimatorSet extends FAnimator
     {
         getCurrent().rotationY(values);
         return this;
+    }
+
+    @Override
+    public ObjectAnimator toObjectAnimator()
+    {
+        throw new UnsupportedOperationException("toObjectAnimator() is not supported here");
     }
 
     @Override
