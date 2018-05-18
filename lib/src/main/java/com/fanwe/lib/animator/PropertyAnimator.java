@@ -18,7 +18,7 @@ package com.fanwe.lib.animator;
 /**
  * 属性动画接口
  */
-public interface FIPropertyAnimator extends FIAnimator
+public interface PropertyAnimator extends Animator
 {
     String X = "x";
     String Y = "y";
@@ -37,7 +37,7 @@ public interface FIPropertyAnimator extends FIAnimator
      * @param values
      * @return
      */
-    FIPropertyAnimator x(float... values);
+    PropertyAnimator x(float... values);
 
     /**
      * 设置y坐标（相对于父容器）
@@ -45,7 +45,7 @@ public interface FIPropertyAnimator extends FIAnimator
      * @param values
      * @return
      */
-    FIPropertyAnimator y(float... values);
+    PropertyAnimator y(float... values);
 
     /**
      * 设置x方向相对于当前位置的偏移量
@@ -53,7 +53,7 @@ public interface FIPropertyAnimator extends FIAnimator
      * @param values
      * @return
      */
-    FIPropertyAnimator translationX(float... values);
+    PropertyAnimator translationX(float... values);
 
     /**
      * 设置y方向相对于当前位置的偏移量
@@ -61,7 +61,7 @@ public interface FIPropertyAnimator extends FIAnimator
      * @param values
      * @return
      */
-    FIPropertyAnimator translationY(float... values);
+    PropertyAnimator translationY(float... values);
 
     /**
      * 设置透明度
@@ -69,7 +69,7 @@ public interface FIPropertyAnimator extends FIAnimator
      * @param values
      * @return
      */
-    FIPropertyAnimator alpha(float... values);
+    PropertyAnimator alpha(float... values);
 
     /**
      * 设置缩放x
@@ -77,7 +77,7 @@ public interface FIPropertyAnimator extends FIAnimator
      * @param values
      * @return
      */
-    FIPropertyAnimator scaleX(float... values);
+    PropertyAnimator scaleX(float... values);
 
     /**
      * 设置缩放y
@@ -85,7 +85,7 @@ public interface FIPropertyAnimator extends FIAnimator
      * @param values
      * @return
      */
-    FIPropertyAnimator scaleY(float... values);
+    PropertyAnimator scaleY(float... values);
 
     /**
      * 设置绕z轴方向旋转角度（大于0顺时针，小于0逆时针）
@@ -93,7 +93,7 @@ public interface FIPropertyAnimator extends FIAnimator
      * @param values
      * @return
      */
-    FIPropertyAnimator rotation(float... values);
+    PropertyAnimator rotation(float... values);
 
     /**
      * 设置绕x轴方向旋转角度
@@ -101,7 +101,7 @@ public interface FIPropertyAnimator extends FIAnimator
      * @param values
      * @return
      */
-    FIPropertyAnimator rotationX(float... values);
+    PropertyAnimator rotationX(float... values);
 
     /**
      * 设置绕y轴方向旋转角度
@@ -109,8 +109,7 @@ public interface FIPropertyAnimator extends FIAnimator
      * @param values
      * @return
      */
-    FIPropertyAnimator rotationY(float... values);
-
+    PropertyAnimator rotationY(float... values);
 
     /**
      * 动画类型参数是否为空

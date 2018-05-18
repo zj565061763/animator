@@ -21,17 +21,16 @@ import android.animation.TimeInterpolator;
 import android.animation.ValueAnimator;
 import android.text.TextUtils;
 import android.view.View;
-import android.view.animation.AccelerateDecelerateInterpolator;
-import android.view.animation.AccelerateInterpolator;
-import android.view.animation.DecelerateInterpolator;
 import android.view.animation.LinearInterpolator;
 
 import com.fanwe.lib.animator.listener.OnStartVisible;
 
+import java.util.ArrayList;
+
 /**
  * 对ObjectAnimator进行封装提供更方便的调用方法
  */
-public class FAnimator implements FIPropertyAnimator, Cloneable
+public class FAnimator implements PropertyAnimator, Cloneable
 {
     private ObjectAnimator mAnimator = new ObjectAnimator();
 
@@ -133,13 +132,9 @@ public class FAnimator implements FIPropertyAnimator, Cloneable
 
     private boolean containsListener(Animator.AnimatorListener listener)
     {
-        if (mAnimator.getListeners() != null)
-        {
-            return mAnimator.getListeners().contains(listener);
-        } else
-        {
-            return false;
-        }
+        final ArrayList<Animator.AnimatorListener> list = mAnimator.getListeners();
+        if (list == null) return false;
+        return list.contains(listener);
     }
 
     @Override
@@ -152,10 +147,8 @@ public class FAnimator implements FIPropertyAnimator, Cloneable
     @Override
     public FAnimator clearListener()
     {
-        if (mAnimator.getListeners() != null)
-        {
-            mAnimator.getListeners().clear();
-        }
+        final ArrayList<Animator.AnimatorListener> list = mAnimator.getListeners();
+        if (list != null) list.clear();
         return this;
     }
 
@@ -244,7 +237,7 @@ public class FAnimator implements FIPropertyAnimator, Cloneable
     {
         mAnimator.setPropertyName(ROTATION);
         mAnimator.setFloatValues(values);
-        setLinear();
+        setInterpolator(new LinearInterpolator());
         return this;
     }
 
@@ -253,7 +246,7 @@ public class FAnimator implements FIPropertyAnimator, Cloneable
     {
         mAnimator.setPropertyName(ROTATION_X);
         mAnimator.setFloatValues(values);
-        setLinear();
+        setInterpolator(new LinearInterpolator());
         return this;
     }
 
@@ -262,59 +255,15 @@ public class FAnimator implements FIPropertyAnimator, Cloneable
     {
         mAnimator.setPropertyName(ROTATION_Y);
         mAnimator.setFloatValues(values);
-        setLinear();
+        setInterpolator(new LinearInterpolator());
         return this;
     }
 
     @Override
     public boolean isEmptyProperty()
     {
-        String propertyName = mAnimator.getPropertyName();
+        final String propertyName = mAnimator.getPropertyName();
         return TextUtils.isEmpty(propertyName) || "null".equals(propertyName);
-    }
-
-    /**
-     * 设置动画为减速效果
-     *
-     * @return
-     */
-    public FAnimator setDecelerate()
-    {
-        setInterpolator(new DecelerateInterpolator());
-        return this;
-    }
-
-    /**
-     * 设置动画为加速效果
-     *
-     * @return
-     */
-    public FAnimator setAccelerate()
-    {
-        setInterpolator(new AccelerateInterpolator());
-        return this;
-    }
-
-    /**
-     * 设置动画为先加速后减速效果
-     *
-     * @return
-     */
-    public FAnimator setAccelerateDecelerate()
-    {
-        setInterpolator(new AccelerateDecelerateInterpolator());
-        return this;
-    }
-
-    /**
-     * 设置动画为匀速效果
-     *
-     * @return
-     */
-    public FAnimator setLinear()
-    {
-        setInterpolator(new LinearInterpolator());
-        return this;
     }
 
     /**
@@ -334,6 +283,7 @@ public class FAnimator implements FIPropertyAnimator, Cloneable
      */
     public void setAnimator(ObjectAnimator animator)
     {
+        if (animator == null) throw new NullPointerException("animator is null");
         mAnimator = animator;
     }
 

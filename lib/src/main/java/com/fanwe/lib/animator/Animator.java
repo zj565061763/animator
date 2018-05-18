@@ -15,14 +15,13 @@
  */
 package com.fanwe.lib.animator;
 
-import android.animation.Animator;
 import android.animation.TimeInterpolator;
 import android.view.View;
 
 /**
  * 动画接口
  */
-public interface FIAnimator
+public interface Animator
 {
     /**
      * 设置要执行动画的view
@@ -30,7 +29,7 @@ public interface FIAnimator
      * @param target
      * @return
      */
-    FIAnimator setTarget(View target);
+    Animator setTarget(View target);
 
     /**
      * 获得执行动画的view
@@ -45,7 +44,7 @@ public interface FIAnimator
      * @param duration 毫秒
      * @return
      */
-    FIAnimator setDuration(long duration);
+    Animator setDuration(long duration);
 
     /**
      * 获得动画时长
@@ -60,7 +59,7 @@ public interface FIAnimator
      * @param count 如果count小于0则无限重复
      * @return
      */
-    FIAnimator setRepeatCount(int count);
+    Animator setRepeatCount(int count);
 
     /**
      * 获得重复次数
@@ -75,7 +74,7 @@ public interface FIAnimator
      * @param interpolator
      * @return
      */
-    FIAnimator setInterpolator(TimeInterpolator interpolator);
+    Animator setInterpolator(TimeInterpolator interpolator);
 
     /**
      * 获得插值器
@@ -90,7 +89,7 @@ public interface FIAnimator
      * @param delay 毫秒
      * @return
      */
-    FIAnimator setStartDelay(long delay);
+    Animator setStartDelay(long delay);
 
     /**
      * 获得动画延迟多久开始执行
@@ -105,21 +104,21 @@ public interface FIAnimator
      * @param listener
      * @return
      */
-    FIAnimator addListener(Animator.AnimatorListener listener);
+    Animator addListener(android.animation.Animator.AnimatorListener listener);
 
     /**
      * 移除动画监听
      *
      * @param listener
      */
-    FIAnimator removeListener(Animator.AnimatorListener listener);
+    Animator removeListener(android.animation.Animator.AnimatorListener listener);
 
     /**
      * 清空监听
      *
      * @return
      */
-    FIAnimator clearListener();
+    Animator clearListener();
 
     /**
      * 开始执行动画

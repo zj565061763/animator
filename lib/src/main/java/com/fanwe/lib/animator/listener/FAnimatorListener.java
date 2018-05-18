@@ -35,7 +35,7 @@ public abstract class FAnimatorListener extends AnimatorListenerAdapter
         setTarget(target);
     }
 
-    public FAnimatorListener setTarget(View target)
+    public final void setTarget(View target)
     {
         if (target != null)
         {
@@ -44,18 +44,11 @@ public abstract class FAnimatorListener extends AnimatorListenerAdapter
         {
             mTarget = null;
         }
-        return this;
     }
 
-    public View getTarget()
+    public final View getTarget()
     {
-        if (mTarget != null)
-        {
-            return mTarget.get();
-        } else
-        {
-            return null;
-        }
+        return mTarget == null ? null : mTarget.get();
     }
 
     @Override
@@ -64,13 +57,12 @@ public abstract class FAnimatorListener extends AnimatorListenerAdapter
         super.onAnimationStart(animation);
         if (animation instanceof ObjectAnimator)
         {
-            ObjectAnimator objectAnimator = (ObjectAnimator) animation;
-            Object objectTarget = objectAnimator.getTarget();
-            if (objectTarget instanceof View)
+            final Object target = ((ObjectAnimator) animation).getTarget();
+            if (target != null && (target instanceof View))
             {
                 if (getTarget() == null)
                 {
-                    setTarget((View) objectTarget);
+                    setTarget((View) target);
                 }
             }
         }
