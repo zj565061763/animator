@@ -112,10 +112,9 @@ public class SimpleDemoActivity extends AppCompatActivity
     {
         new FAnimatorSet().setTarget(v)
                 .moveToX(mXCenterAligner, v, view_target_1, view_target_2, view_target_3).setDuration(2000)
-                .withClone().moveToY(mYCenterAligner, v, view_target_1, view_target_2, view_target_3) //依次移动y到v, view_target_1, view_target_2, view_target_3
+                .withClone().moveToY(mYCenterAligner, v, view_target_1, view_target_2, view_target_3)
                 .delay(1000)
                 .addListener(new OnEndRemoveView()) //动画完成后移除view
                 .startAsPop();
     }
-
 }
