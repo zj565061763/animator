@@ -284,7 +284,7 @@ public class FAnimator implements IPropertyAnimator, Cloneable
         target.getLocationOnScreen(mTargetLocation);
     }
 
-    private void updateTempLocation(View view)
+    private void saveTempLocation(View view)
     {
         if (view == null) return;
         if (mTempLocation == null) mTempLocation = new int[]{0, 0};
@@ -350,7 +350,7 @@ public class FAnimator implements IPropertyAnimator, Cloneable
             for (int i = 0; i < views.length; i++)
             {
                 final View view = views[i];
-                updateTempLocation(view);
+                saveTempLocation(view);
                 values[i] = mTempLocation[0];
 
                 if (alignType == AlignType.Center)
@@ -379,7 +379,7 @@ public class FAnimator implements IPropertyAnimator, Cloneable
             for (int i = 0; i < views.length; i++)
             {
                 final View view = views[i];
-                updateTempLocation(view);
+                saveTempLocation(view);
                 values[i] = mTempLocation[1];
 
                 if (alignType == AlignType.Center)
