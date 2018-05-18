@@ -33,6 +33,6 @@ publish {
     website = 'https://github.com/zj565061763/animator'
 }
 
-tasks.withType(JavaCompile) {
-    options.encoding = "UTF-8"
+task javadoc(type: Javadoc) {
+    options.encoding = "utf-8"
 }
