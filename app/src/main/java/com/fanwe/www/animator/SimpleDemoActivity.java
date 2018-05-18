@@ -102,10 +102,10 @@ public class SimpleDemoActivity extends AppCompatActivity
 
     public void onClickBtnAnimInside(View v)
     {
-        new FAnimatorSet().setTarget(v)
-                .moveToX(mXCenterAligner, v, view_target_1, view_target_2, view_target_3).setDuration(2000)
-                .withClone().moveToY(mYCenterAligner, v, view_target_1, view_target_2, view_target_3)
-                .delay(1000)
+        new FAnimatorSet(true).setTarget(v)
+                .moveToX(mXCenterAligner, v, view_target_1, view_target_2, view_target_3).setDuration(2000).setTag("x移动")
+                .withClone().moveToY(mYCenterAligner, v, view_target_1, view_target_2, view_target_3).setTag("y移动")
+                .delay(1000).setTag("延迟1000毫秒")
                 .addListener(new OnEndRemoveView()) //动画完成后移除view
                 .startAsPop();
     }
