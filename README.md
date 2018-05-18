@@ -80,7 +80,7 @@ public void onClickBtnAnim(View v)
      *
      * 注意：如果调用此方法的话，要记得在最后的动画结束后移除镜像ImageView，除非业务需求就是不移除
      */
-    animatorSet.startAsPop();
+//    animatorSet.startAsPop();
 }
 ```
 ## 火箭动画demo
