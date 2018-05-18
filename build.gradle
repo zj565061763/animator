@@ -23,3 +23,7 @@ allprojects {
 task clean(type: Delete) {
     delete rootProject.buildDir
 }
+
+task javadoc(type: Javadoc) {
+    options.encoding = "utf-8"
+}
