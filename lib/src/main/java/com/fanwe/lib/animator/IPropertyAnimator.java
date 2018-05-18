@@ -18,7 +18,7 @@ package com.fanwe.lib.animator;
 /**
  * 属性动画接口
  */
-public interface PropertyAnimator extends Animator
+public interface IPropertyAnimator extends IAnimator
 {
     String X = "x";
     String Y = "y";
@@ -37,7 +37,7 @@ public interface PropertyAnimator extends Animator
      * @param values
      * @return
      */
-    PropertyAnimator x(float... values);
+    IPropertyAnimator x(float... values);
 
     /**
      * 设置y坐标（相对于父容器）
@@ -45,7 +45,7 @@ public interface PropertyAnimator extends Animator
      * @param values
      * @return
      */
-    PropertyAnimator y(float... values);
+    IPropertyAnimator y(float... values);
 
     /**
      * 设置x方向相对于当前位置的偏移量
@@ -53,7 +53,7 @@ public interface PropertyAnimator extends Animator
      * @param values
      * @return
      */
-    PropertyAnimator translationX(float... values);
+    IPropertyAnimator translationX(float... values);
 
     /**
      * 设置y方向相对于当前位置的偏移量
@@ -61,7 +61,7 @@ public interface PropertyAnimator extends Animator
      * @param values
      * @return
      */
-    PropertyAnimator translationY(float... values);
+    IPropertyAnimator translationY(float... values);
 
     /**
      * 设置透明度
@@ -69,7 +69,7 @@ public interface PropertyAnimator extends Animator
      * @param values
      * @return
      */
-    PropertyAnimator alpha(float... values);
+    IPropertyAnimator alpha(float... values);
 
     /**
      * 设置缩放x
@@ -77,7 +77,7 @@ public interface PropertyAnimator extends Animator
      * @param values
      * @return
      */
-    PropertyAnimator scaleX(float... values);
+    IPropertyAnimator scaleX(float... values);
 
     /**
      * 设置缩放y
@@ -85,7 +85,7 @@ public interface PropertyAnimator extends Animator
      * @param values
      * @return
      */
-    PropertyAnimator scaleY(float... values);
+    IPropertyAnimator scaleY(float... values);
 
     /**
      * 设置绕z轴方向旋转角度（大于0顺时针，小于0逆时针）
@@ -93,7 +93,7 @@ public interface PropertyAnimator extends Animator
      * @param values
      * @return
      */
-    PropertyAnimator rotation(float... values);
+    IPropertyAnimator rotation(float... values);
 
     /**
      * 设置绕x轴方向旋转角度
@@ -101,7 +101,7 @@ public interface PropertyAnimator extends Animator
      * @param values
      * @return
      */
-    PropertyAnimator rotationX(float... values);
+    IPropertyAnimator rotationX(float... values);
 
     /**
      * 设置绕y轴方向旋转角度
@@ -109,7 +109,7 @@ public interface PropertyAnimator extends Animator
      * @param values
      * @return
      */
-    PropertyAnimator rotationY(float... values);
+    IPropertyAnimator rotationY(float... values);
 
     /**
      * 动画类型参数是否为空

@@ -30,7 +30,7 @@ import java.util.ArrayList;
 /**
  * 对ObjectAnimator进行封装提供更方便的调用方法
  */
-public class FAnimator implements PropertyAnimator, Cloneable
+public class FAnimator implements IPropertyAnimator, Cloneable
 {
     private ObjectAnimator mAnimator = new ObjectAnimator();
 
