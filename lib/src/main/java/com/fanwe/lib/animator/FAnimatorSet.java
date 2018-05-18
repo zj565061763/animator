@@ -397,30 +397,6 @@ public class FAnimatorSet extends FAnimator
     }
 
     @Override
-    public FAnimatorSet setDecelerate()
-    {
-        return (FAnimatorSet) super.setDecelerate();
-    }
-
-    @Override
-    public FAnimatorSet setAccelerate()
-    {
-        return (FAnimatorSet) super.setAccelerate();
-    }
-
-    @Override
-    public FAnimatorSet setAccelerateDecelerate()
-    {
-        return (FAnimatorSet) super.setAccelerateDecelerate();
-    }
-
-    @Override
-    public FAnimatorSet setLinear()
-    {
-        return (FAnimatorSet) super.setLinear();
-    }
-
-    @Override
     public FAnimatorSet clone()
     {
         FAnimatorSet clone = (FAnimatorSet) super.clone();
