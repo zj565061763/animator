@@ -443,12 +443,10 @@ public class FAnimator implements PropertyAnimator, Cloneable
     {
         if (views != null && views.length > 0)
         {
-            float[] values = new float[views.length];
+            final float[] values = new float[views.length];
             for (int i = 0; i < views.length; i++)
             {
-                View view = views[i];
-                float value = ((float) view.getWidth()) / ((float) getTarget().getWidth());
-                values[i] = value;
+                values[i] = ((float) views[i].getWidth()) / ((float) getTarget().getWidth());
             }
             return scaleX(values);
         } else
@@ -467,12 +465,10 @@ public class FAnimator implements PropertyAnimator, Cloneable
     {
         if (views != null && views.length > 0)
         {
-            float[] values = new float[views.length];
+            final float[] values = new float[views.length];
             for (int i = 0; i < views.length; i++)
             {
-                View view = views[i];
-                float value = ((float) view.getHeight()) / ((float) getTarget().getHeight());
-                values[i] = value;
+                values[i] = ((float) views[i].getHeight()) / ((float) getTarget().getHeight());
             }
             return scaleY(values);
         } else
@@ -489,10 +485,8 @@ public class FAnimator implements PropertyAnimator, Cloneable
      */
     public FAnimator setAlignType(AlignType alignType)
     {
-        if (alignType != null)
-        {
-            mAlignType = alignType;
-        }
+        if (alignType == null) throw new NullPointerException("alignType is null");
+        mAlignType = alignType;
         return this;
     }
 
