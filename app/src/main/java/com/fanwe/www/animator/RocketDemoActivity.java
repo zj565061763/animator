@@ -5,6 +5,7 @@ import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.view.animation.AccelerateInterpolator;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -79,7 +80,7 @@ public class RocketDemoActivity extends AppCompatActivity
                 })
                 //火箭起飞
                 .next(fl_rocket_root).translationY(0, -getResources().getDisplayMetrics().heightPixels)
-                .setDuration(3000).setAccelerate()
+                .setDuration(3000).setInterpolator(new AccelerateInterpolator())
                 .addListener(new OnEndInvisible(fl_rocket_root)) //动画结束隐藏fl_rocket_root
                 .addListener(new OnEndReset(fl_rocket_root)) //动画结束重置fl_rocket_root
                 .addListener(new FAnimatorListener()
