@@ -87,7 +87,7 @@ public class SimpleDemoActivity extends AppCompatActivity
                 .start();
 
         /**
-         * 为了解决一些view没办法超出父布局边界来执行动画的问题，提供了这个方法
+         * 为了解决view没办法超出父布局边界来执行动画的问题，提供了这个方法
          *
          * 内部实现原理：
          *
