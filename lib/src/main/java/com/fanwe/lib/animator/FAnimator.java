@@ -280,10 +280,8 @@ public class FAnimator implements IPropertyAnimator, Cloneable
 
     private void saveTargetLocation()
     {
-        final View target = getTarget();
-        if (target == null) return;
         if (mTargetLocation == null) mTargetLocation = new int[]{0, 0};
-        target.getLocationOnScreen(mTargetLocation);
+        getTarget().getLocationOnScreen(mTargetLocation);
     }
 
     private void saveTempLocation(View view)
@@ -481,11 +479,6 @@ public class FAnimator implements IPropertyAnimator, Cloneable
     {
         if (mTag == null) mTag = "";
         return mTag;
-    }
-
-    public interface CoordinateModifier
-    {
-        int modify(View view, View target);
     }
 
     private enum Coordinate
