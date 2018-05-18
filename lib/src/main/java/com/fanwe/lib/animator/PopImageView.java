@@ -20,13 +20,12 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewParent;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 
 class PopImageView extends ImageView
 {
-    private FrameLayout mFrameLayout;
+    private final FrameLayout mFrameLayout;
 
     public PopImageView(Context context)
     {
@@ -35,8 +34,7 @@ class PopImageView extends ImageView
         {
             throw new IllegalArgumentException("context must be instance of Activity");
         }
-        Activity activity = (Activity) context;
-        mFrameLayout = activity.findViewById(android.R.id.content);
+        mFrameLayout = ((Activity) context).findViewById(android.R.id.content);
     }
 
     /**
@@ -60,16 +58,18 @@ class PopImageView extends ImageView
     {
         removeSelf();
 
-        int[] locationTarget = {0, 0};
+        final int[] locationTarget = {0, 0};
         target.getLocationOnScreen(locationTarget);
-        int[] locationContainer = {0, 0};
+
+        final int[] locationContainer = {0, 0};
         mFrameLayout.getLocationOnScreen(locationContainer);
 
-        int left = locationTarget[0] - locationContainer[0];
-        int top = locationTarget[1] - locationContainer[1];
+        final int left = locationTarget[0] - locationContainer[0];
+        final int top = locationTarget[1] - locationContainer[1];
 
         final FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT);
+
         params.leftMargin = left;
         params.topMargin = top;
 
@@ -79,17 +79,18 @@ class PopImageView extends ImageView
             params.width = paramsTarget.width;
             params.height = paramsTarget.height;
         }
+
         setLayoutParams(params);
         mFrameLayout.addView(this);
     }
 
     private void removeSelf()
     {
-        ViewParent parent = getParent();
-        if (parent instanceof ViewGroup)
+        try
         {
-            ViewGroup viewGroup = (ViewGroup) parent;
-            viewGroup.removeView(this);
+            ((ViewGroup) getParent()).removeView(this);
+        } catch (Exception e)
+        {
         }
     }
 
