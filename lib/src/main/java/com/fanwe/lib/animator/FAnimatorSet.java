@@ -53,24 +53,6 @@ public class FAnimatorSet extends FAnimator
         super(null);
     }
 
-    private void initNewAnim(FAnimatorSet anim)
-    {
-        //如果target为空，设置默认target
-        View target = anim.getTarget();
-        if (target == null)
-        {
-            target = this.getTarget();
-            if (target == null)
-            {
-                if (mParent != null)
-                {
-                    target = mParent.getTarget();
-                }
-            }
-            anim.setTarget(target);
-        }
-    }
-
     private void setParent(FAnimatorSet parent)
     {
         mParent = parent;
@@ -163,6 +145,23 @@ public class FAnimatorSet extends FAnimator
         getSet().play(next.get()).after(current.get());
         setCurrent(next);
         return next;
+    }
+
+    private void initNewAnim(FAnimatorSet anim)
+    {
+        View target = anim.getTarget();
+        if (target == null)
+        {
+            target = this.getTarget();
+            if (target == null)
+            {
+                if (mParent != null)
+                {
+                    target = mParent.getTarget();
+                }
+            }
+            anim.setTarget(target);
+        }
     }
 
     /**
