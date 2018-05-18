@@ -308,27 +308,18 @@ public class FAnimator implements PropertyAnimator, Cloneable
 
     private void updateTargetLocation()
     {
-        if (getTarget() == null)
-        {
-            return;
-        }
-        if (mTargetLocation == null)
-        {
-            mTargetLocation = new int[]{0, 0};
-        }
-        getTarget().getLocationOnScreen(mTargetLocation);
+        final View target = getTarget();
+        if (target == null) return;
+
+        if (mTargetLocation == null) mTargetLocation = new int[]{0, 0};
+        target.getLocationOnScreen(mTargetLocation);
     }
 
     private void updateTempLocation(View view)
     {
-        if (view == null)
-        {
-            return;
-        }
-        if (mTempLocation == null)
-        {
-            mTempLocation = new int[]{0, 0};
-        }
+        if (view == null) return;
+
+        if (mTempLocation == null) mTempLocation = new int[]{0, 0};
         view.getLocationOnScreen(mTempLocation);
     }
 
@@ -344,10 +335,10 @@ public class FAnimator implements PropertyAnimator, Cloneable
         {
             updateTargetLocation();
 
-            float[] realValues = new float[values.length];
+            final float[] realValues = new float[values.length];
             for (int i = 0; i < values.length; i++)
             {
-                float real = (values[i] - mTargetLocation[0]) + getTarget().getTranslationX();
+                final float real = (values[i] - mTargetLocation[0]) + getTarget().getTranslationX();
                 realValues[i] = real;
             }
             return translationX(realValues);
@@ -369,11 +360,10 @@ public class FAnimator implements PropertyAnimator, Cloneable
         {
             updateTargetLocation();
 
-            float[] realValues = new float[values.length];
-            realValues[0] = getTarget().getTranslationY();
+            final float[] realValues = new float[values.length];
             for (int i = 0; i < values.length; i++)
             {
-                float real = (values[i] - mTargetLocation[1]) + getTarget().getTranslationY();
+                final float real = (values[i] - mTargetLocation[1]) + getTarget().getTranslationY();
                 realValues[i] = real;
             }
             return translationY(realValues);
@@ -393,18 +383,17 @@ public class FAnimator implements PropertyAnimator, Cloneable
     {
         if (views != null && views.length > 0)
         {
-            float[] values = new float[views.length];
+            final float[] values = new float[views.length];
             for (int i = 0; i < views.length; i++)
             {
-                View view = views[i];
+                final View view = views[i];
                 updateTempLocation(view);
                 values[i] = mTempLocation[0];
 
                 if (mAlignType == AlignType.Center)
                 {
-                    int delta = view.getWidth() / 2 - getTarget().getWidth() / 2;
-                    float result = mTempLocation[0] + delta;
-                    values[i] = result;
+                    final int delta = view.getWidth() / 2 - getTarget().getWidth() / 2;
+                    values[i] = mTempLocation[0] + delta;
                 }
             }
             return moveToX(values);
@@ -424,18 +413,17 @@ public class FAnimator implements PropertyAnimator, Cloneable
     {
         if (views != null && views.length > 0)
         {
-            float[] values = new float[views.length];
+            final float[] values = new float[views.length];
             for (int i = 0; i < views.length; i++)
             {
-                View view = views[i];
+                final View view = views[i];
                 updateTempLocation(view);
                 values[i] = mTempLocation[1];
 
                 if (mAlignType == AlignType.Center)
                 {
-                    int delta = view.getHeight() / 2 - getTarget().getHeight() / 2;
-                    float result = mTempLocation[1] + delta;
-                    values[i] = result;
+                    final int delta = view.getHeight() / 2 - getTarget().getHeight() / 2;
+                    values[i] = mTempLocation[1] + delta;
                 }
             }
             return moveToY(values);
