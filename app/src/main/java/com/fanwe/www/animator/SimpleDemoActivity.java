@@ -100,11 +100,6 @@ public class SimpleDemoActivity extends AppCompatActivity
 //        animatorSet.startAsPop();
     }
 
-    /**
-     * 对target截图然后设置给ImageView，让ImageView镜像在android.R.id.content的FrameLayout里面执行动画，以此来突破父容器范围的局限
-     *
-     * @param v
-     */
     public void onClickBtnAnimInside(View v)
     {
         new FAnimatorSet().setTarget(v)
