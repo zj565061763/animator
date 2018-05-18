@@ -91,40 +91,42 @@ git太大了有点卡，具体可以看demo<br>
 ![](http://thumbsnap.com/i/cD2NW5lZ.gif?0815)<br>
 
 ```java
-new FAnimatorSet(v)
-        //火箭淡入
-        .alpha(0, 1f).setDuration(1000)
-        .delay(500)
-        //数字倒数
-        .with(tv_number).scaleX(1f, 0f).setRepeatCount(2).setDuration(1000)
-        .withClone().scaleY(1f, 0f)
+/**
+ * true-调试模式，会输入内部动画的排序，可以给每个动画设置tag，来加强描述
+ */
+final FAnimatorSet animatorSet = new FAnimatorSet(true);
+
+animatorSet.setTarget(fl_rocket_root)
+        .alpha(0, 1f).setDuration(500).setTag("火箭淡入")
+        .delay(500).setTag("延迟500毫秒")
+        .next(tv_number).scaleX(1f, 0f).setRepeatCount(2).setDuration(1000).setTag("开始数字缩放X")
+        .withClone().scaleY(1f, 0f).setTag("开始数字缩放Y")
         .addListener(new FAnimatorListener()
         {
             @Override
             public void onAnimationStart(Animator animation)
             {
                 super.onAnimationStart(animation);
-                tv_number.setText(String.valueOf(number));
+                tv_number.setText(String.valueOf(mNumber));
             }
 
             @Override
             public void onAnimationEnd(Animator animation)
             {
                 super.onAnimationEnd(animation);
-                number = 3;
+                mNumber = 3;
             }
 
             @Override
             public void onAnimationRepeat(Animator animation)
             {
                 super.onAnimationRepeat(animation);
-                number--;
-                tv_number.setText(String.valueOf(number));
+                mNumber--;
+                tv_number.setText(String.valueOf(mNumber));
             }
         })
-        //火箭起飞
-        .next(fl_rocket_root).translationY(0, -getResources().getDisplayMetrics().heightPixels)
-        .setDuration(3000).setAccelerate()
+        .next(fl_rocket_root).translationY(0, -getResources().getDisplayMetrics().heightPixels).setTag("火箭起飞")
+        .setDuration(3000).setInterpolator(new AccelerateInterpolator())
         .addListener(new OnEndInvisible(fl_rocket_root)) //动画结束隐藏fl_rocket_root
         .addListener(new OnEndReset(fl_rocket_root)) //动画结束重置fl_rocket_root
         .addListener(new FAnimatorListener()
@@ -145,10 +147,10 @@ new FAnimatorSet(v)
                 animationDrawable.stop(); //停止火箭喷火动画
             }
         })
-        //烟雾淡入
-        .with(iv_rocket_smoke).alpha(0, 1f).setDuration(3000).setStartDelay(500)
-        //烟雾淡出
-        .next().alpha(1f, 0).setDuration(500)
+        .with(iv_rocket_smoke).alpha(0, 1f).setDuration(3000).setStartDelay(500).setTag("烟雾淡入")
+        .next().alpha(1f, 0).setDuration(500).setTag("烟雾淡出")
         .addListener(new OnEndInvisible(iv_rocket_smoke))
         .start();
+
+AnimatorSet animatorSetOriginal = animatorSet.getSet(); // 也可以得到原生的动画对象
 ```
