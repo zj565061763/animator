@@ -25,6 +25,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 
+import com.fanwe.lib.animator.aligner.Aligner;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -406,16 +408,16 @@ public class FAnimatorSet extends FAnimator
     }
 
     @Override
-    public FAnimatorSet moveToX(AlignType alignType, View... views)
+    public FAnimatorSet moveToX(Aligner aligner, View... views)
     {
-        getCurrent().moveToX(alignType, views);
+        getCurrent().moveToX(aligner, views);
         return this;
     }
 
     @Override
-    public FAnimatorSet moveToY(AlignType alignType, View... views)
+    public FAnimatorSet moveToY(Aligner aligner, View... views)
     {
-        getCurrent().moveToY(alignType, views);
+        getCurrent().moveToY(aligner, views);
         return this;
     }
 

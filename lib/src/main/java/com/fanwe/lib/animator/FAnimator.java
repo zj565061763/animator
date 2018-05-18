@@ -23,9 +23,11 @@ import android.text.TextUtils;
 import android.view.View;
 import android.view.animation.LinearInterpolator;
 
+import com.fanwe.lib.animator.aligner.Aligner;
 import com.fanwe.lib.animator.listener.OnStartVisible;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 对ObjectAnimator进行封装提供更方便的调用方法
@@ -291,6 +293,99 @@ public class FAnimator implements IPropertyAnimator, Cloneable
         view.getLocationOnScreen(mTempLocation);
     }
 
+    private void moveTo(Coordinate coordinate, float... values)
+    {
+        if (values != null && values.length > 0)
+        {
+            saveTargetLocation();
+            final float[] realValues = new float[values.length];
+            for (int i = 0; i < values.length; i++)
+            {
+                if (coordinate == Coordinate.X)
+                {
+                    realValues[i] = (values[i] - mTargetLocation[0]) + getTarget().getTranslationX();
+                } else if (coordinate == Coordinate.Y)
+                {
+                    realValues[i] = (values[i] - mTargetLocation[1]) + getTarget().getTranslationY();
+                }
+            }
+            if (coordinate == Coordinate.X)
+            {
+                translationX(realValues);
+            } else if (coordinate == Coordinate.Y)
+            {
+                translationY(realValues);
+            }
+        }
+    }
+
+    private void moveTo(Coordinate coordinate, Aligner aligner, View... views)
+    {
+        if (views != null && views.length > 0)
+        {
+            final List<Float> list = new ArrayList<>();
+            for (int i = 0; i < views.length; i++)
+            {
+                final View view = views[i];
+                if (view == null) continue;
+                if (aligner == null) aligner = Aligner.DEFAULT;
+
+                saveTempLocation(view);
+                if (coordinate == Coordinate.X)
+                {
+                    float value = aligner.align(getTarget(), view, mTempLocation[0]);
+                    list.add(value);
+                } else if (coordinate == Coordinate.Y)
+                {
+                    float value = aligner.align(getTarget(), view, mTempLocation[1]);
+                    list.add(value);
+                }
+            }
+
+            final int count = list.size();
+            if (count > 0)
+            {
+                final float[] values = new float[count];
+                for (int i = 0; i < count; i++)
+                {
+                    values[i] = list.get(i);
+                }
+                if (coordinate == Coordinate.X)
+                {
+                    moveToX(values);
+                } else if (coordinate == Coordinate.Y)
+                {
+                    moveToY(values);
+                }
+            }
+        }
+    }
+
+    private void scale(Coordinate coordinate, View... views)
+    {
+        if (views != null && views.length > 0)
+        {
+            final float[] values = new float[views.length];
+            for (int i = 0; i < views.length; i++)
+            {
+                if (coordinate == Coordinate.X)
+                {
+                    values[i] = ((float) views[i].getWidth()) / ((float) getTarget().getWidth());
+                } else if (coordinate == Coordinate.Y)
+                {
+                    values[i] = ((float) views[i].getHeight()) / ((float) getTarget().getHeight());
+                }
+            }
+            if (coordinate == Coordinate.X)
+            {
+                scaleX(values);
+            } else if (coordinate == Coordinate.Y)
+            {
+                scaleY(values);
+            }
+        }
+    }
+
     /**
      * 移动到屏幕x坐标
      *
@@ -299,19 +394,8 @@ public class FAnimator implements IPropertyAnimator, Cloneable
      */
     public FAnimator moveToX(float... values)
     {
-        if (values != null && values.length > 0)
-        {
-            saveTargetLocation();
-            final float[] realValues = new float[values.length];
-            for (int i = 0; i < values.length; i++)
-            {
-                realValues[i] = (values[i] - mTargetLocation[0]) + getTarget().getTranslationX();
-            }
-            return translationX(realValues);
-        } else
-        {
-            return translationX(values);
-        }
+        moveTo(Coordinate.X, values);
+        return this;
     }
 
     /**
@@ -322,74 +406,33 @@ public class FAnimator implements IPropertyAnimator, Cloneable
      */
     public FAnimator moveToY(float... values)
     {
-        if (values != null && values.length > 0)
-        {
-            saveTargetLocation();
-            final float[] realValues = new float[values.length];
-            for (int i = 0; i < values.length; i++)
-            {
-                realValues[i] = (values[i] - mTargetLocation[1]) + getTarget().getTranslationY();
-            }
-            translationY(realValues);
-        }
+        moveTo(Coordinate.Y, values);
         return this;
     }
 
     /**
      * 移动到view的屏幕x坐标
      *
-     * @param alignType
+     * @param aligner
      * @param views
      * @return
      */
-    public FAnimator moveToX(AlignType alignType, View... views)
+    public FAnimator moveToX(Aligner aligner, View... views)
     {
-        if (views != null && views.length > 0)
-        {
-            final float[] values = new float[views.length];
-            for (int i = 0; i < views.length; i++)
-            {
-                final View view = views[i];
-                saveTempLocation(view);
-                values[i] = mTempLocation[0];
-
-                if (alignType == AlignType.Center)
-                {
-                    final int delta = view.getWidth() / 2 - getTarget().getWidth() / 2;
-                    values[i] = mTempLocation[0] + delta;
-                }
-            }
-            moveToX(values);
-        }
+        moveTo(Coordinate.X, aligner, views);
         return this;
     }
 
     /**
      * 移动到view的屏幕y坐标
      *
-     * @param alignType
+     * @param aligner
      * @param views
      * @return
      */
-    public FAnimator moveToY(AlignType alignType, View... views)
+    public FAnimator moveToY(Aligner aligner, View... views)
     {
-        if (views != null && views.length > 0)
-        {
-            final float[] values = new float[views.length];
-            for (int i = 0; i < views.length; i++)
-            {
-                final View view = views[i];
-                saveTempLocation(view);
-                values[i] = mTempLocation[1];
-
-                if (alignType == AlignType.Center)
-                {
-                    final int delta = view.getHeight() / 2 - getTarget().getHeight() / 2;
-                    values[i] = mTempLocation[1] + delta;
-                }
-            }
-            moveToY(values);
-        }
+        moveTo(Coordinate.Y, aligner, views);
         return this;
     }
 
@@ -401,15 +444,7 @@ public class FAnimator implements IPropertyAnimator, Cloneable
      */
     public FAnimator scaleX(View... views)
     {
-        if (views != null && views.length > 0)
-        {
-            final float[] values = new float[views.length];
-            for (int i = 0; i < views.length; i++)
-            {
-                values[i] = ((float) views[i].getWidth()) / ((float) getTarget().getWidth());
-            }
-            scaleX(values);
-        }
+        scale(Coordinate.X, views);
         return this;
     }
 
@@ -421,15 +456,7 @@ public class FAnimator implements IPropertyAnimator, Cloneable
      */
     public FAnimator scaleY(View... views)
     {
-        if (views != null && views.length > 0)
-        {
-            final float[] values = new float[views.length];
-            for (int i = 0; i < views.length; i++)
-            {
-                values[i] = ((float) views[i].getHeight()) / ((float) getTarget().getHeight());
-            }
-            scaleY(values);
-        }
+        scale(Coordinate.Y, views);
         return this;
     }
 
@@ -456,6 +483,18 @@ public class FAnimator implements IPropertyAnimator, Cloneable
         return mTag;
     }
 
+    public interface CoordinateModifier
+    {
+        int modify(View view, View target);
+    }
+
+    private enum Coordinate
+    {
+        X, Y
+    }
+
+    //----------extend end----------
+
     @Override
     public FAnimator clone()
     {
@@ -472,18 +511,4 @@ public class FAnimator implements IPropertyAnimator, Cloneable
         }
         return null;
     }
-
-    public enum AlignType
-    {
-        /**
-         * View左上角对齐
-         */
-        TopLeft,
-        /**
-         * View中间对齐
-         */
-        Center
-    }
-
-    //----------extend end----------
 }
