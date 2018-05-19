@@ -31,7 +31,7 @@ public interface AnimatorChain
     NodeAnimator with();
 
     /**
-     * 生成一个新动画和上一个动画同时执行
+     * {@link #with()}
      *
      * @param target 新动画要执行的View对象，如果为null，则沿用上一个动画的View对象
      * @return
@@ -53,7 +53,7 @@ public interface AnimatorChain
     NodeAnimator next();
 
     /**
-     * 生成一个新动画在上一个动画执行完成后执行
+     * {@link #next()}
      *
      * @param target 新动画要执行的View对象，如果为null，则沿用上一个动画的View对象
      * @return
