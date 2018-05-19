@@ -296,8 +296,7 @@ public class FAnimatorChain implements AnimatorChain
         {
             if (isEmptyProperty() && mType != Type.DELAY)
                 throw new UnsupportedOperationException("can not access AnimatorChain because animator property is empty");
-            if (getTarget() == null)
-                throw new UnsupportedOperationException("target view must be provided before this see the Animator.setTarget(View) method");
+            checkTarget();
             return mChain;
         }
     }
