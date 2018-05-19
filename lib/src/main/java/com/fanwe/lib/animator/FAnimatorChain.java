@@ -149,7 +149,7 @@ class FAnimatorChain implements AnimatorChain
                             break;
                     }
                 }
-                Log.i(FAnimatorChain.class.getSimpleName(), sb.toString());
+                Log.i(AnimatorChain.class.getSimpleName(), sb.toString());
             }
         }
 

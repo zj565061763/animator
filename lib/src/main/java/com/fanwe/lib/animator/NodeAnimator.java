@@ -25,7 +25,7 @@ public class NodeAnimator extends BaseAnimator<NodeAnimator>
         mChain = chain;
     }
 
-    void setType(int type)
+    final void setType(int type)
     {
         if (type == Type.HEAD || type == Type.WITH
                 || type == Type.NEXT || type == Type.DELAY)
