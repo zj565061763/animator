@@ -16,8 +16,9 @@
 package com.fanwe.lib.animator;
 
 /**
- * 对ObjectAnimator进行封装提供更方便的调用方法
+ * 用{@link NodeAnimator}替代
  */
+@Deprecated
 public class FAnimator extends BaseAnimator<FAnimator>
 {
 }
