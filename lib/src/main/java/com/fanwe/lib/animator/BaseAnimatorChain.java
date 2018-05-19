@@ -41,15 +41,8 @@ abstract class BaseAnimatorChain implements AnimatorChain
 
     public BaseAnimatorChain(boolean isDebug, FNodeAnimator animator)
     {
-        if (animator == null)
-            throw new NullPointerException("animator is null");
-        if (animator.getType() != NodeAnimator.Type.HEAD)
-            throw new RuntimeException("HEAD animator required");
-
         mIsDebug = isDebug;
-        mCurrent = animator;
-        mAnimatorSet.play(animator.toObjectAnimator());
-        addNodeIfNeed(animator);
+        initNodeAnimator(animator);
     }
 
     @Override
@@ -111,8 +104,16 @@ abstract class BaseAnimatorChain implements AnimatorChain
      */
     private NodeAnimator initNodeAnimator(NodeAnimator animator)
     {
+        if (animator == null) throw new NullPointerException("animator is null");
         if (mCurrent == null)
-            throw new RuntimeException("HEAD animator must be provided before this");
+        {
+            if (animator.getType() != NodeAnimator.Type.HEAD)
+                throw new IllegalArgumentException("HEAD animator is required");
+        } else
+        {
+            if (animator.getType() == NodeAnimator.Type.HEAD)
+                throw new IllegalArgumentException("HEAD animator has been provided");
+        }
 
         final View target = animator.getTarget();
         if (target == null) animator.setTarget(mCurrent.getTarget());
@@ -120,6 +121,9 @@ abstract class BaseAnimatorChain implements AnimatorChain
         final int type = animator.getType();
         switch (type)
         {
+            case NodeAnimator.Type.HEAD:
+                mAnimatorSet.play(animator.toObjectAnimator());
+                break;
             case NodeAnimator.Type.WITH:
                 mAnimatorSet.play(mCurrent.toObjectAnimator()).with(animator.toObjectAnimator());
                 break;
