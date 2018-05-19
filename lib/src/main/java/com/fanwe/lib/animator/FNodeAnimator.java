@@ -3,23 +3,23 @@ package com.fanwe.lib.animator;
 /**
  * 链条节点动画，可以在链条{@link AnimatorChain}上一起执行，也可以单独执行
  */
-public class NodeAnimator extends BaseAnimator<NodeAnimator>
+public class FNodeAnimator extends BaseAnimator<FNodeAnimator>
 {
     private int mType;
     private final AnimatorChain mChain;
 
-    public NodeAnimator()
+    public FNodeAnimator()
     {
         this(false);
     }
 
-    public NodeAnimator(boolean isDebug)
+    public FNodeAnimator(boolean isDebug)
     {
         this(Type.HEAD, new FAnimatorChain(isDebug));
         ((FAnimatorChain) mChain).setCurrent(this);
     }
 
-    NodeAnimator(int type, AnimatorChain chain)
+    FNodeAnimator(int type, AnimatorChain chain)
     {
         setType(type);
         mChain = chain;
@@ -33,7 +33,7 @@ public class NodeAnimator extends BaseAnimator<NodeAnimator>
             mType = type;
         } else
         {
-            throw new IllegalArgumentException("type must be value of NodeAnimator.Type.XXX");
+            throw new IllegalArgumentException("type must be value of FNodeAnimator.Type.XXX");
         }
     }
 

@@ -16,21 +16,21 @@ import java.util.List;
 class FAnimatorChain implements AnimatorChain
 {
     private final AnimatorSet mAnimatorSet = new AnimatorSet();
-    private NodeAnimator mCurrent;
+    private FNodeAnimator mCurrent;
 
     private final boolean mIsDebug;
-    private List<NodeAnimator> mListNode;
+    private List<FNodeAnimator> mListNode;
 
     FAnimatorChain(boolean isDebug)
     {
         mIsDebug = isDebug;
     }
 
-    void setCurrent(NodeAnimator current)
+    void setCurrent(FNodeAnimator current)
     {
         if (current == null) throw new NullPointerException("current is null");
 
-        if (current.getType() == NodeAnimator.Type.HEAD)
+        if (current.getType() == FNodeAnimator.Type.HEAD)
         {
             if (mCurrent == null)
                 mAnimatorSet.play(current.toObjectAnimator());
@@ -46,7 +46,7 @@ class FAnimatorChain implements AnimatorChain
         addNodeIfNeed(current);
     }
 
-    private void addNodeIfNeed(NodeAnimator animator)
+    private void addNodeIfNeed(FNodeAnimator animator)
     {
         if (mIsDebug)
         {
@@ -56,28 +56,28 @@ class FAnimatorChain implements AnimatorChain
     }
 
     @Override
-    public NodeAnimator with()
+    public FNodeAnimator with()
     {
         return with(null);
     }
 
     @Override
-    public NodeAnimator with(View target)
+    public FNodeAnimator with(View target)
     {
-        final NodeAnimator animator = new NodeAnimator(NodeAnimator.Type.WITH, this);
+        final FNodeAnimator animator = new FNodeAnimator(FNodeAnimator.Type.WITH, this);
         animator.setTarget(target);
         return withInternal(animator);
     }
 
     @Override
-    public NodeAnimator withClone()
+    public FNodeAnimator withClone()
     {
-        final NodeAnimator animator = mCurrent.clone();
-        animator.setType(NodeAnimator.Type.WITH);
+        final FNodeAnimator animator = mCurrent.clone();
+        animator.setType(FNodeAnimator.Type.WITH);
         return withInternal(animator);
     }
 
-    private NodeAnimator withInternal(NodeAnimator animator)
+    private FNodeAnimator withInternal(FNodeAnimator animator)
     {
         initNodeAnim(animator);
         mAnimatorSet.play(mCurrent.toObjectAnimator()).with(animator.toObjectAnimator());
@@ -86,20 +86,20 @@ class FAnimatorChain implements AnimatorChain
     }
 
     @Override
-    public NodeAnimator next()
+    public FNodeAnimator next()
     {
         return next(null);
     }
 
     @Override
-    public NodeAnimator next(View target)
+    public FNodeAnimator next(View target)
     {
-        final NodeAnimator animator = new NodeAnimator(NodeAnimator.Type.NEXT, this);
+        final FNodeAnimator animator = new FNodeAnimator(FNodeAnimator.Type.NEXT, this);
         animator.setTarget(target);
         return nextInternal(animator);
     }
 
-    private NodeAnimator nextInternal(NodeAnimator animator)
+    private FNodeAnimator nextInternal(FNodeAnimator animator)
     {
         initNodeAnim(animator);
         mAnimatorSet.play(animator.toObjectAnimator()).after(mCurrent.toObjectAnimator());
@@ -108,14 +108,14 @@ class FAnimatorChain implements AnimatorChain
     }
 
     @Override
-    public NodeAnimator delay(long time)
+    public FNodeAnimator delay(long time)
     {
-        final NodeAnimator animator = new NodeAnimator(NodeAnimator.Type.DELAY, this);
+        final FNodeAnimator animator = new FNodeAnimator(FNodeAnimator.Type.DELAY, this);
         animator.setDuration(time);
         return nextInternal(animator);
     }
 
-    private void initNodeAnim(NodeAnimator anim)
+    private void initNodeAnim(FNodeAnimator anim)
     {
         final View target = anim.getTarget();
         if (target == null)
@@ -138,20 +138,20 @@ class FAnimatorChain implements AnimatorChain
             if (mListNode != null)
             {
                 final StringBuilder sb = new StringBuilder("----------");
-                for (NodeAnimator item : mListNode)
+                for (FNodeAnimator item : mListNode)
                 {
                     switch (item.getType())
                     {
-                        case NodeAnimator.Type.HEAD:
+                        case FNodeAnimator.Type.HEAD:
                             sb.append("\r\n").append("Head:").append(item.getTag());
                             break;
-                        case NodeAnimator.Type.NEXT:
+                        case FNodeAnimator.Type.NEXT:
                             sb.append("\r\n").append("Next:").append(item.getTag());
                             break;
-                        case NodeAnimator.Type.WITH:
+                        case FNodeAnimator.Type.WITH:
                             sb.append(" With:").append(item.getTag());
                             break;
-                        case NodeAnimator.Type.DELAY:
+                        case FNodeAnimator.Type.DELAY:
                             sb.append("\r\n").append("Delay:").append(item.getTag());
                             break;
                     }

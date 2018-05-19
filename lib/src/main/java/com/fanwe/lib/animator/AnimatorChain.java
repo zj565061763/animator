@@ -13,7 +13,7 @@ public interface AnimatorChain
      *
      * @return
      */
-    NodeAnimator with();
+    FNodeAnimator with();
 
     /**
      * 生成一个新动画和上一个动画同时执行
@@ -21,21 +21,21 @@ public interface AnimatorChain
      * @param target 新动画要执行的View对象，如果为null，则沿用上一个动画的View对象
      * @return
      */
-    NodeAnimator with(View target);
+    FNodeAnimator with(View target);
 
     /**
      * 在{@link #with()}方法的基础上会保留上一个动画的参数设置
      *
      * @return
      */
-    NodeAnimator withClone();
+    FNodeAnimator withClone();
 
     /**
      * 生成一个新动画在上一个动画执行完成后执行
      *
      * @return
      */
-    NodeAnimator next();
+    FNodeAnimator next();
 
     /**
      * 生成一个新动画在上一个动画执行完成后执行
@@ -43,7 +43,7 @@ public interface AnimatorChain
      * @param target 新动画要执行的View对象，如果为null，则沿用上一个动画的View对象
      * @return
      */
-    NodeAnimator next(View target);
+    FNodeAnimator next(View target);
 
     /**
      * 生成一个延迟动画在上一个动画执行完成后执行
@@ -51,7 +51,7 @@ public interface AnimatorChain
      * @param time 延迟多少毫秒
      * @return
      */
-    NodeAnimator delay(long time);
+    FNodeAnimator delay(long time);
 
     /**
      * 转为{@link AnimatorSet}
