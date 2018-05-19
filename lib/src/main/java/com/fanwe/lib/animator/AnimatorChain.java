@@ -19,7 +19,7 @@ import android.animation.AnimatorSet;
 import android.view.View;
 
 /**
- * 动画链条
+ * 动画链
  */
 public interface AnimatorChain
 {

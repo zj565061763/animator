@@ -29,7 +29,7 @@ import java.util.HashMap;
 import java.util.List;
 
 /**
- * 动画链条
+ * 动画链
  */
 public class FAnimatorChain implements AnimatorChain
 {
@@ -57,7 +57,7 @@ public class FAnimatorChain implements AnimatorChain
     /**
      * 返回一个节点动画
      *
-     * @param isDebug true-调试模式，会输出内部动画链条日志
+     * @param isDebug true-调试模式，会输出各个动画节点
      * @return
      */
     public static NodeAnimator node(boolean isDebug)

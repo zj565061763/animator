@@ -56,7 +56,9 @@ public class SimpleDemoActivity extends AppCompatActivity
                 .moveToX(mXCenterAligner, v, view_target_1, view_target_2, view_target_3).setDuration(2000)
 
                 /**
-                 * 动画链条提供的节点方法，有with()，withClone()，next()，delay()
+                 * chain()方法返回的是动画链对象
+                 *
+                 * 动画链提供的节点方法，有with()，withClone()，next()，delay()
                  *
                  * with()：生成一个新动画和上一个动画同时执行
                  * withClone()：在with()方法的基础上会复制上一个动画的一些设置属性，比如动画时长等
@@ -102,7 +104,7 @@ public class SimpleDemoActivity extends AppCompatActivity
          *
          * 注意：如果调用此方法的话，要记得在最后的动画结束后移除镜像ImageView，除非业务需求就是不移除
          */
-//        nodeAnimator.chain().startAsPop();
+        //    nodeAnimator.chain().startAsPop();
     }
 
     public void onClickBtnAnimInside(View v)

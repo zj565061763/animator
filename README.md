@@ -20,10 +20,12 @@ private final YCenterAligner mYCenterAligner = new YCenterAligner();
 
 public void onClickBtnAnim(View v)
 {
-    final FAnimatorSet animatorSet = new FAnimatorSet();
+    /**
+     * 创建一个节点动画
+     */
+    final NodeAnimator nodeAnimator = FAnimatorChain.node();
 
-    animatorSet
-
+    nodeAnimator
             /**
              * 设置要执行动画的view
              */
@@ -36,14 +38,16 @@ public void onClickBtnAnim(View v)
             .moveToX(mXCenterAligner, v, view_target_1, view_target_2, view_target_3).setDuration(2000)
 
             /**
-             * 动画节点方法，有with()，withClone()，next()，delay()
+             * chain()方法返回的是动画链对象
              *
-             * with()：内部生成一个新动画，新动画会和上一个动画一起执行
+             * 动画链提供的节点方法，有with()，withClone()，next()，delay()
+             *
+             * with()：生成一个新动画和上一个动画同时执行
              * withClone()：在with()方法的基础上会复制上一个动画的一些设置属性，比如动画时长等
-             * next()：内部生成一个新动画，新动画在上一个动画执行结束后开始执行
-             * delay()：内部其实就是一个next()动画
+             * next()：生成一个新动画在上一个动画执行完成后执行
+             * delay()：生成一个延迟动画在上一个动画执行完成后执行
              */
-            .withClone()
+            .chain().withClone()
 
             /**
              * 设置动画view的y方向要移动到哪些view的位置
@@ -51,8 +55,10 @@ public void onClickBtnAnim(View v)
              */
             .moveToY(mYCenterAligner, v, view_target_1, view_target_2, view_target_3)
 
-            // 延迟1000毫秒
-            .delay(1000)
+            /**
+             * 延迟1000毫秒
+             */
+            .chain().delay(1000)
 
             /**
              * 添加一个动画监听
@@ -65,9 +71,9 @@ public void onClickBtnAnim(View v)
             .addListener(new OnEndReset()) // 动画完成后重置view
 
             /**
-             * 开始执行动画
+             * 开始执行整个动画链
              */
-            .start();
+            .chain().start();
 
     /**
      * 为了解决view没办法超出父布局边界来执行动画的问题，提供了这个方法
@@ -80,7 +86,7 @@ public void onClickBtnAnim(View v)
      *
      * 注意：如果调用此方法的话，要记得在最后的动画结束后移除镜像ImageView，除非业务需求就是不移除
      */
-//    animatorSet.startAsPop();
+    //    nodeAnimator.chain().startAsPop();
 }
 ```
 ## 火箭动画demo
