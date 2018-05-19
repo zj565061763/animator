@@ -113,8 +113,6 @@ abstract class BaseAnimatorChain implements AnimatorChain
     {
         if (mCurrent == null)
             throw new RuntimeException("HEAD animator must be provided before this");
-        if (animator.getType() == NodeAnimator.Type.HEAD)
-            throw new UnsupportedOperationException("HEAD animator is not supported here");
 
         final View target = animator.getTarget();
         if (target == null) animator.setTarget(mCurrent.getTarget());
@@ -129,6 +127,8 @@ abstract class BaseAnimatorChain implements AnimatorChain
             case NodeAnimator.Type.DELAY:
                 mAnimatorSet.play(animator.toObjectAnimator()).after(mCurrent.toObjectAnimator());
                 break;
+            default:
+                throw new IllegalArgumentException("Illegal animator:" + type);
         }
 
         mCurrent = animator;
