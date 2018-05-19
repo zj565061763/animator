@@ -107,7 +107,7 @@ public class SimpleDemoActivity extends AppCompatActivity
          */
         //    nodeAnimator.chain().startAsPop();
 
-        AnimatorSet animatorSet = nodeAnimator.chain().toAnimatorSet(); // 返回原生的动画对象
+        AnimatorSet animatorSet = nodeAnimator.chain().toAnimatorSet(); // 也可以得到原生的动画对象
     }
 
     public void onClickBtnAnimInside(View v)

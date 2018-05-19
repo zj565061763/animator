@@ -88,7 +88,7 @@ public void onClickBtnAnim(View v)
      */
     //    nodeAnimator.chain().startAsPop();
 
-    AnimatorSet animatorSet = nodeAnimator.chain().toAnimatorSet(); // 返回原生的动画对象
+    AnimatorSet animatorSet = nodeAnimator.chain().toAnimatorSet(); // 也可以得到原生的动画对象
 }
 ```
 ## 火箭动画demo
@@ -98,7 +98,7 @@ git太大了有点卡，具体可以看demo<br>
 
 ```java
 /**
- * true-调试模式，会输出整个动画的结构，方便开发调试，可以给每个动画设置tag，来加强描述
+ * true-调试模式，会输出整个动画链的结构，方便开发调试，可以给每个节点动画设置tag，来加强描述
  *
  * demo中的日志输入如下：
  *
@@ -109,13 +109,12 @@ git太大了有点卡，具体可以看demo<br>
  *    Next:烟雾淡出
  *
  */
-final FAnimatorSet animatorSet = new FAnimatorSet(true);
-
-animatorSet.setTarget(fl_rocket_root)
+final AnimatorChain animatorChain = FAnimatorChain.node(true)
+        .setTarget(fl_rocket_root)
         .alpha(0, 1f).setDuration(500).setTag("火箭淡入")
-        .delay(500).setTag("延迟500毫秒")
-        .next(tv_number).scaleX(1f, 0f).setRepeatCount(2).setDuration(1000).setTag("开始数字缩放X")
-        .withClone().scaleY(1f, 0f).setTag("开始数字缩放Y")
+        .chain().delay(500).setTag("延迟500毫秒")
+        .chain().next(tv_number).scaleX(1f, 0f).setRepeatCount(2).setDuration(1000).setTag("开始数字缩放X")
+        .chain().withClone().scaleY(1f, 0f).setTag("开始数字缩放Y")
         .addListener(new FAnimatorListener()
         {
             @Override
@@ -140,7 +139,7 @@ animatorSet.setTarget(fl_rocket_root)
                 tv_number.setText(String.valueOf(mNumber));
             }
         })
-        .next(fl_rocket_root).translationY(0, -getResources().getDisplayMetrics().heightPixels).setTag("火箭起飞")
+        .chain().next(fl_rocket_root).translationY(0, -getResources().getDisplayMetrics().heightPixels).setTag("火箭起飞")
         .setDuration(3000).setInterpolator(new AccelerateInterpolator())
         .addListener(new OnEndInvisible(fl_rocket_root)) //动画结束隐藏fl_rocket_root
         .addListener(new OnEndReset(fl_rocket_root)) //动画结束重置fl_rocket_root
@@ -162,10 +161,10 @@ animatorSet.setTarget(fl_rocket_root)
                 animationDrawable.stop(); //停止火箭喷火动画
             }
         })
-        .with(iv_rocket_smoke).alpha(0, 1f).setDuration(3000).setStartDelay(500).setTag("烟雾淡入")
-        .next().alpha(1f, 0).setDuration(500).setTag("烟雾淡出")
-        .addListener(new OnEndInvisible(iv_rocket_smoke))
-        .start();
+        .chain().with(iv_rocket_smoke).alpha(0, 1f).setDuration(3000).setStartDelay(500).setTag("烟雾淡入")
+        .chain().next().alpha(1f, 0).setDuration(500).setTag("烟雾淡出")
+        .addListener(new OnEndInvisible(iv_rocket_smoke)) //动画结束隐藏烟雾
+        .chain();
 
-AnimatorSet animatorSetOriginal = animatorSet.getSet(); // 也可以得到原生的动画对象
+animatorChain.start();
 ```

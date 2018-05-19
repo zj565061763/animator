@@ -114,7 +114,7 @@ public class RocketDemoActivity extends AppCompatActivity
                 })
                 .chain().with(iv_rocket_smoke).alpha(0, 1f).setDuration(3000).setStartDelay(500).setTag("烟雾淡入")
                 .chain().next().alpha(1f, 0).setDuration(500).setTag("烟雾淡出")
-                .addListener(new OnEndInvisible(iv_rocket_smoke))
+                .addListener(new OnEndInvisible(iv_rocket_smoke)) //动画结束隐藏烟雾
                 .chain();
 
         animatorChain.start();
