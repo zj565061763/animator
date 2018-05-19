@@ -112,6 +112,7 @@ abstract class BaseAnimatorChain implements AnimatorChain
      */
     private NodeAnimator initNodeAnimator(NodeAnimator animator)
     {
+        checkNull(animator);
         checkEmptyProperty(mCurrent);
         checkTarget(mCurrent);
 
