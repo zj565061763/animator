@@ -1,7 +1,7 @@
 package com.fanwe.lib.animator;
 
 /**
- * 链条节点动画
+ * 链条节点动画，可以在链条{@link AnimatorChain}上一起执行，也可以单独执行
  */
 public class NodeAnimator extends BaseAnimator<NodeAnimator>
 {
