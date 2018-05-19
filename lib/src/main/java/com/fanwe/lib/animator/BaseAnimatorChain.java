@@ -114,6 +114,7 @@ abstract class BaseAnimatorChain implements AnimatorChain
             if (animator.getType() == NodeAnimator.Type.HEAD)
                 throw new IllegalArgumentException("HEAD animator has been provided");
         }
+        checkEmptyProperty(mCurrent);
 
         final View target = animator.getTarget();
         if (target == null) animator.setTarget(mCurrent.getTarget());
@@ -146,9 +147,16 @@ abstract class BaseAnimatorChain implements AnimatorChain
         return animator;
     }
 
+    public static void checkEmptyProperty(NodeAnimator animator)
+    {
+        if (animator != null && animator.isEmptyProperty() && animator.getType() != NodeAnimator.Type.DELAY)
+            throw new UnsupportedOperationException("animator property is empty");
+    }
+
     @Override
     public AnimatorSet toAnimatorSet()
     {
+        checkEmptyProperty(mCurrent);
         return mAnimatorSet;
     }
 
@@ -182,6 +190,7 @@ abstract class BaseAnimatorChain implements AnimatorChain
             }
         }
 
+        checkEmptyProperty(mCurrent);
         mAnimatorSet.start();
     }
 

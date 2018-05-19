@@ -48,8 +48,6 @@ public class FNodeAnimator extends BaseAnimator<NodeAnimator> implements NodeAni
     @Override
     public final AnimatorChain chain()
     {
-        if (isEmptyProperty() && mType != Type.DELAY)
-            throw new UnsupportedOperationException("can not access AnimatorChain because animator property is empty");
         checkTarget();
 
         if (mChain == null) mChain = new InternalAnimatorChain(mIsDebug, this);
