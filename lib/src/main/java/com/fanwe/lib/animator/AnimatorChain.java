@@ -2,10 +2,11 @@ package com.fanwe.lib.animator;
 
 import android.view.View;
 
+/**
+ * 动画链
+ */
 public interface AnimatorChain
 {
-    NodeAnimator begin();
-
     /**
      * 生成一个新动画和当前动画同时执行
      *

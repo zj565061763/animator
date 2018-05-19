@@ -30,7 +30,11 @@ public class FAnimatorChain implements AnimatorChain
         if (current == null) throw new NullPointerException("current is null");
         checkEmptyProperty(mCurrent);
 
-        if (current.mType == NodeAnimator.Type.HEAD) mAnimatorSet.play(current.toObjectAnimator());
+        if (current.mType == NodeAnimator.Type.HEAD)
+        {
+            if (mCurrent == null) mAnimatorSet.play(current.toObjectAnimator());
+            else throw new IllegalArgumentException("AnimatorChain can only have one HEAD");
+        }
 
         mCurrent = current;
         addNodeIfNeed(current);
@@ -49,14 +53,8 @@ public class FAnimatorChain implements AnimatorChain
     {
         if (animator != null && animator.isEmptyProperty() && animator.mType != NodeAnimator.Type.DELAY)
         {
-            throw new RuntimeException("Animator's property is empty");
+            throw new RuntimeException("NodeAnimator's property is empty");
         }
-    }
-
-    @Override
-    public NodeAnimator begin()
-    {
-        return null;
     }
 
     @Override
