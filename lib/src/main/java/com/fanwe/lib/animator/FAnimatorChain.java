@@ -75,7 +75,7 @@ public class FAnimatorChain implements AnimatorChain
         if (animator.getType() != NodeAnimator.Type.HEAD)
             throw new IllegalArgumentException("HEAD animator required");
         if (mCurrent != null)
-            throw new UnsupportedOperationException("HEAD is already set");
+            throw new UnsupportedOperationException("HEAD has been provided");
 
         mCurrent = animator;
         mAnimatorSet.play(animator.toObjectAnimator());
