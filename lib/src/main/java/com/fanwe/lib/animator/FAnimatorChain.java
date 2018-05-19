@@ -57,7 +57,7 @@ public class FAnimatorChain implements AnimatorChain
     /**
      * 返回一个节点动画
      *
-     * @param isDebug
+     * @param isDebug true-调试模式，会输出内部动画链条日志
      * @return
      */
     public static NodeAnimator node(boolean isDebug)
