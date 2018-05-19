@@ -54,6 +54,8 @@ public final class NodeAnimator extends BaseAnimator<NodeAnimator>
      */
     public AnimatorChain chain()
     {
+        if (isEmptyProperty())
+            throw new UnsupportedOperationException("Can not access AnimatorChain because property is empty");
         return mChain;
     }
 

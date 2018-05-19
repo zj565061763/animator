@@ -28,7 +28,6 @@ class FAnimatorChain implements AnimatorChain
     void setCurrent(NodeAnimator current)
     {
         if (current == null) throw new NullPointerException("current is null");
-        checkEmptyProperty(mCurrent);
 
         if (current.getType() == NodeAnimator.Type.HEAD)
         {
@@ -46,14 +45,6 @@ class FAnimatorChain implements AnimatorChain
         {
             if (mListNode == null) mListNode = new ArrayList<>();
             mListNode.add(animator);
-        }
-    }
-
-    private static void checkEmptyProperty(NodeAnimator animator)
-    {
-        if (animator != null && animator.isEmptyProperty() && animator.getType() != NodeAnimator.Type.DELAY)
-        {
-            throw new RuntimeException("NodeAnimator's property is empty");
         }
     }
 
@@ -162,7 +153,6 @@ class FAnimatorChain implements AnimatorChain
             }
         }
 
-        checkEmptyProperty(mCurrent);
         mAnimatorSet.start();
     }
 
