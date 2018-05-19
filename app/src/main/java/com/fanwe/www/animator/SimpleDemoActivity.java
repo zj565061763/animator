@@ -5,7 +5,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
-import com.fanwe.lib.animator.FAnimatorChain;
+import com.fanwe.lib.animator.FNodeAnimator;
 import com.fanwe.lib.animator.NodeAnimator;
 import com.fanwe.lib.animator.aligner.XCenterAligner;
 import com.fanwe.lib.animator.aligner.YCenterAligner;
@@ -42,7 +42,7 @@ public class SimpleDemoActivity extends AppCompatActivity
         /**
          * 创建一个节点动画
          */
-        final NodeAnimator nodeAnimator = FAnimatorChain.node();
+        final NodeAnimator nodeAnimator = new FNodeAnimator();
 
         nodeAnimator
                 /**
@@ -112,7 +112,7 @@ public class SimpleDemoActivity extends AppCompatActivity
 
     public void onClickBtnAnimInside(View v)
     {
-        FAnimatorChain.node(true).setTarget(v)
+        new FNodeAnimator(true).setTarget(v)
                 .moveToX(mXCenterAligner, v, view_target_1, view_target_2, view_target_3).setDuration(2000).setTag("x移动")
                 .chain().withClone().moveToY(mYCenterAligner, v, view_target_1, view_target_2, view_target_3).setTag("y移动")
                 .chain().delay(1000).setTag("延迟1000毫秒")

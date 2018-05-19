@@ -31,7 +31,7 @@ import java.util.List;
 /**
  * 动画链
  */
-public class FAnimatorChain implements AnimatorChain
+abstract class BaseAnimatorChain implements AnimatorChain
 {
     private final AnimatorSet mAnimatorSet = new AnimatorSet();
     private NodeAnimator mCurrent;
@@ -39,35 +39,13 @@ public class FAnimatorChain implements AnimatorChain
     private final boolean mIsDebug;
     private List<NodeAnimator> mListNode;
 
-    private FAnimatorChain(boolean isDebug)
+    public BaseAnimatorChain(boolean isDebug)
     {
         mIsDebug = isDebug;
 
-        mCurrent = new InternalNodeAnimator(NodeAnimator.Type.HEAD, this);
+        mCurrent = createNodeAnimator(NodeAnimator.Type.HEAD);
         mAnimatorSet.play(mCurrent.toObjectAnimator());
         addNodeIfNeed(mCurrent);
-    }
-
-    /**
-     * 返回一个节点动画
-     *
-     * @return
-     */
-    public static NodeAnimator node()
-    {
-        return node(false);
-    }
-
-    /**
-     * 返回一个节点动画
-     *
-     * @param isDebug true-调试模式，会输出整个动画链的结构，方便开发调试，可以给每个节点动画设置tag，来加强描述
-     * @return
-     */
-    public static NodeAnimator node(boolean isDebug)
-    {
-        final FAnimatorChain chain = new FAnimatorChain(isDebug);
-        return chain.mCurrent;
     }
 
     @Override
@@ -79,14 +57,15 @@ public class FAnimatorChain implements AnimatorChain
     @Override
     public NodeAnimator with(View target)
     {
-        return initNodeAnimator(new InternalNodeAnimator(NodeAnimator.Type.WITH, this).setTarget(target));
+        return initNodeAnimator(createNodeAnimator(NodeAnimator.Type.WITH).setTarget(target));
     }
 
     @Override
     public NodeAnimator withClone()
     {
-        final InternalNodeAnimator animator = (InternalNodeAnimator) mCurrent.clone();
-        animator.setType(NodeAnimator.Type.WITH);
+        final NodeAnimator animator = mCurrent.cloneToType(NodeAnimator.Type.WITH);
+        if (animator.getType() != NodeAnimator.Type.WITH)
+            throw new RuntimeException("clone animator must be NodeAnimator.Type.WITH type");
         return initNodeAnimator(animator);
     }
 
@@ -99,14 +78,26 @@ public class FAnimatorChain implements AnimatorChain
     @Override
     public NodeAnimator next(View target)
     {
-        return initNodeAnimator(new InternalNodeAnimator(NodeAnimator.Type.NEXT, this).setTarget(target));
+        return initNodeAnimator(createNodeAnimator(NodeAnimator.Type.NEXT).setTarget(target));
     }
 
     @Override
     public NodeAnimator delay(long time)
     {
-        return initNodeAnimator(new InternalNodeAnimator(NodeAnimator.Type.DELAY, this).setDuration(time));
+        return initNodeAnimator(createNodeAnimator(NodeAnimator.Type.DELAY).setDuration(time));
     }
+
+    private NodeAnimator createNodeAnimator(final int type)
+    {
+        final NodeAnimator animator = onCreateNodeAnimator(type);
+        if (animator == null)
+            throw new NullPointerException("animator is null");
+        if (animator.getType() != type)
+            throw new RuntimeException("NodeAnimator must be " + type + " type");
+        return animator;
+    }
+
+    protected abstract NodeAnimator onCreateNodeAnimator(int type);
 
     /**
      * 初始化节点动画
@@ -116,9 +107,6 @@ public class FAnimatorChain implements AnimatorChain
      */
     private NodeAnimator initNodeAnimator(NodeAnimator animator)
     {
-        if (animator == null)
-            throw new NullPointerException("animator is null");
-
         final View target = animator.getTarget();
         if (target == null) animator.setTarget(mCurrent.getTarget());
 
@@ -248,44 +236,5 @@ public class FAnimatorChain implements AnimatorChain
     public void cancel()
     {
         mAnimatorSet.cancel();
-    }
-
-    private static class InternalNodeAnimator extends BaseAnimator<NodeAnimator> implements NodeAnimator
-    {
-        private int mType;
-        private final AnimatorChain mChain;
-
-        private InternalNodeAnimator(int type, AnimatorChain chain)
-        {
-            setType(type);
-            mChain = chain;
-        }
-
-        private void setType(int type)
-        {
-            if (type == Type.HEAD || type == Type.WITH
-                    || type == Type.NEXT || type == Type.DELAY)
-            {
-                mType = type;
-            } else
-            {
-                throw new IllegalArgumentException("type must be value of NodeAnimator.Type.XXX");
-            }
-        }
-
-        @Override
-        public final int getType()
-        {
-            return mType;
-        }
-
-        @Override
-        public final AnimatorChain chain()
-        {
-            if (isEmptyProperty() && mType != Type.DELAY)
-                throw new UnsupportedOperationException("can not access AnimatorChain because animator property is empty");
-            checkTarget();
-            return mChain;
-        }
     }
 }

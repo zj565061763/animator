@@ -10,7 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.fanwe.lib.animator.AnimatorChain;
-import com.fanwe.lib.animator.FAnimatorChain;
+import com.fanwe.lib.animator.FNodeAnimator;
 import com.fanwe.lib.animator.listener.FAnimatorListener;
 import com.fanwe.lib.animator.listener.api.OnEndInvisible;
 import com.fanwe.lib.animator.listener.api.OnEndReset;
@@ -60,7 +60,7 @@ public class RocketDemoActivity extends AppCompatActivity
          *    Next:烟雾淡出
          *
          */
-        final AnimatorChain animatorChain = FAnimatorChain.node(true)
+        final AnimatorChain animatorChain = new FNodeAnimator(true)
                 .setTarget(fl_rocket_root)
                 .alpha(0, 1f).setDuration(500).setTag("火箭淡入")
                 .chain().delay(500).setTag("延迟500毫秒")

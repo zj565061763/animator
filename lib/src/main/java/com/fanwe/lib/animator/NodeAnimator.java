@@ -35,6 +35,14 @@ public interface NodeAnimator extends SimplePropertyAnimator<NodeAnimator>
     AnimatorChain chain();
 
     /**
+     * 克隆为指定类型的动节点画
+     *
+     * @param type {@link Type}
+     * @return
+     */
+    NodeAnimator cloneToType(int type);
+
+    /**
      * 节点类型
      */
     final class Type
