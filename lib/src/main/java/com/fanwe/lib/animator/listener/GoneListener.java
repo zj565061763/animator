@@ -18,37 +18,25 @@ package com.fanwe.lib.animator.listener;
 import android.animation.Animator;
 import android.view.View;
 
-/**
- * 动画结束重置view
- */
-public class OnEndReset extends FAnimatorListener
+public class GoneListener extends LifecycleListener
 {
-    public OnEndReset()
+    public GoneListener(int lifecycle)
     {
-        super();
+        super(lifecycle);
     }
 
-    public OnEndReset(View target)
+    public GoneListener(int lifecycle, View target)
     {
-        super(target);
+        super(lifecycle, target);
     }
 
     @Override
-    public void onAnimationEnd(Animator animation)
+    public void onAnimationLifecycle(Animator animator)
     {
-        super.onAnimationEnd(animation);
-
         final View target = getTarget();
         if (target != null)
         {
-            target.setAlpha(1.0f);
-            target.setRotation(0.0f);
-            target.setRotationX(0.0f);
-            target.setRotationY(0.0f);
-            target.setTranslationX(0.0f);
-            target.setTranslationY(0.0f);
-            target.setScaleX(1.0f);
-            target.setScaleY(1.0f);
+            target.setVisibility(View.GONE);
         }
     }
 }

@@ -13,39 +13,24 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.fanwe.lib.animator.listener;
+package com.fanwe.lib.animator.listener.api;
 
-import android.animation.Animator;
 import android.view.View;
-import android.view.ViewGroup;
+
+import com.fanwe.lib.animator.listener.GoneListener;
 
 /**
- * 动画结束移除view
+ * 动画开始设置view为View.GONE
  */
-public class OnEndRemoveView extends FAnimatorListener
+public class OnStartGone extends GoneListener
 {
-    public OnEndRemoveView()
+    public OnStartGone()
     {
-        super();
+        super(Lifecycle.START);
     }
 
-    public OnEndRemoveView(View target)
+    public OnStartGone(View target)
     {
-        super(target);
-    }
-
-    @Override
-    public void onAnimationEnd(Animator animation)
-    {
-        super.onAnimationEnd(animation);
-
-        try
-        {
-            final View target = getTarget();
-            ((ViewGroup) target.getParent()).removeView(target);
-        } catch (Exception e)
-        {
-            e.printStackTrace();
-        }
+        super(Lifecycle.START, target);
     }
 }

@@ -13,35 +13,24 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.fanwe.lib.animator.listener;
+package com.fanwe.lib.animator.listener.api;
 
-import android.animation.Animator;
 import android.view.View;
 
+import com.fanwe.lib.animator.listener.ResetListener;
+
 /**
- * 动画结束设置view为View.INVISIBLE
+ * 动画开始重置view
  */
-public class OnEndInvisible extends FAnimatorListener
+public class OnStartReset extends ResetListener
 {
-    public OnEndInvisible()
+    public OnStartReset()
     {
-        super();
+        super(Lifecycle.START);
     }
 
-    public OnEndInvisible(View target)
+    public OnStartReset(View target)
     {
-        super(target);
-    }
-
-    @Override
-    public void onAnimationEnd(Animator animation)
-    {
-        super.onAnimationEnd(animation);
-
-        final View target = getTarget();
-        if (target != null && target.getVisibility() != View.INVISIBLE)
-        {
-            target.setVisibility(View.INVISIBLE);
-        }
+        super(Lifecycle.START, target);
     }
 }

@@ -8,8 +8,8 @@ import com.fanwe.lib.animator.FAnimatorChain;
 import com.fanwe.lib.animator.NodeAnimator;
 import com.fanwe.lib.animator.aligner.XCenterAligner;
 import com.fanwe.lib.animator.aligner.YCenterAligner;
-import com.fanwe.lib.animator.listener.OnEndRemoveView;
-import com.fanwe.lib.animator.listener.OnEndReset;
+import com.fanwe.lib.animator.listener.api.OnEndRemoveView;
+import com.fanwe.lib.animator.listener.api.OnEndReset;
 
 public class SimpleDemoActivity extends AppCompatActivity
 {

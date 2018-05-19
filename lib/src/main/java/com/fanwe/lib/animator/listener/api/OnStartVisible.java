@@ -13,35 +13,24 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.fanwe.lib.animator.listener;
+package com.fanwe.lib.animator.listener.api;
 
-import android.animation.Animator;
 import android.view.View;
 
+import com.fanwe.lib.animator.listener.VisibleListener;
+
 /**
- * 动画结束设置view为View.GONE
+ * 动画开始设置view可见
  */
-public class OnEndGone extends FAnimatorListener
+public class OnStartVisible extends VisibleListener
 {
-    public OnEndGone()
+    public OnStartVisible()
     {
-        super();
+        super(Lifecycle.START);
     }
 
-    public OnEndGone(View target)
+    public OnStartVisible(View target)
     {
-        super(target);
-    }
-
-    @Override
-    public void onAnimationEnd(Animator animation)
-    {
-        super.onAnimationEnd(animation);
-
-        final View target = getTarget();
-        if (target != null && target.getVisibility() != View.GONE)
-        {
-            target.setVisibility(View.GONE);
-        }
+        super(Lifecycle.START, target);
     }
 }

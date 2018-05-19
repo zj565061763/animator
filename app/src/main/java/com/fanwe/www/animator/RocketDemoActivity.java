@@ -12,8 +12,8 @@ import android.widget.TextView;
 import com.fanwe.lib.animator.AnimatorChain;
 import com.fanwe.lib.animator.FAnimatorChain;
 import com.fanwe.lib.animator.listener.FAnimatorListener;
-import com.fanwe.lib.animator.listener.OnEndInvisible;
-import com.fanwe.lib.animator.listener.OnEndReset;
+import com.fanwe.lib.animator.listener.api.OnEndInvisible;
+import com.fanwe.lib.animator.listener.api.OnEndReset;
 
 /**
  * Created by Administrator on 2017/8/15.
