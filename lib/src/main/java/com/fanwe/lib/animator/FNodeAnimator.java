@@ -48,8 +48,6 @@ public class FNodeAnimator extends BaseAnimator<NodeAnimator> implements NodeAni
     @Override
     public final AnimatorChain chain()
     {
-        checkTarget();
-
         if (mChain == null) mChain = new InternalAnimatorChain(mIsDebug, this);
         return mChain;
     }

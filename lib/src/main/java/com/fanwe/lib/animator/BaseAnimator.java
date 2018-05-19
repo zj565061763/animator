@@ -447,7 +447,7 @@ class BaseAnimator<T extends SimplePropertyAnimator> implements SimplePropertyAn
         }
     }
 
-    protected final void checkTarget()
+    private void checkTarget()
     {
         if (getTarget() == null)
             throw new NullPointerException("target view must be provided before this, see the Animator.setTarget(View) method");
