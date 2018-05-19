@@ -1,6 +1,7 @@
 package com.fanwe.lib.animator;
 
 import android.animation.Animator;
+import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.app.Activity;
 import android.content.Context;
@@ -14,7 +15,7 @@ import java.util.List;
 
 class FAnimatorChain implements AnimatorChain
 {
-    private final android.animation.AnimatorSet mAnimatorSet = new android.animation.AnimatorSet();
+    private final AnimatorSet mAnimatorSet = new AnimatorSet();
     private NodeAnimator mCurrent;
 
     private final boolean mIsDebug;
@@ -124,7 +125,7 @@ class FAnimatorChain implements AnimatorChain
     }
 
     @Override
-    public android.animation.AnimatorSet toAnimatorSet()
+    public AnimatorSet toAnimatorSet()
     {
         return mAnimatorSet;
     }
@@ -165,8 +166,7 @@ class FAnimatorChain implements AnimatorChain
     @Override
     public void startAsPop()
     {
-        final android.animation.AnimatorSet animatorSet = mAnimatorSet;
-        final ArrayList<android.animation.Animator> listChild = animatorSet.getChildAnimations();
+        final ArrayList<android.animation.Animator> listChild = mAnimatorSet.getChildAnimations();
         if (listChild == null || listChild.isEmpty())
         {
             return;

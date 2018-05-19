@@ -1,5 +1,6 @@
 package com.fanwe.lib.animator;
 
+import android.animation.AnimatorSet;
 import android.view.View;
 
 /**
@@ -53,11 +54,11 @@ public interface AnimatorChain
     NodeAnimator delay(long time);
 
     /**
-     * 转为{@link android.animation.AnimatorSet}
+     * 转为{@link AnimatorSet}
      *
      * @return
      */
-    android.animation.AnimatorSet toAnimatorSet();
+    AnimatorSet toAnimatorSet();
 
     /**
      * 开始动画
