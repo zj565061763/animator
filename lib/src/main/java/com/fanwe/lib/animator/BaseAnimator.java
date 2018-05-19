@@ -347,7 +347,6 @@ class BaseAnimator<T extends SimplePropertyAnimator> implements SimplePropertyAn
 
     private void saveTempLocation(View view)
     {
-        if (view == null) return;
         if (mTempLocation == null) mTempLocation = new int[]{0, 0};
         view.getLocationOnScreen(mTempLocation);
     }
