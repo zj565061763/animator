@@ -175,10 +175,7 @@ class FAnimatorChain implements AnimatorChain
         for (Animator animator : listChild)
         {
             final View target = (View) ((ObjectAnimator) animator).getTarget();
-            if (target == null)
-            {
-                continue;
-            }
+            if (target == null) continue;
 
             final ImageView cache = mapCache.get(target);
             if (cache == null)
