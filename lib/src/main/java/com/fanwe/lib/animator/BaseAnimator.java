@@ -32,7 +32,7 @@ import java.util.List;
 /**
  * 对ObjectAnimator进行封装提供更方便的调用方法
  */
-public class BaseAnimator<T extends BaseAnimator> implements SimplePropertyAnimator<T>, Cloneable
+public class BaseAnimator<T extends SimplePropertyAnimator> implements SimplePropertyAnimator<T>
 {
     private ObjectAnimator mObjectAnimator = new ObjectAnimator();
     private String mTag;

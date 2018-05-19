@@ -15,9 +15,6 @@
  */
 package com.fanwe.lib.animator;
 
-/**
- * 用{@link FNodeAnimator}替代
- */
 @Deprecated
 public class FAnimator extends BaseAnimator<FAnimator>
 {

@@ -1,3 +1,18 @@
+/*
+ * Copyright (C) 2017 zhengjun, fanwe (http://www.fanwe.com)
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package com.fanwe.lib.animator;
 
 import android.animation.Animator;
@@ -13,114 +28,143 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-class FAnimatorChain implements AnimatorChain
+/**
+ * 动画链条
+ */
+public class FAnimatorChain implements AnimatorChain
 {
     private final AnimatorSet mAnimatorSet = new AnimatorSet();
-    private FNodeAnimator mCurrent;
+    private NodeAnimator mCurrent;
 
     private final boolean mIsDebug;
-    private List<FNodeAnimator> mListNode;
+    private List<NodeAnimator> mListNode;
 
-    FAnimatorChain(boolean isDebug)
+    private FAnimatorChain(boolean isDebug)
     {
         mIsDebug = isDebug;
     }
 
-    void setCurrent(FNodeAnimator current)
+    /**
+     * 返回一个节点动画
+     *
+     * @return
+     */
+    public static NodeAnimator node()
     {
-        if (current == null) throw new NullPointerException("current is null");
-
-        if (current.getType() == FNodeAnimator.Type.HEAD)
-        {
-            if (mCurrent == null)
-                mAnimatorSet.play(current.toObjectAnimator());
-            else
-                throw new UnsupportedOperationException("HEAD is already set");
-        } else
-        {
-            if (mCurrent == null)
-                throw new UnsupportedOperationException("HEAD must be set before this");
-        }
-
-        mCurrent = current;
-        addNodeIfNeed(current);
+        return node(false);
     }
 
-    private void addNodeIfNeed(FNodeAnimator animator)
+    /**
+     * 返回一个节点动画
+     *
+     * @param isDebug
+     * @return
+     */
+    public static NodeAnimator node(boolean isDebug)
     {
-        if (mIsDebug)
-        {
-            if (mListNode == null) mListNode = new ArrayList<>();
-            mListNode.add(animator);
-        }
+        final FAnimatorChain chain = new FAnimatorChain(isDebug);
+        final NodeAnimator head = new InternalNodeAnimator(NodeAnimator.Type.HEAD, chain);
+        chain.setHead(head);
+        return head;
+    }
+
+    private void setHead(NodeAnimator animator)
+    {
+        if (animator == null)
+            throw new NullPointerException("animator is null");
+        if (animator.getType() != NodeAnimator.Type.HEAD)
+            throw new IllegalArgumentException("HEAD animator required");
+        if (mCurrent != null)
+            throw new UnsupportedOperationException("HEAD is already set");
+
+        mCurrent = animator;
+        mAnimatorSet.play(animator.toObjectAnimator());
+        addNodeIfNeed(animator);
     }
 
     @Override
-    public FNodeAnimator with()
+    public NodeAnimator with()
     {
         return with(null);
     }
 
     @Override
-    public FNodeAnimator with(View target)
+    public NodeAnimator with(View target)
     {
-        final FNodeAnimator animator = new FNodeAnimator(FNodeAnimator.Type.WITH, this);
-        animator.setTarget(target);
-        return withInternal(animator);
+        return initNodeAnimator(new InternalNodeAnimator(NodeAnimator.Type.WITH, this).setTarget(target));
     }
 
     @Override
-    public FNodeAnimator withClone()
+    public NodeAnimator withClone()
     {
-        final FNodeAnimator animator = mCurrent.clone();
-        animator.setType(FNodeAnimator.Type.WITH);
-        return withInternal(animator);
-    }
-
-    private FNodeAnimator withInternal(FNodeAnimator animator)
-    {
-        initNodeAnim(animator);
-        mAnimatorSet.play(mCurrent.toObjectAnimator()).with(animator.toObjectAnimator());
-        setCurrent(animator);
-        return animator;
+        final InternalNodeAnimator animator = (InternalNodeAnimator) ((InternalNodeAnimator) mCurrent).clone();
+        animator.setType(NodeAnimator.Type.WITH);
+        return initNodeAnimator(animator);
     }
 
     @Override
-    public FNodeAnimator next()
+    public NodeAnimator next()
     {
         return next(null);
     }
 
     @Override
-    public FNodeAnimator next(View target)
+    public NodeAnimator next(View target)
     {
-        final FNodeAnimator animator = new FNodeAnimator(FNodeAnimator.Type.NEXT, this);
-        animator.setTarget(target);
-        return nextInternal(animator);
-    }
-
-    private FNodeAnimator nextInternal(FNodeAnimator animator)
-    {
-        initNodeAnim(animator);
-        mAnimatorSet.play(animator.toObjectAnimator()).after(mCurrent.toObjectAnimator());
-        setCurrent(animator);
-        return animator;
+        return initNodeAnimator(new InternalNodeAnimator(NodeAnimator.Type.NEXT, this).setTarget(target));
     }
 
     @Override
-    public FNodeAnimator delay(long time)
+    public NodeAnimator delay(long time)
     {
-        final FNodeAnimator animator = new FNodeAnimator(FNodeAnimator.Type.DELAY, this);
-        animator.setDuration(time);
-        return nextInternal(animator);
+        return initNodeAnimator(new InternalNodeAnimator(NodeAnimator.Type.DELAY, this).setDuration(time));
     }
 
-    private void initNodeAnim(FNodeAnimator anim)
+    /**
+     * 初始化节点动画
+     *
+     * @param animator
+     * @return
+     */
+    private NodeAnimator initNodeAnimator(NodeAnimator animator)
     {
-        final View target = anim.getTarget();
-        if (target == null)
+        if (animator == null)
+            throw new NullPointerException("animator is null");
+
+        final View target = animator.getTarget();
+        if (target == null) animator.setTarget(mCurrent.getTarget());
+
+        final int type = animator.getType();
+        switch (type)
         {
-            anim.setTarget(mCurrent.getTarget());
+            case NodeAnimator.Type.WITH:
+                mAnimatorSet.play(mCurrent.toObjectAnimator()).with(animator.toObjectAnimator());
+                break;
+            case NodeAnimator.Type.NEXT:
+            case NodeAnimator.Type.DELAY:
+                mAnimatorSet.play(animator.toObjectAnimator()).after(mCurrent.toObjectAnimator());
+                break;
+        }
+        setCurrent(animator);
+
+        return animator;
+    }
+
+    private void setCurrent(NodeAnimator animator)
+    {
+        if (animator.getType() == NodeAnimator.Type.HEAD)
+            throw new UnsupportedOperationException("HEAD animator is not supported here");
+
+        mCurrent = animator;
+        addNodeIfNeed(animator);
+    }
+
+    private void addNodeIfNeed(NodeAnimator animator)
+    {
+        if (mIsDebug)
+        {
+            if (mListNode == null) mListNode = new ArrayList<>();
+            mListNode.add(animator);
         }
     }
 
@@ -138,20 +182,20 @@ class FAnimatorChain implements AnimatorChain
             if (mListNode != null)
             {
                 final StringBuilder sb = new StringBuilder("----------");
-                for (FNodeAnimator item : mListNode)
+                for (NodeAnimator item : mListNode)
                 {
                     switch (item.getType())
                     {
-                        case FNodeAnimator.Type.HEAD:
+                        case NodeAnimator.Type.HEAD:
                             sb.append("\r\n").append("Head:").append(item.getTag());
                             break;
-                        case FNodeAnimator.Type.NEXT:
+                        case NodeAnimator.Type.NEXT:
                             sb.append("\r\n").append("Next:").append(item.getTag());
                             break;
-                        case FNodeAnimator.Type.WITH:
+                        case NodeAnimator.Type.WITH:
                             sb.append(" With:").append(item.getTag());
                             break;
-                        case FNodeAnimator.Type.DELAY:
+                        case NodeAnimator.Type.DELAY:
                             sb.append("\r\n").append("Delay:").append(item.getTag());
                             break;
                     }
@@ -214,5 +258,43 @@ class FAnimatorChain implements AnimatorChain
     public void cancel()
     {
         mAnimatorSet.cancel();
+    }
+
+    private static class InternalNodeAnimator extends BaseAnimator<NodeAnimator> implements NodeAnimator
+    {
+        private int mType;
+        private final AnimatorChain mChain;
+
+        private InternalNodeAnimator(int type, AnimatorChain chain)
+        {
+            setType(type);
+            mChain = chain;
+        }
+
+        private void setType(int type)
+        {
+            if (type == Type.HEAD || type == Type.WITH
+                    || type == Type.NEXT || type == Type.DELAY)
+            {
+                mType = type;
+            } else
+            {
+                throw new IllegalArgumentException("type must be value of NodeAnimator.Type.XXX");
+            }
+        }
+
+        @Override
+        public final int getType()
+        {
+            return mType;
+        }
+
+        @Override
+        public final AnimatorChain chain()
+        {
+            if (isEmptyProperty() && mType != Type.DELAY)
+                throw new UnsupportedOperationException("Can not access AnimatorChain because property is empty");
+            return mChain;
+        }
     }
 }

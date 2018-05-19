@@ -21,7 +21,7 @@ import android.view.View;
 /**
  * 动画接口
  */
-public interface Animator<T extends Animator>
+public interface Animator<T extends Animator> extends Cloneable
 {
     /**
      * 设置要执行动画的view

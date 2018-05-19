@@ -1,3 +1,18 @@
+/*
+ * Copyright (C) 2017 zhengjun, fanwe (http://www.fanwe.com)
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package com.fanwe.lib.animator;
 
 import android.animation.AnimatorSet;
@@ -13,7 +28,7 @@ public interface AnimatorChain
      *
      * @return
      */
-    FNodeAnimator with();
+    NodeAnimator with();
 
     /**
      * 生成一个新动画和上一个动画同时执行
@@ -21,21 +36,21 @@ public interface AnimatorChain
      * @param target 新动画要执行的View对象，如果为null，则沿用上一个动画的View对象
      * @return
      */
-    FNodeAnimator with(View target);
+    NodeAnimator with(View target);
 
     /**
      * 在{@link #with()}方法的基础上会保留上一个动画的参数设置
      *
      * @return
      */
-    FNodeAnimator withClone();
+    NodeAnimator withClone();
 
     /**
      * 生成一个新动画在上一个动画执行完成后执行
      *
      * @return
      */
-    FNodeAnimator next();
+    NodeAnimator next();
 
     /**
      * 生成一个新动画在上一个动画执行完成后执行
@@ -43,7 +58,7 @@ public interface AnimatorChain
      * @param target 新动画要执行的View对象，如果为null，则沿用上一个动画的View对象
      * @return
      */
-    FNodeAnimator next(View target);
+    NodeAnimator next(View target);
 
     /**
      * 生成一个延迟动画在上一个动画执行完成后执行
@@ -51,7 +66,7 @@ public interface AnimatorChain
      * @param time 延迟多少毫秒
      * @return
      */
-    FNodeAnimator delay(long time);
+    NodeAnimator delay(long time);
 
     /**
      * 转为{@link AnimatorSet}
