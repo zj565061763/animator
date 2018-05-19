@@ -143,4 +143,11 @@ public interface Animator<T extends Animator> extends Cloneable
      * 取消动画
      */
     void cancel();
+
+    /**
+     * 克隆动画
+     *
+     * @return
+     */
+    T clone();
 }

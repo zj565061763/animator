@@ -97,7 +97,7 @@ public class FAnimatorChain implements AnimatorChain
     @Override
     public NodeAnimator withClone()
     {
-        final InternalNodeAnimator animator = (InternalNodeAnimator) ((InternalNodeAnimator) mCurrent).clone();
+        final InternalNodeAnimator animator = (InternalNodeAnimator) mCurrent.clone();
         animator.setType(NodeAnimator.Type.WITH);
         return initNodeAnimator(animator);
     }
@@ -152,6 +152,8 @@ public class FAnimatorChain implements AnimatorChain
 
     private void setCurrent(NodeAnimator animator)
     {
+        if (mCurrent == null)
+            throw new RuntimeException("HEAD animator is not set yet");
         if (animator.getType() == NodeAnimator.Type.HEAD)
             throw new UnsupportedOperationException("HEAD animator is not supported here");
 
