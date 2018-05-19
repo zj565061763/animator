@@ -23,7 +23,7 @@ public void onClickBtnAnim(View v)
     /**
      * 创建一个节点动画
      */
-    final NodeAnimator nodeAnimator = FAnimatorChain.node();
+    final NodeAnimator nodeAnimator = new FNodeAnimator();
 
     nodeAnimator
             /**
