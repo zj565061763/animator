@@ -107,6 +107,11 @@ abstract class BaseAnimatorChain implements AnimatorChain
      */
     private NodeAnimator initNodeAnimator(NodeAnimator animator)
     {
+        if (mCurrent == null)
+            throw new RuntimeException("HEAD animator must be provided before this");
+        if (animator.getType() == NodeAnimator.Type.HEAD)
+            throw new UnsupportedOperationException("HEAD animator is not supported here");
+
         final View target = animator.getTarget();
         if (target == null) animator.setTarget(mCurrent.getTarget());
 
@@ -121,20 +126,11 @@ abstract class BaseAnimatorChain implements AnimatorChain
                 mAnimatorSet.play(animator.toObjectAnimator()).after(mCurrent.toObjectAnimator());
                 break;
         }
-        setCurrent(animator);
-
-        return animator;
-    }
-
-    private void setCurrent(NodeAnimator animator)
-    {
-        if (mCurrent == null)
-            throw new RuntimeException("HEAD animator must be provided before this");
-        if (animator.getType() == NodeAnimator.Type.HEAD)
-            throw new UnsupportedOperationException("HEAD animator is not supported here");
 
         mCurrent = animator;
         addNodeIfNeed(animator);
+
+        return animator;
     }
 
     private void addNodeIfNeed(NodeAnimator animator)
