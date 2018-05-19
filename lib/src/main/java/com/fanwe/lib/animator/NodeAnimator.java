@@ -3,7 +3,7 @@ package com.fanwe.lib.animator;
 /**
  * 链条节点动画
  */
-public final class NodeAnimator extends BaseAnimator<NodeAnimator>
+public class NodeAnimator extends BaseAnimator<NodeAnimator>
 {
     private int mType;
     private final AnimatorChain mChain;
@@ -42,7 +42,7 @@ public final class NodeAnimator extends BaseAnimator<NodeAnimator>
      *
      * @return
      */
-    public int getType()
+    public final int getType()
     {
         return mType;
     }
@@ -52,9 +52,9 @@ public final class NodeAnimator extends BaseAnimator<NodeAnimator>
      *
      * @return
      */
-    public AnimatorChain chain()
+    public final AnimatorChain chain()
     {
-        if (isEmptyProperty())
+        if (isEmptyProperty() && mType != Type.DELAY)
             throw new UnsupportedOperationException("Can not access AnimatorChain because property is empty");
         return mChain;
     }
@@ -62,7 +62,7 @@ public final class NodeAnimator extends BaseAnimator<NodeAnimator>
     /**
      * 节点类型
      */
-    public static class Type
+    public static final class Type
     {
         public static final int HEAD = 0;
         public static final int WITH = 1;
