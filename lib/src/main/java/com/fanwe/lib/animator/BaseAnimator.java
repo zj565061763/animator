@@ -355,6 +355,7 @@ class BaseAnimator<T extends SimplePropertyAnimator> implements SimplePropertyAn
     {
         if (values != null && values.length > 0)
         {
+            checkTarget();
             saveTargetLocation();
             final float[] realValues = new float[values.length];
             for (int i = 0; i < values.length; i++)
@@ -381,6 +382,7 @@ class BaseAnimator<T extends SimplePropertyAnimator> implements SimplePropertyAn
     {
         if (views != null && views.length > 0)
         {
+            checkTarget();
             final List<Float> list = new ArrayList<>();
             for (int i = 0; i < views.length; i++)
             {
@@ -423,6 +425,7 @@ class BaseAnimator<T extends SimplePropertyAnimator> implements SimplePropertyAn
     {
         if (views != null && views.length > 0)
         {
+            checkTarget();
             final float[] values = new float[views.length];
             for (int i = 0; i < views.length; i++)
             {
@@ -442,6 +445,12 @@ class BaseAnimator<T extends SimplePropertyAnimator> implements SimplePropertyAn
                 scaleY(values);
             }
         }
+    }
+
+    private void checkTarget()
+    {
+        if (getTarget() == null)
+            throw new NullPointerException("target view must be provided before this see the Animator.setTarget(View) method");
     }
 
     //---------- SimplePropertyAnimator End ----------
