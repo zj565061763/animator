@@ -38,6 +38,9 @@ public class SimpleDemoActivity extends AppCompatActivity
 
     public void onClickBtnAnim(View v)
     {
+        /**
+         * 创建一个节点动画
+         */
         final NodeAnimator nodeAnimator = FAnimatorChain.node();
 
         nodeAnimator
@@ -53,12 +56,12 @@ public class SimpleDemoActivity extends AppCompatActivity
                 .moveToX(mXCenterAligner, v, view_target_1, view_target_2, view_target_3).setDuration(2000)
 
                 /**
-                 * 动画节点方法，有with()，withClone()，next()，delay()
+                 * 动画链条提供的节点方法，有with()，withClone()，next()，delay()
                  *
-                 * with()：内部生成一个新动画，新动画会和上一个动画一起执行
+                 * with()：生成一个新动画和上一个动画同时执行
                  * withClone()：在with()方法的基础上会复制上一个动画的一些设置属性，比如动画时长等
-                 * next()：内部生成一个新动画，新动画在上一个动画执行结束后开始执行
-                 * delay()：内部其实就是一个next()动画
+                 * next()：生成一个新动画在上一个动画执行完成后执行
+                 * delay()：生成一个延迟动画在上一个动画执行完成后执行
                  */
                 .chain().withClone()
 
@@ -68,7 +71,9 @@ public class SimpleDemoActivity extends AppCompatActivity
                  */
                 .moveToY(mYCenterAligner, v, view_target_1, view_target_2, view_target_3)
 
-                // 延迟1000毫秒
+                /**
+                 * 延迟1000毫秒
+                 */
                 .chain().delay(1000)
 
                 /**
@@ -82,7 +87,7 @@ public class SimpleDemoActivity extends AppCompatActivity
                 .addListener(new OnEndReset()) // 动画完成后重置view
 
                 /**
-                 * 开始执行动画
+                 * 开始执行整个动画链
                  */
                 .chain().start();
 

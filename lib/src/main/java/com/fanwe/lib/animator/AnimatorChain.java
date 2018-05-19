@@ -39,7 +39,7 @@ public interface AnimatorChain
     NodeAnimator with(View target);
 
     /**
-     * 在{@link #with()}方法的基础上会保留上一个动画的参数设置
+     * 在{@link #with()}方法的基础上会复制上一个动画的一些设置属性，比如动画时长等
      *
      * @return
      */
