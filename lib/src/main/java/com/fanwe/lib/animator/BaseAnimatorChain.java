@@ -136,18 +136,14 @@ abstract class BaseAnimatorChain implements AnimatorChain
         }
 
         mCurrent = animator;
-        addNodeIfNeed(animator);
 
-        return animator;
-    }
-
-    private void addNodeIfNeed(NodeAnimator animator)
-    {
         if (mIsDebug)
         {
             if (mListNode == null) mListNode = new ArrayList<>();
             mListNode.add(animator);
         }
+
+        return animator;
     }
 
     @Override
