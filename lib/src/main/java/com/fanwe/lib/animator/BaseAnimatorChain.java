@@ -39,13 +39,17 @@ abstract class BaseAnimatorChain implements AnimatorChain
     private final boolean mIsDebug;
     private List<NodeAnimator> mListNode;
 
-    public BaseAnimatorChain(boolean isDebug)
+    public BaseAnimatorChain(boolean isDebug, FNodeAnimator animator)
     {
-        mIsDebug = isDebug;
+        if (animator == null)
+            throw new NullPointerException("animator is null");
+        if (animator.getType() != NodeAnimator.Type.HEAD)
+            throw new RuntimeException("HEAD NodeAnimator required");
 
-        mCurrent = createNodeAnimator(NodeAnimator.Type.HEAD);
-        mAnimatorSet.play(mCurrent.toObjectAnimator());
-        addNodeIfNeed(mCurrent);
+        mIsDebug = isDebug;
+        mCurrent = animator;
+        mAnimatorSet.play(animator.toObjectAnimator());
+        addNodeIfNeed(animator);
     }
 
     @Override

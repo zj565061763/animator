@@ -52,7 +52,7 @@ public class FNodeAnimator extends BaseAnimator<NodeAnimator> implements NodeAni
             throw new UnsupportedOperationException("can not access AnimatorChain because animator property is empty");
         checkTarget();
 
-        if (mChain == null) mChain = new InternalAnimatorChain(mIsDebug);
+        if (mChain == null) mChain = new InternalAnimatorChain(mIsDebug, this);
         return mChain;
     }
 
@@ -66,9 +66,9 @@ public class FNodeAnimator extends BaseAnimator<NodeAnimator> implements NodeAni
 
     private final static class InternalAnimatorChain extends BaseAnimatorChain
     {
-        public InternalAnimatorChain(boolean isDebug)
+        public InternalAnimatorChain(boolean isDebug, FNodeAnimator animator)
         {
-            super(isDebug);
+            super(isDebug, animator);
         }
 
         @Override
