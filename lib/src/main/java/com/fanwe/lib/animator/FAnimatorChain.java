@@ -197,4 +197,22 @@ class FAnimatorChain implements AnimatorChain
         }
         start();
     }
+
+    @Override
+    public boolean isRunning()
+    {
+        return mAnimatorSet.isRunning();
+    }
+
+    @Override
+    public boolean isStarted()
+    {
+        return mAnimatorSet.isStarted();
+    }
+
+    @Override
+    public void cancel()
+    {
+        mAnimatorSet.cancel();
+    }
 }
