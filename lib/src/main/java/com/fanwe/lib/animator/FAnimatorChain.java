@@ -30,7 +30,7 @@ class FAnimatorChain implements AnimatorChain
         if (current == null) throw new NullPointerException("current is null");
         checkEmptyProperty(mCurrent);
 
-        if (current.mType == NodeAnimator.Type.HEAD)
+        if (current.getType() == NodeAnimator.Type.HEAD)
         {
             if (mCurrent == null) mAnimatorSet.play(current.toObjectAnimator());
             else throw new IllegalArgumentException("AnimatorChain can only contains one HEAD");
@@ -51,7 +51,7 @@ class FAnimatorChain implements AnimatorChain
 
     private static void checkEmptyProperty(NodeAnimator animator)
     {
-        if (animator != null && animator.isEmptyProperty() && animator.mType != NodeAnimator.Type.DELAY)
+        if (animator != null && animator.isEmptyProperty() && animator.getType() != NodeAnimator.Type.DELAY)
         {
             throw new RuntimeException("NodeAnimator's property is empty");
         }
@@ -74,9 +74,9 @@ class FAnimatorChain implements AnimatorChain
     @Override
     public NodeAnimator withClone()
     {
-        NodeAnimator clone = mCurrent.clone();
-        clone.mType = NodeAnimator.Type.WITH;
-        return withInternal(clone);
+        final NodeAnimator animator = mCurrent.clone();
+        animator.setType(NodeAnimator.Type.WITH);
+        return withInternal(animator);
     }
 
     private NodeAnimator withInternal(NodeAnimator animator)
@@ -142,7 +142,7 @@ class FAnimatorChain implements AnimatorChain
                 final StringBuilder sb = new StringBuilder("----------");
                 for (NodeAnimator item : mListNode)
                 {
-                    switch (item.mType)
+                    switch (item.getType())
                     {
                         case NodeAnimator.Type.HEAD:
                             sb.append("\r\n").append("Head:").append(item.getTag());

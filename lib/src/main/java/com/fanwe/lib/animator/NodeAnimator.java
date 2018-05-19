@@ -5,7 +5,7 @@ package com.fanwe.lib.animator;
  */
 public final class NodeAnimator extends BaseAnimator<NodeAnimator>
 {
-    int mType;
+    private int mType;
     private final AnimatorChain mChain;
 
     public NodeAnimator()
@@ -21,8 +21,20 @@ public final class NodeAnimator extends BaseAnimator<NodeAnimator>
 
     NodeAnimator(int type, AnimatorChain chain)
     {
-        mType = type;
+        setType(type);
         mChain = chain;
+    }
+
+    void setType(int type)
+    {
+        if (type == Type.HEAD || type == Type.WITH
+                || type == Type.NEXT || type == Type.DELAY)
+        {
+            mType = type;
+        } else
+        {
+            throw new IllegalArgumentException("type must be value of NodeAnimator.Type.XXX");
+        }
     }
 
     /**
