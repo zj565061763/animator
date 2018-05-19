@@ -44,7 +44,7 @@ abstract class BaseAnimatorChain implements AnimatorChain
         if (animator == null)
             throw new NullPointerException("animator is null");
         if (animator.getType() != NodeAnimator.Type.HEAD)
-            throw new RuntimeException("HEAD NodeAnimator required");
+            throw new RuntimeException("HEAD animator required");
 
         mIsDebug = isDebug;
         mCurrent = animator;
@@ -97,7 +97,7 @@ abstract class BaseAnimatorChain implements AnimatorChain
         if (animator == null)
             throw new NullPointerException("animator is null");
         if (animator.getType() != type)
-            throw new RuntimeException("NodeAnimator must be " + type + " type");
+            throw new RuntimeException("animator must be " + type + " type");
         return animator;
     }
 
