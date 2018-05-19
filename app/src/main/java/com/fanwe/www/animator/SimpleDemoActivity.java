@@ -112,7 +112,8 @@ public class SimpleDemoActivity extends AppCompatActivity
 
     public void onClickBtnAnimInside(View v)
     {
-        new FNodeAnimator(true).setTarget(v)
+        new FNodeAnimator(true)
+                .setTarget(v)
                 .moveToX(mXCenterAligner, v, view_target_1, view_target_2, view_target_3).setDuration(2000).setTag("x移动")
                 .chain().withClone().moveToY(mYCenterAligner, v, view_target_1, view_target_2, view_target_3).setTag("y移动")
                 .chain().delay(1000).setTag("延迟1000毫秒")
