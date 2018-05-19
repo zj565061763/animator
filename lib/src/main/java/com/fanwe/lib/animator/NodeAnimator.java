@@ -3,12 +3,23 @@ package com.fanwe.lib.animator;
 public final class NodeAnimator extends BaseAnimator<NodeAnimator>
 {
     int mType;
-    private final AnimatorSet mAnimatorSet;
+    private final AnimatorChain mChain;
 
-    NodeAnimator(int type, AnimatorSet animatorSet)
+    public NodeAnimator()
+    {
+        this(false);
+    }
+
+    public NodeAnimator(boolean isDebug)
+    {
+        this(Type.HEAD, new FAnimatorChain(isDebug));
+        ((FAnimatorChain) mChain).setCurrent(this);
+    }
+
+    NodeAnimator(int type, AnimatorChain chain)
     {
         mType = type;
-        mAnimatorSet = animatorSet;
+        mChain = chain;
     }
 
     public int getType()
@@ -16,9 +27,9 @@ public final class NodeAnimator extends BaseAnimator<NodeAnimator>
         return mType;
     }
 
-    public AnimatorSet set()
+    public AnimatorChain chain()
     {
-        return mAnimatorSet;
+        return mChain;
     }
 
     public static class Type

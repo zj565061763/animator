@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class FFAnimatorSet implements AnimatorSet
+public class FAnimatorChain implements AnimatorChain
 {
     private final android.animation.AnimatorSet mAnimatorSet = new android.animation.AnimatorSet();
     private NodeAnimator mCurrent;
@@ -20,34 +20,17 @@ public class FFAnimatorSet implements AnimatorSet
     private final boolean mIsDebug;
     private List<NodeAnimator> mListNode;
 
-    public FFAnimatorSet()
-    {
-        this(false);
-    }
-
-    public FFAnimatorSet(boolean isDebug)
+    FAnimatorChain(boolean isDebug)
     {
         mIsDebug = isDebug;
-        mAnimatorSet.play(getCurrent().toObjectAnimator());
     }
 
-    public NodeAnimator getCurrent()
+    void setCurrent(NodeAnimator current)
     {
-        if (mCurrent == null)
-        {
-            mCurrent = new NodeAnimator(NodeAnimator.Type.HEAD, this);
-            addNodeIfNeed(mCurrent);
-        }
-        return mCurrent;
-    }
-
-    private void setCurrent(NodeAnimator current)
-    {
-        if (mCurrent == null)
-            throw new UnsupportedOperationException("Head animator is not created yet");
-        if (current == null)
-            throw new NullPointerException("current is null");
+        if (current == null) throw new NullPointerException("current is null");
         checkEmptyProperty(mCurrent);
+
+        if (current.mType == NodeAnimator.Type.HEAD) mAnimatorSet.play(current.toObjectAnimator());
 
         mCurrent = current;
         addNodeIfNeed(current);
@@ -64,7 +47,7 @@ public class FFAnimatorSet implements AnimatorSet
 
     private static void checkEmptyProperty(NodeAnimator animator)
     {
-        if (animator.isEmptyProperty() && animator.mType != NodeAnimator.Type.DELAY)
+        if (animator != null && animator.isEmptyProperty() && animator.mType != NodeAnimator.Type.DELAY)
         {
             throw new RuntimeException("Animator's property is empty");
         }
@@ -93,7 +76,7 @@ public class FFAnimatorSet implements AnimatorSet
     @Override
     public NodeAnimator withClone()
     {
-        NodeAnimator clone = (NodeAnimator) getCurrent().clone();
+        NodeAnimator clone = mCurrent.clone();
         clone.mType = NodeAnimator.Type.WITH;
         return withInternal(clone);
     }
@@ -101,7 +84,7 @@ public class FFAnimatorSet implements AnimatorSet
     private NodeAnimator withInternal(NodeAnimator animator)
     {
         initNodeAnim(animator);
-        mAnimatorSet.play(getCurrent().toObjectAnimator()).with(animator.toObjectAnimator());
+        mAnimatorSet.play(mCurrent.toObjectAnimator()).with(animator.toObjectAnimator());
         setCurrent(animator);
         return animator;
     }
@@ -123,7 +106,7 @@ public class FFAnimatorSet implements AnimatorSet
     private NodeAnimator nextInternal(NodeAnimator animator)
     {
         initNodeAnim(animator);
-        mAnimatorSet.play(animator.toObjectAnimator()).after(getCurrent().toObjectAnimator());
+        mAnimatorSet.play(animator.toObjectAnimator()).after(mCurrent.toObjectAnimator());
         setCurrent(animator);
         return animator;
     }
@@ -141,7 +124,7 @@ public class FFAnimatorSet implements AnimatorSet
         final View target = anim.getTarget();
         if (target == null)
         {
-            anim.setTarget(getCurrent().getTarget());
+            anim.setTarget(mCurrent.getTarget());
         }
     }
 
@@ -177,7 +160,7 @@ public class FFAnimatorSet implements AnimatorSet
                             break;
                     }
                 }
-                Log.i(FFAnimatorSet.class.getSimpleName(), sb.toString());
+                Log.i(FAnimatorChain.class.getSimpleName(), sb.toString());
             }
         }
 

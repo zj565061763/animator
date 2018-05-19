@@ -2,7 +2,7 @@ package com.fanwe.lib.animator;
 
 import android.view.View;
 
-public interface AnimatorSet
+public interface AnimatorChain
 {
     NodeAnimator begin();
 

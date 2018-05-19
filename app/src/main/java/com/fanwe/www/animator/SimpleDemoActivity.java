@@ -4,7 +4,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
-import com.fanwe.lib.animator.FFAnimatorSet;
+import com.fanwe.lib.animator.NodeAnimator;
 import com.fanwe.lib.animator.aligner.XCenterAligner;
 import com.fanwe.lib.animator.aligner.YCenterAligner;
 import com.fanwe.lib.animator.listener.OnEndRemoveView;
@@ -37,10 +37,9 @@ public class SimpleDemoActivity extends AppCompatActivity
 
     public void onClickBtnAnim(View v)
     {
-        final FFAnimatorSet animatorSet = new FFAnimatorSet();
+        final NodeAnimator nodeAnimator = new NodeAnimator();
 
-        animatorSet.getCurrent()
-
+        nodeAnimator
                 /**
                  * 设置要执行动画的view
                  */
@@ -60,7 +59,7 @@ public class SimpleDemoActivity extends AppCompatActivity
                  * next()：内部生成一个新动画，新动画在上一个动画执行结束后开始执行
                  * delay()：内部其实就是一个next()动画
                  */
-                .set().withClone()
+                .chain().withClone()
 
                 /**
                  * 设置动画view的y方向要移动到哪些view的位置
@@ -69,7 +68,7 @@ public class SimpleDemoActivity extends AppCompatActivity
                 .moveToY(mYCenterAligner, v, view_target_1, view_target_2, view_target_3)
 
                 // 延迟1000毫秒
-                .set().delay(1000)
+                .chain().delay(1000)
 
                 /**
                  * 添加一个动画监听
@@ -84,7 +83,7 @@ public class SimpleDemoActivity extends AppCompatActivity
                 /**
                  * 开始执行动画
                  */
-                .start();
+                .chain().start();
 
         /**
          * 为了解决view没办法超出父布局边界来执行动画的问题，提供了这个方法
@@ -97,16 +96,16 @@ public class SimpleDemoActivity extends AppCompatActivity
          *
          * 注意：如果调用此方法的话，要记得在最后的动画结束后移除镜像ImageView，除非业务需求就是不移除
          */
-//        animatorSet.startAsPop();
+//        nodeAnimator.chain().startAsPop();
     }
 
     public void onClickBtnAnimInside(View v)
     {
-        new FFAnimatorSet(true).getCurrent().setTarget(v)
+        new NodeAnimator(true).setTarget(v)
                 .moveToX(mXCenterAligner, v, view_target_1, view_target_2, view_target_3).setDuration(2000).setTag("x移动")
-                .set().withClone().moveToY(mYCenterAligner, v, view_target_1, view_target_2, view_target_3).setTag("y移动")
-                .set().delay(1000).setTag("延迟1000毫秒")
+                .chain().withClone().moveToY(mYCenterAligner, v, view_target_1, view_target_2, view_target_3).setTag("y移动")
+                .chain().delay(1000).setTag("延迟1000毫秒")
                 .addListener(new OnEndRemoveView()) //动画完成后移除view
-                .set().startAsPop();
+                .chain().startAsPop();
     }
 }
