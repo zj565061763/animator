@@ -48,7 +48,20 @@ public class RocketDemoActivity extends AppCompatActivity
             return;
         }
 
-        mAnimatorChain = FAnimatorChain.node(true).setTarget(fl_rocket_root)
+        /**
+         * true-调试模式，会输出整个动画链的结构，方便开发调试，可以给每个节点动画设置tag，来加强描述
+         *
+         * demo中的日志输入如下：
+         *
+         *    Head:火箭淡入
+         *    Delay:延迟500毫秒
+         *    Next:开始数字缩放X With:开始数字缩放Y
+         *    Next:火箭起飞 With:烟雾淡入
+         *    Next:烟雾淡出
+         *
+         */
+        final AnimatorChain animatorChain = FAnimatorChain.node(true)
+                .setTarget(fl_rocket_root)
                 .alpha(0, 1f).setDuration(500).setTag("火箭淡入")
                 .chain().delay(500).setTag("延迟500毫秒")
                 .chain().next(tv_number).scaleX(1f, 0f).setRepeatCount(2).setDuration(1000).setTag("开始数字缩放X")
@@ -104,6 +117,8 @@ public class RocketDemoActivity extends AppCompatActivity
                 .addListener(new OnEndInvisible(iv_rocket_smoke))
                 .chain();
 
-        mAnimatorChain.start();
+        animatorChain.start();
+
+        mAnimatorChain = animatorChain;
     }
 }

@@ -57,7 +57,7 @@ public class FAnimatorChain implements AnimatorChain
     /**
      * 返回一个节点动画
      *
-     * @param isDebug true-调试模式，会输出各个动画节点
+     * @param isDebug true-调试模式，会输出整个动画链的结构，方便开发调试，可以给每个节点动画设置tag，来加强描述
      * @return
      */
     public static NodeAnimator node(boolean isDebug)
