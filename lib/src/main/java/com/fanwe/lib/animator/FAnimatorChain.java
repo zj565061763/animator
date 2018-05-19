@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class FAnimatorChain implements AnimatorChain
+class FAnimatorChain implements AnimatorChain
 {
     private final android.animation.AnimatorSet mAnimatorSet = new android.animation.AnimatorSet();
     private NodeAnimator mCurrent;
