@@ -77,13 +77,17 @@ public interface AnimatorChain
 
     /**
      * 开始动画
+     *
+     * @return
      */
-    void start();
+    AnimatorChain start();
 
     /**
      * 对target截图然后设置给ImageView，让ImageView镜像在android.R.id.content的FrameLayout里面执行动画
+     *
+     * @return
      */
-    void startAsPop();
+    AnimatorChain startAsPop();
 
     /**
      * 动画是否处于运行中

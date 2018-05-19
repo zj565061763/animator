@@ -60,7 +60,7 @@ public class RocketDemoActivity extends AppCompatActivity
          *    Next:烟雾淡出
          *
          */
-        final AnimatorChain animatorChain = new FNodeAnimator(true)
+        mAnimatorChain = new FNodeAnimator(true)
                 .setTarget(fl_rocket_root)
                 .alpha(0, 1f).setDuration(500).setTag("火箭淡入")
                 .chain().delay(500).setTag("延迟500毫秒")
@@ -115,10 +115,6 @@ public class RocketDemoActivity extends AppCompatActivity
                 .chain().with(iv_rocket_smoke).alpha(0, 1f).setDuration(3000).setStartDelay(500).setTag("烟雾淡入")
                 .chain().next().alpha(1f, 0).setDuration(500).setTag("烟雾淡出")
                 .addListener(new OnEndInvisible(iv_rocket_smoke)) //动画结束隐藏烟雾
-                .chain();
-
-        animatorChain.start();
-
-        mAnimatorChain = animatorChain;
+                .chain().start();
     }
 }

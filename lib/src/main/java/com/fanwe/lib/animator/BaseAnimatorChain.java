@@ -173,7 +173,7 @@ abstract class BaseAnimatorChain implements AnimatorChain
     }
 
     @Override
-    public void start()
+    public AnimatorChain start()
     {
         if (mIsDebug)
         {
@@ -204,16 +204,13 @@ abstract class BaseAnimatorChain implements AnimatorChain
 
         checkEmptyProperty(mCurrent);
         mAnimatorSet.start();
+        return this;
     }
 
     @Override
-    public void startAsPop()
+    public AnimatorChain startAsPop()
     {
         final ArrayList<android.animation.Animator> listChild = mAnimatorSet.getChildAnimations();
-        if (listChild == null || listChild.isEmpty())
-        {
-            return;
-        }
         final HashMap<View, ImageView> mapCache = new HashMap<>();
         for (Animator animator : listChild)
         {
@@ -239,6 +236,7 @@ abstract class BaseAnimatorChain implements AnimatorChain
             }
         }
         start();
+        return this;
     }
 
     @Override
