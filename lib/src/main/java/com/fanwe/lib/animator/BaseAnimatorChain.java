@@ -91,6 +91,8 @@ abstract class BaseAnimatorChain implements AnimatorChain
             throw new NullPointerException("animator is null");
         if (animator.getType() != type)
             throw new RuntimeException("animator must be " + type + " type");
+        if (animator.chain() != this)
+            throw new RuntimeException("animator's chain() method must return current instance");
         return animator;
     }
 
