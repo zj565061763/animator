@@ -109,7 +109,7 @@ git太大了有点卡，具体可以看demo<br>
  *    Next:烟雾淡出
  *
  */
-final AnimatorChain animatorChain = FAnimatorChain.node(true)
+new FNodeAnimator(true)
         .setTarget(fl_rocket_root)
         .alpha(0, 1f).setDuration(500).setTag("火箭淡入")
         .chain().delay(500).setTag("延迟500毫秒")
@@ -164,7 +164,5 @@ final AnimatorChain animatorChain = FAnimatorChain.node(true)
         .chain().with(iv_rocket_smoke).alpha(0, 1f).setDuration(3000).setStartDelay(500).setTag("烟雾淡入")
         .chain().next().alpha(1f, 0).setDuration(500).setTag("烟雾淡出")
         .addListener(new OnEndInvisible(iv_rocket_smoke)) //动画结束隐藏烟雾
-        .chain();
-
-animatorChain.start();
+        .chain().start();
 ```
