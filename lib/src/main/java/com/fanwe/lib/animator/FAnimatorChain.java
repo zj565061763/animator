@@ -153,7 +153,7 @@ public class FAnimatorChain implements AnimatorChain
     private void setCurrent(NodeAnimator animator)
     {
         if (mCurrent == null)
-            throw new RuntimeException("HEAD animator is not set yet");
+            throw new RuntimeException("HEAD animator must be provided before this");
         if (animator.getType() == NodeAnimator.Type.HEAD)
             throw new UnsupportedOperationException("HEAD animator is not supported here");
 
@@ -295,9 +295,9 @@ public class FAnimatorChain implements AnimatorChain
         public final AnimatorChain chain()
         {
             if (isEmptyProperty() && mType != Type.DELAY)
-                throw new UnsupportedOperationException("Can not access AnimatorChain because property is empty");
+                throw new UnsupportedOperationException("can not access AnimatorChain because animator property is empty");
             if (getTarget() == null)
-                throw new NullPointerException("animator target view is null");
+                throw new UnsupportedOperationException("target view must be provided before this see the Animator.setTarget(View) method");
             return mChain;
         }
     }
