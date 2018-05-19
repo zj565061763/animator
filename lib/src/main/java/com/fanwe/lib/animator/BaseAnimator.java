@@ -76,11 +76,9 @@ public class BaseAnimator<T extends BaseAnimator> implements SimplePropertyAnima
     {
         if (count < 0)
         {
-            mObjectAnimator.setRepeatCount(ValueAnimator.INFINITE);
-        } else
-        {
-            mObjectAnimator.setRepeatCount(count);
+            count = ValueAnimator.INFINITE;
         }
+        mObjectAnimator.setRepeatCount(count);
         return (T) this;
     }
 
