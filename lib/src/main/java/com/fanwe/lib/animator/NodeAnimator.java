@@ -1,5 +1,8 @@
 package com.fanwe.lib.animator;
 
+/**
+ * 链条节点动画
+ */
 public final class NodeAnimator extends BaseAnimator<NodeAnimator>
 {
     int mType;
@@ -22,16 +25,29 @@ public final class NodeAnimator extends BaseAnimator<NodeAnimator>
         mChain = chain;
     }
 
+    /**
+     * {@link Type}
+     *
+     * @return
+     */
     public int getType()
     {
         return mType;
     }
 
+    /**
+     * 返回动画链条{@link AnimatorChain}
+     *
+     * @return
+     */
     public AnimatorChain chain()
     {
         return mChain;
     }
 
+    /**
+     * 节点类型
+     */
     public static class Type
     {
         public static final int HEAD = 0;
