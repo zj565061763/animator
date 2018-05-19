@@ -42,6 +42,10 @@ public class FAnimatorChain implements AnimatorChain
     private FAnimatorChain(boolean isDebug)
     {
         mIsDebug = isDebug;
+
+        mCurrent = new InternalNodeAnimator(NodeAnimator.Type.HEAD, this);
+        mAnimatorSet.play(mCurrent.toObjectAnimator());
+        addNodeIfNeed(mCurrent);
     }
 
     /**
@@ -63,23 +67,7 @@ public class FAnimatorChain implements AnimatorChain
     public static NodeAnimator node(boolean isDebug)
     {
         final FAnimatorChain chain = new FAnimatorChain(isDebug);
-        final NodeAnimator head = new InternalNodeAnimator(NodeAnimator.Type.HEAD, chain);
-        chain.setHead(head);
-        return head;
-    }
-
-    private void setHead(NodeAnimator animator)
-    {
-        if (animator == null)
-            throw new NullPointerException("animator is null");
-        if (animator.getType() != NodeAnimator.Type.HEAD)
-            throw new IllegalArgumentException("HEAD animator required");
-        if (mCurrent != null)
-            throw new UnsupportedOperationException("HEAD has been provided");
-
-        mCurrent = animator;
-        mAnimatorSet.play(animator.toObjectAnimator());
-        addNodeIfNeed(animator);
+        return chain.mCurrent;
     }
 
     @Override
