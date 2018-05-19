@@ -67,6 +67,7 @@ abstract class BaseAnimatorChain implements AnimatorChain
     public NodeAnimator withClone()
     {
         final NodeAnimator animator = mCurrent.cloneToType(NodeAnimator.Type.WITH);
+        checkNull(animator);
         if (animator.getType() != NodeAnimator.Type.WITH)
             throw new RuntimeException("clone animator must be NodeAnimator.Type.WITH type");
         return initNodeAnimator(animator);
