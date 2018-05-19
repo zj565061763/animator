@@ -31,8 +31,14 @@ class FAnimatorChain implements AnimatorChain
 
         if (current.getType() == NodeAnimator.Type.HEAD)
         {
-            if (mCurrent == null) mAnimatorSet.play(current.toObjectAnimator());
-            else throw new IllegalArgumentException("AnimatorChain can only contains one HEAD");
+            if (mCurrent == null)
+                mAnimatorSet.play(current.toObjectAnimator());
+            else
+                throw new UnsupportedOperationException("HEAD is already set");
+        } else
+        {
+            if (mCurrent == null)
+                throw new UnsupportedOperationException("HEAD must be set before this");
         }
 
         mCurrent = current;
