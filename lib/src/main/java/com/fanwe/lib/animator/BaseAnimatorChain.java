@@ -41,9 +41,7 @@ abstract class BaseAnimatorChain implements AnimatorChain
 
     public BaseAnimatorChain(boolean isDebug, FNodeAnimator animator)
     {
-        checkNull(animator);
-        if (animator.getType() != NodeAnimator.Type.HEAD)
-            throw new IllegalArgumentException("HEAD animator is required");
+        checkAnimator(animator, NodeAnimator.Type.HEAD);
 
         mIsDebug = isDebug;
         mCurrent = animator;
@@ -52,80 +50,55 @@ abstract class BaseAnimatorChain implements AnimatorChain
     }
 
     @Override
-    public NodeAnimator with()
+    public NodeAnimator currentNode()
     {
-        return with(null);
+        return mCurrent;
     }
 
     @Override
-    public NodeAnimator with(View target)
+    public NodeAnimator node(NodeAnimator.Type type)
     {
-        return initNodeAnimator(createNodeAnimator(NodeAnimator.Type.WITH).setTarget(target));
+        return node(type, false);
     }
 
     @Override
-    public NodeAnimator withClone()
+    public NodeAnimator node(NodeAnimator.Type type, boolean clone)
     {
-        final NodeAnimator animator = mCurrent.cloneToType(NodeAnimator.Type.WITH);
-        checkNull(animator);
-        if (animator.getType() != NodeAnimator.Type.WITH)
-            throw new RuntimeException("clone animator must be NodeAnimator.Type.WITH type");
-        return initNodeAnimator(animator);
-    }
+        if (type == null)
+            throw new NullPointerException("type is null");
+        if (type == NodeAnimator.Type.HEAD)
+            throw new IllegalArgumentException("Illegal type:" + type);
 
-    @Override
-    public NodeAnimator next()
-    {
-        return next(null);
-    }
+        final NodeAnimator animator = clone ? currentNode().cloneToType(type) : onCreateNodeAnimator(type);
 
-    @Override
-    public NodeAnimator next(View target)
-    {
-        return initNodeAnimator(createNodeAnimator(NodeAnimator.Type.NEXT).setTarget(target));
-    }
+        checkAnimator(animator, type);
+        checkChain(animator);
 
-    private NodeAnimator createNodeAnimator(final int type)
-    {
-        final NodeAnimator animator = onCreateNodeAnimator(type);
-        checkNull(animator);
-        if (animator.getType() != type)
-            throw new RuntimeException("animator must be " + type + " type");
-        if (animator.chain() != this)
-            throw new RuntimeException("animator's chain() method must return current instance");
+        initNode(animator);
         return animator;
     }
 
-    protected abstract NodeAnimator onCreateNodeAnimator(int type);
+    protected abstract NodeAnimator onCreateNodeAnimator(NodeAnimator.Type type);
 
-    /**
-     * 初始化新节点动画
-     *
-     * @param animator
-     * @return
-     */
-    private NodeAnimator initNodeAnimator(NodeAnimator animator)
+    private void initNode(NodeAnimator animator)
     {
         final View target = animator.getTarget();
         if (target == null) animator.setTarget(mCurrent.getTarget());
 
-        final int type = animator.getType();
-        switch (type)
+        switch (animator.getType())
         {
-            case NodeAnimator.Type.WITH:
+            case WITH:
                 mAnimatorSet.play(mCurrent.toObjectAnimator()).with(animator.toObjectAnimator());
                 break;
-            case NodeAnimator.Type.NEXT:
+            case NEXT:
                 mAnimatorSet.play(animator.toObjectAnimator()).after(mCurrent.toObjectAnimator());
                 break;
             default:
-                throw new IllegalArgumentException("Illegal animator:" + type);
+                throw new IllegalArgumentException("Illegal animator:" + animator.getType());
         }
 
         mCurrent = animator;
         addNodeIfNeed(animator);
-
-        return animator;
     }
 
     private void addNodeIfNeed(NodeAnimator animator)
@@ -137,9 +110,20 @@ abstract class BaseAnimatorChain implements AnimatorChain
         }
     }
 
-    private static void checkNull(NodeAnimator animator)
+    private static void checkAnimator(NodeAnimator animator, NodeAnimator.Type targetType)
     {
-        if (animator == null) throw new NullPointerException("animator is null");
+        if (animator == null)
+            throw new NullPointerException("animator is null");
+        if (targetType == null)
+            throw new NullPointerException("targetType is null");
+        if (animator.getType() != targetType)
+            throw new RuntimeException("animator must be " + targetType + " type");
+    }
+
+    private void checkChain(NodeAnimator animator)
+    {
+        if (animator.chain() != this)
+            throw new RuntimeException("animator's chain() method must return current instance");
     }
 
     @Override
@@ -160,13 +144,13 @@ abstract class BaseAnimatorChain implements AnimatorChain
                 {
                     switch (item.getType())
                     {
-                        case NodeAnimator.Type.HEAD:
+                        case HEAD:
                             sb.append("\r\n").append("Head:").append(item.getTag());
                             break;
-                        case NodeAnimator.Type.NEXT:
+                        case NEXT:
                             sb.append("\r\n").append("Next:").append(item.getTag());
                             break;
-                        case NodeAnimator.Type.WITH:
+                        case WITH:
                             sb.append(" With:").append(item.getTag());
                             break;
                     }

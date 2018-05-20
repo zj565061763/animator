@@ -59,14 +59,14 @@ public class SimpleDemoActivity extends AppCompatActivity
                 /**
                  * chain()方法返回的是动画链对象
                  *
-                 * 动画链提供的节点方法，有with()，withClone()，next()，delay()
+                 * 创建一个新的节点动画
+                 * 第一个参数表示动画类型
+                 * 第二个参数表示是否复制上一个动画的设置参数，比如动画时长等
                  *
-                 * with()：生成一个新动画和上一个动画同时执行
-                 * withClone()：在with()方法的基础上会复制上一个动画的一些设置属性，比如动画时长等
-                 * next()：生成一个新动画在上一个动画执行完成后执行
-                 * delay()：生成一个延迟动画在上一个动画执行完成后执行
+                 * NodeAnimator.Type.WITH：新动画和上一个动画同时执行
+                 * NodeAnimator.Type.NEXT：新动画在上一个动画执行完成后执行
                  */
-                .chain().withClone()
+                .chain().node(NodeAnimator.Type.WITH, true)
 
                 /**
                  * 设置动画view的y方向要移动到哪些view的位置
@@ -77,7 +77,7 @@ public class SimpleDemoActivity extends AppCompatActivity
                 /**
                  * 延迟1000毫秒
                  */
-                .chain().next().setDuration(1000)
+                .chain().node(NodeAnimator.Type.NEXT).setDuration(1000)
 
                 /**
                  * 添加一个动画监听
@@ -115,8 +115,9 @@ public class SimpleDemoActivity extends AppCompatActivity
         new FNodeAnimator(true)
                 .setTarget(v)
                 .moveToX(mXCenterAligner, v, view_target_1, view_target_2, view_target_3).setDuration(2000).setTag("x移动")
-                .chain().withClone().moveToY(mYCenterAligner, v, view_target_1, view_target_2, view_target_3).setTag("y移动")
-                .chain().next().setDuration(1000).setTag("延迟1000毫秒")
+                .chain().node(NodeAnimator.Type.WITH, true)
+                .moveToY(mYCenterAligner, v, view_target_1, view_target_2, view_target_3).setTag("y移动")
+                .chain().node(NodeAnimator.Type.NEXT).setDuration(1000).setTag("延迟1000毫秒")
                 .addListener(new OnEndRemoveView()) //动画完成后移除view
                 .chain().startAsPop();
     }

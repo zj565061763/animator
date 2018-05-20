@@ -16,7 +16,6 @@
 package com.fanwe.lib.animator;
 
 import android.animation.AnimatorSet;
-import android.view.View;
 
 /**
  * 动画链
@@ -24,41 +23,28 @@ import android.view.View;
 public interface AnimatorChain
 {
     /**
-     * 生成一个新动画和上一个动画同时执行
+     * 返回当前节点动画
      *
      * @return
      */
-    NodeAnimator with();
+    NodeAnimator currentNode();
 
     /**
-     * {@link #with()}
+     * 创建一个新的节点动画
      *
-     * @param target 新动画要执行的View对象，如果为null，则沿用上一个动画的View对象
+     * @param type {@link NodeAnimator.Type}
      * @return
      */
-    NodeAnimator with(View target);
+    NodeAnimator node(NodeAnimator.Type type);
 
     /**
-     * 在{@link #with()}方法的基础上会复制上一个动画的一些设置属性，比如动画时长等
+     * 创建一个新的节点动画
      *
+     * @param type  {@link NodeAnimator.Type}
+     * @param clone true-复制上一个节点动画的参数设置
      * @return
      */
-    NodeAnimator withClone();
-
-    /**
-     * 生成一个新动画在上一个动画执行完成后执行
-     *
-     * @return
-     */
-    NodeAnimator next();
-
-    /**
-     * {@link #next()}
-     *
-     * @param target 新动画要执行的View对象，如果为null，则沿用上一个动画的View对象
-     * @return
-     */
-    NodeAnimator next(View target);
+    NodeAnimator node(NodeAnimator.Type type, boolean clone);
 
     /**
      * 转为{@link AnimatorSet}

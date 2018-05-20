@@ -5,7 +5,7 @@ package com.fanwe.lib.animator;
  */
 public class FNodeAnimator extends BaseAnimator<NodeAnimator> implements NodeAnimator
 {
-    private int mType;
+    private Type mType;
     private AnimatorChain mChain;
 
     private boolean mIsDebug;
@@ -21,25 +21,14 @@ public class FNodeAnimator extends BaseAnimator<NodeAnimator> implements NodeAni
         mIsDebug = isDebug;
     }
 
-    private FNodeAnimator(int type, AnimatorChain chain)
+    private FNodeAnimator(Type type, AnimatorChain chain)
     {
-        setType(type);
+        mType = type;
         mChain = chain;
     }
 
-    private void setType(int type)
-    {
-        if (type == Type.HEAD || type == Type.WITH || type == Type.NEXT)
-        {
-            mType = type;
-        } else
-        {
-            throw new IllegalArgumentException("type must be value of NodeAnimator.Type.XXX");
-        }
-    }
-
     @Override
-    public final int getType()
+    public final Type getType()
     {
         return mType;
     }
@@ -52,10 +41,10 @@ public class FNodeAnimator extends BaseAnimator<NodeAnimator> implements NodeAni
     }
 
     @Override
-    public final NodeAnimator cloneToType(int type)
+    public final NodeAnimator cloneToType(Type type)
     {
         final FNodeAnimator clone = (FNodeAnimator) super.clone();
-        clone.setType(type);
+        clone.mType = type;
         return clone;
     }
 
@@ -67,7 +56,7 @@ public class FNodeAnimator extends BaseAnimator<NodeAnimator> implements NodeAni
         }
 
         @Override
-        protected NodeAnimator onCreateNodeAnimator(int type)
+        protected NodeAnimator onCreateNodeAnimator(Type type)
         {
             return new FNodeAnimator(type, this);
         }

@@ -25,7 +25,7 @@ public interface NodeAnimator extends SimplePropertyAnimator<NodeAnimator>
      *
      * @return
      */
-    int getType();
+    Type getType();
 
     /**
      * 返回动画链{@link AnimatorChain}
@@ -40,15 +40,21 @@ public interface NodeAnimator extends SimplePropertyAnimator<NodeAnimator>
      * @param type {@link Type}
      * @return
      */
-    NodeAnimator cloneToType(int type);
+    NodeAnimator cloneToType(Type type);
 
     /**
      * 节点类型
      */
-    final class Type
+    enum Type
     {
-        public static final int HEAD = 0;
-        public static final int WITH = 1;
-        public static final int NEXT = 2;
+        HEAD,
+        /**
+         * 新动画和上一个动画同时执行
+         */
+        WITH,
+        /**
+         * 新动画在上一个动画执行完成后执行
+         */
+        NEXT
     }
 }
