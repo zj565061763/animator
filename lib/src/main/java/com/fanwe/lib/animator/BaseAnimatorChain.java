@@ -75,7 +75,7 @@ abstract class BaseAnimatorChain implements AnimatorChain
 
     private NodeAnimator createNode(NodeAnimator.Type type, boolean clone)
     {
-        final NodeAnimator animator = clone ? currentNode().cloneToType(type) : onCreateNodeAnimator(type);
+        final NodeAnimator animator = clone ? mCurrent.cloneToType(type) : onCreateNodeAnimator(type);
 
         checkAnimator(animator, type);
         checkChain(animator);
