@@ -106,9 +106,6 @@ abstract class BaseAnimatorChain implements AnimatorChain
      */
     private NodeAnimator initNodeAnimator(NodeAnimator animator)
     {
-        checkNull(animator);
-        checkTarget(mCurrent);
-
         final View target = animator.getTarget();
         if (target == null) animator.setTarget(mCurrent.getTarget());
 
@@ -143,12 +140,6 @@ abstract class BaseAnimatorChain implements AnimatorChain
     private static void checkNull(NodeAnimator animator)
     {
         if (animator == null) throw new NullPointerException("animator is null");
-    }
-
-    private static void checkTarget(NodeAnimator animator)
-    {
-        if (animator != null && animator.getTarget() == null)
-            throw new NullPointerException("target view must be provided before this, see the Animator.setTarget(View) method");
     }
 
     @Override
