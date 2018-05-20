@@ -40,14 +40,10 @@ public void onClickBtnAnim(View v)
             /**
              * chain()方法返回的是动画链对象
              *
-             * 动画链提供的节点方法，有with()，withClone()，next()，delay()
-             *
-             * with()：生成一个新动画和上一个动画同时执行
-             * withClone()：在with()方法的基础上会复制上一个动画的一些设置属性，比如动画时长等
-             * next()：生成一个新动画在上一个动画执行完成后执行
-             * delay()：生成一个延迟动画在上一个动画执行完成后执行
+             * 创建一个新的节点动画，新动画和上一个动画同时执行
+             * 参数表示是否复制上一个动画的设置参数，比如动画时长等
              */
-            .chain().withClone()
+            .chain().nodeWith(true)
 
             /**
              * 设置动画view的y方向要移动到哪些view的位置
@@ -58,7 +54,7 @@ public void onClickBtnAnim(View v)
             /**
              * 延迟1000毫秒
              */
-            .chain().delay(1000)
+            .chain().nodeNext().setDuration(1000)
 
             /**
              * 添加一个动画监听
@@ -103,7 +99,7 @@ git太大了有点卡，具体可以看demo<br>
  * demo中的日志输入如下：
  *
  *    Head:火箭淡入
- *    Delay:延迟500毫秒
+ *    Next:延迟500毫秒
  *    Next:开始数字缩放X With:开始数字缩放Y
  *    Next:火箭起飞 With:烟雾淡入
  *    Next:烟雾淡出
@@ -112,9 +108,9 @@ git太大了有点卡，具体可以看demo<br>
 new FNodeAnimator(true)
         .setTarget(fl_rocket_root)
         .alpha(0, 1f).setDuration(500).setTag("火箭淡入")
-        .chain().delay(500).setTag("延迟500毫秒")
-        .chain().next(tv_number).scaleX(1f, 0f).setRepeatCount(2).setDuration(1000).setTag("开始数字缩放X")
-        .chain().withClone().scaleY(1f, 0f).setTag("开始数字缩放Y")
+        .chain().nodeNext().setDuration(500).setTag("延迟500毫秒")
+        .chain().nodeNext().setTarget(tv_number).scaleX(1f, 0f).setRepeatCount(2).setDuration(1000).setTag("开始数字缩放X")
+        .chain().nodeWith(true).scaleY(1f, 0f).setTag("开始数字缩放Y")
         .addListener(new FAnimatorListener()
         {
             @Override
@@ -139,7 +135,7 @@ new FNodeAnimator(true)
                 tv_number.setText(String.valueOf(mNumber));
             }
         })
-        .chain().next(fl_rocket_root).translationY(0, -getResources().getDisplayMetrics().heightPixels).setTag("火箭起飞")
+        .chain().nodeNext().setTarget(fl_rocket_root).translationY(0, -getResources().getDisplayMetrics().heightPixels).setTag("火箭起飞")
         .setDuration(3000).setInterpolator(new AccelerateInterpolator())
         .addListener(new OnEndInvisible(fl_rocket_root)) //动画结束隐藏fl_rocket_root
         .addListener(new OnEndReset(fl_rocket_root)) //动画结束重置fl_rocket_root
@@ -161,8 +157,8 @@ new FNodeAnimator(true)
                 animationDrawable.stop(); //停止火箭喷火动画
             }
         })
-        .chain().with(iv_rocket_smoke).alpha(0, 1f).setDuration(3000).setStartDelay(500).setTag("烟雾淡入")
-        .chain().next().alpha(1f, 0).setDuration(500).setTag("烟雾淡出")
+        .chain().nodeWith().setTarget(iv_rocket_smoke).alpha(0, 1f).setDuration(3000).setStartDelay(500).setTag("烟雾淡入")
+        .chain().nodeNext().alpha(1f, 0).setDuration(500).setTag("烟雾淡出")
         .addListener(new OnEndInvisible(iv_rocket_smoke)) //动画结束隐藏烟雾
         .chain().start();
 ```
