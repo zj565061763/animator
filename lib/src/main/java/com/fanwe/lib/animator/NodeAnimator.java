@@ -50,6 +50,5 @@ public interface NodeAnimator extends SimplePropertyAnimator<NodeAnimator>
         public static final int HEAD = 0;
         public static final int WITH = 1;
         public static final int NEXT = 2;
-        public static final int DELAY = 3;
     }
 }

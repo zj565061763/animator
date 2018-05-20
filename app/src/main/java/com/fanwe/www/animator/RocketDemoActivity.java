@@ -63,7 +63,7 @@ public class RocketDemoActivity extends AppCompatActivity
         mAnimatorChain = new FNodeAnimator(true)
                 .setTarget(fl_rocket_root)
                 .alpha(0, 1f).setDuration(500).setTag("火箭淡入")
-                .chain().delay(500).setTag("延迟500毫秒")
+                .chain().next().setDuration(500).setTag("延迟500毫秒")
                 .chain().next(tv_number).scaleX(1f, 0f).setRepeatCount(2).setDuration(1000).setTag("开始数字缩放X")
                 .chain().withClone().scaleY(1f, 0f).setTag("开始数字缩放Y")
                 .addListener(new FAnimatorListener()

@@ -61,14 +61,6 @@ public interface AnimatorChain
     NodeAnimator next(View target);
 
     /**
-     * 生成一个延迟动画在上一个动画执行完成后执行
-     *
-     * @param time 延迟多少毫秒
-     * @return
-     */
-    NodeAnimator delay(long time);
-
-    /**
      * 转为{@link AnimatorSet}
      *
      * @return

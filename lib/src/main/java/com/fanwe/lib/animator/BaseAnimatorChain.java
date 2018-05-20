@@ -85,12 +85,6 @@ abstract class BaseAnimatorChain implements AnimatorChain
         return initNodeAnimator(createNodeAnimator(NodeAnimator.Type.NEXT).setTarget(target));
     }
 
-    @Override
-    public NodeAnimator delay(long time)
-    {
-        return initNodeAnimator(createNodeAnimator(NodeAnimator.Type.DELAY).setDuration(time));
-    }
-
     private NodeAnimator createNodeAnimator(final int type)
     {
         final NodeAnimator animator = onCreateNodeAnimator(type);
@@ -113,7 +107,6 @@ abstract class BaseAnimatorChain implements AnimatorChain
     private NodeAnimator initNodeAnimator(NodeAnimator animator)
     {
         checkNull(animator);
-        checkEmptyProperty(mCurrent);
         checkTarget(mCurrent);
 
         final View target = animator.getTarget();
@@ -126,7 +119,6 @@ abstract class BaseAnimatorChain implements AnimatorChain
                 mAnimatorSet.play(mCurrent.toObjectAnimator()).with(animator.toObjectAnimator());
                 break;
             case NodeAnimator.Type.NEXT:
-            case NodeAnimator.Type.DELAY:
                 mAnimatorSet.play(animator.toObjectAnimator()).after(mCurrent.toObjectAnimator());
                 break;
             default:
@@ -159,16 +151,9 @@ abstract class BaseAnimatorChain implements AnimatorChain
             throw new NullPointerException("target view must be provided before this, see the Animator.setTarget(View) method");
     }
 
-    private static void checkEmptyProperty(NodeAnimator animator)
-    {
-        if (animator != null && animator.isEmptyProperty() && animator.getType() != NodeAnimator.Type.DELAY)
-            throw new UnsupportedOperationException("animator property is empty");
-    }
-
     @Override
     public AnimatorSet toAnimatorSet()
     {
-        checkEmptyProperty(mCurrent);
         return mAnimatorSet;
     }
 
@@ -193,16 +178,12 @@ abstract class BaseAnimatorChain implements AnimatorChain
                         case NodeAnimator.Type.WITH:
                             sb.append(" With:").append(item.getTag());
                             break;
-                        case NodeAnimator.Type.DELAY:
-                            sb.append("\r\n").append("Delay:").append(item.getTag());
-                            break;
                     }
                 }
                 Log.i(AnimatorChain.class.getSimpleName(), sb.toString());
             }
         }
 
-        checkEmptyProperty(mCurrent);
         mAnimatorSet.start();
         return this;
     }

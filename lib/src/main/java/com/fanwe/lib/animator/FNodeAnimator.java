@@ -29,8 +29,7 @@ public class FNodeAnimator extends BaseAnimator<NodeAnimator> implements NodeAni
 
     private void setType(int type)
     {
-        if (type == Type.HEAD || type == Type.WITH
-                || type == Type.NEXT || type == Type.DELAY)
+        if (type == Type.HEAD || type == Type.WITH || type == Type.NEXT)
         {
             mType = type;
         } else
