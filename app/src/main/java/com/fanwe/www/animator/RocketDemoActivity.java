@@ -54,7 +54,7 @@ public class RocketDemoActivity extends AppCompatActivity
          * demo中的日志输入如下：
          *
          *    Head:火箭淡入
-         *    Delay:延迟500毫秒
+         *    Next:延迟500毫秒
          *    Next:开始数字缩放X With:开始数字缩放Y
          *    Next:火箭起飞 With:烟雾淡入
          *    Next:烟雾淡出
