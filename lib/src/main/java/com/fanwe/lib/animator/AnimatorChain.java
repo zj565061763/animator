@@ -30,21 +30,26 @@ public interface AnimatorChain
     NodeAnimator currentNode();
 
     /**
-     * 创建一个新的节点动画
+     * 创建一个新的节点动画，新动画和上一个动画同时执行
      *
-     * @param type {@link NodeAnimator.Type}
      * @return
      */
-    NodeAnimator node(NodeAnimator.Type type);
+    NodeAnimator nodeWith();
 
     /**
-     * 创建一个新的节点动画
+     * {@link #nodeWith()}
      *
-     * @param type  {@link NodeAnimator.Type}
-     * @param clone true-复制上一个节点动画的参数设置
+     * @param clone 是否复制上一个动画的设置参数，比如动画时长等
      * @return
      */
-    NodeAnimator node(NodeAnimator.Type type, boolean clone);
+    NodeAnimator nodeWith(boolean clone);
+
+    /**
+     * 创建一个新的节点动画，新动画在上一个动画执行完成后执行
+     *
+     * @return
+     */
+    NodeAnimator nodeNext();
 
     /**
      * 转为{@link AnimatorSet}

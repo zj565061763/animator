@@ -56,19 +56,25 @@ abstract class BaseAnimatorChain implements AnimatorChain
     }
 
     @Override
-    public NodeAnimator node(NodeAnimator.Type type)
+    public NodeAnimator nodeWith()
     {
-        return node(type, false);
+        return createNode(NodeAnimator.Type.WITH, false);
     }
 
     @Override
-    public NodeAnimator node(NodeAnimator.Type type, boolean clone)
+    public NodeAnimator nodeWith(boolean clone)
     {
-        if (type == null)
-            throw new NullPointerException("type is null");
-        if (type == NodeAnimator.Type.HEAD)
-            throw new IllegalArgumentException("Illegal type:" + type);
+        return createNode(NodeAnimator.Type.WITH, true);
+    }
 
+    @Override
+    public NodeAnimator nodeNext()
+    {
+        return createNode(NodeAnimator.Type.NEXT, false);
+    }
+
+    private NodeAnimator createNode(NodeAnimator.Type type, boolean clone)
+    {
         final NodeAnimator animator = clone ? currentNode().cloneToType(type) : onCreateNodeAnimator(type);
 
         checkAnimator(animator, type);

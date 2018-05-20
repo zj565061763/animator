@@ -11,7 +11,6 @@ import android.widget.TextView;
 
 import com.fanwe.lib.animator.AnimatorChain;
 import com.fanwe.lib.animator.FNodeAnimator;
-import com.fanwe.lib.animator.NodeAnimator;
 import com.fanwe.lib.animator.listener.FAnimatorListener;
 import com.fanwe.lib.animator.listener.api.OnEndInvisible;
 import com.fanwe.lib.animator.listener.api.OnEndReset;
@@ -64,9 +63,9 @@ public class RocketDemoActivity extends AppCompatActivity
         mAnimatorChain = new FNodeAnimator(true)
                 .setTarget(fl_rocket_root)
                 .alpha(0, 1f).setDuration(500).setTag("火箭淡入")
-                .chain().node(NodeAnimator.Type.NEXT).setDuration(500).setTag("延迟500毫秒")
-                .chain().node(NodeAnimator.Type.NEXT).setTarget(tv_number).scaleX(1f, 0f).setRepeatCount(2).setDuration(1000).setTag("开始数字缩放X")
-                .chain().node(NodeAnimator.Type.WITH, true).scaleY(1f, 0f).setTag("开始数字缩放Y")
+                .chain().nodeNext().setDuration(500).setTag("延迟500毫秒")
+                .chain().nodeNext().setTarget(tv_number).scaleX(1f, 0f).setRepeatCount(2).setDuration(1000).setTag("开始数字缩放X")
+                .chain().nodeWith(true).scaleY(1f, 0f).setTag("开始数字缩放Y")
                 .addListener(new FAnimatorListener()
                 {
                     @Override
@@ -91,8 +90,7 @@ public class RocketDemoActivity extends AppCompatActivity
                         tv_number.setText(String.valueOf(mNumber));
                     }
                 })
-                .chain().node(NodeAnimator.Type.NEXT)
-                .setTarget(fl_rocket_root).translationY(0, -getResources().getDisplayMetrics().heightPixels).setTag("火箭起飞")
+                .chain().nodeNext().setTarget(fl_rocket_root).translationY(0, -getResources().getDisplayMetrics().heightPixels).setTag("火箭起飞")
                 .setDuration(3000).setInterpolator(new AccelerateInterpolator())
                 .addListener(new OnEndInvisible(fl_rocket_root)) //动画结束隐藏fl_rocket_root
                 .addListener(new OnEndReset(fl_rocket_root)) //动画结束重置fl_rocket_root
@@ -114,8 +112,8 @@ public class RocketDemoActivity extends AppCompatActivity
                         animationDrawable.stop(); //停止火箭喷火动画
                     }
                 })
-                .chain().node(NodeAnimator.Type.WITH).setTarget(iv_rocket_smoke).alpha(0, 1f).setDuration(3000).setStartDelay(500).setTag("烟雾淡入")
-                .chain().node(NodeAnimator.Type.NEXT).alpha(1f, 0).setDuration(500).setTag("烟雾淡出")
+                .chain().nodeWith().setTarget(iv_rocket_smoke).alpha(0, 1f).setDuration(3000).setStartDelay(500).setTag("烟雾淡入")
+                .chain().nodeNext().alpha(1f, 0).setDuration(500).setTag("烟雾淡出")
                 .addListener(new OnEndInvisible(iv_rocket_smoke)) //动画结束隐藏烟雾
                 .chain().start();
     }
