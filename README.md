@@ -2,7 +2,7 @@
 对ObjectAnimator和AnimatorSet进行封装
 
 ## Gradle
-`implementation 'com.fanwe.android:animator:1.1.0-rc8'`
+`implementation 'com.fanwe.android:animator:1.1.0-rc9'`
 
 ## 简单demo
 效果图：<br>
@@ -23,14 +23,9 @@ public void onClickBtnAnim(View v)
     /**
      * 创建一个节点动画
      */
-    final NodeAnimator nodeAnimator = new FNodeAnimator();
+    final NodeAnimator nodeAnimator = new SimpleNodeAnimator(v);
 
     nodeAnimator
-            /**
-             * 设置要执行动画的view
-             */
-            .setTarget(v)
-
             /**
              * 设置动画view的x方向要移动到哪些view的位置
              * 第一个参数为动画view和对齐view的对齐方式，默认左边对齐，库中还提供了中心点对齐的实现类
@@ -114,9 +109,9 @@ public void onclickStartRocket(View v)
      *    Next:(烟雾淡出 alpha:500)
      *
      */
-    mAnimatorChain = new FNodeAnimator().chain().setDebug(true);
+    mAnimatorChain = new SimpleNodeAnimator(fl_rocket_root).chain().setDebug(true);
 
-    mAnimatorChain.currentNode().setTarget(fl_rocket_root).alpha(0, 1f).setDuration(500).setTag("火箭淡入")
+    mAnimatorChain.currentNode().alpha(0, 1f).setDuration(500).setTag("火箭淡入")
             .next().setDuration(500).setTag("延迟500毫秒")
             .next().setTarget(tv_number).scaleX(1f, 0f).setRepeatCount(2).setDuration(1000).setTag("开始数字缩放X")
             .withClone().scaleY(1f, 0f).setTag("开始数字缩放Y")

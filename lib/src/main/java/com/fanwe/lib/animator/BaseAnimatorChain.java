@@ -65,7 +65,8 @@ abstract class BaseAnimatorChain implements AnimatorChain
     private NodeAnimator createNode(NodeAnimator.Type type, boolean clone)
     {
         final NodeAnimator current = currentNode();
-        if (current.getType() == NodeAnimator.Type.Head) checkTarget(current);
+        if (current.getType() == NodeAnimator.Type.Head)
+            throw new NullPointerException(type + " animator's target is null");
 
         final NodeAnimator animator = clone ? current.cloneToType(type) : onCreateNodeAnimator(type);
 
@@ -226,12 +227,6 @@ abstract class BaseAnimatorChain implements AnimatorChain
     {
         if (animator.chain() != this)
             throw new RuntimeException("animator's chain() method must return current instance");
-    }
-
-    private static void checkTarget(NodeAnimator animator)
-    {
-        if (animator.getTarget() == null)
-            throw new NullPointerException("target view must be provided before this, see the Animator.setTarget(View) method");
     }
 
     //---------- check end ----------
