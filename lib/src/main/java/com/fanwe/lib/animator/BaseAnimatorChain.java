@@ -154,11 +154,11 @@ abstract class BaseAnimatorChain implements AnimatorChain
                         case Head:
                             sb.append("\r\n").append("Head:");
                             break;
-                        case Next:
-                            sb.append("\r\n").append("Next:");
-                            break;
                         case With:
                             sb.append(" With:");
+                            break;
+                        case Next:
+                            sb.append("\r\n").append("Next:");
                             break;
                     }
 
