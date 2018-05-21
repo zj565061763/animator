@@ -87,7 +87,7 @@ public class SimpleDemoActivity extends AppCompatActivity
                  *
                  * 注意：在哪个节点addListener，就是监听哪个节点的动画，demo这里监听的是延迟1000毫秒这个动画
                  */
-                .addListener(new OnEndReset()) // 动画完成后重置view
+                .addListener(new OnEndReset()) // 动画完成后重置，构造方法可以传入某个指定的view，不传的话默认view是动画view
 
                 /**
                  * 开始执行整个动画链
