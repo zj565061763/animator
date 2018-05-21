@@ -43,19 +43,19 @@ public class FNodeAnimator extends BaseAnimator<NodeAnimator> implements NodeAni
     @Override
     public NodeAnimator nodeWith()
     {
-        return chain().nodeWith();
+        return chain().newNode(Type.With, false);
     }
 
     @Override
     public NodeAnimator nodeWithClone()
     {
-        return chain().nodeWithClone();
+        return chain().newNode(Type.With, true);
     }
 
     @Override
     public NodeAnimator nodeNext()
     {
-        return chain().nodeNext();
+        return chain().newNode(Type.Next, false);
     }
 
     @Override
