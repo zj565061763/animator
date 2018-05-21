@@ -1,8 +1,10 @@
 package com.fanwe.www.animator;
 
+import android.animation.Animator;
 import android.animation.AnimatorSet;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 
 import com.fanwe.lib.animator.NodeAnimator;
@@ -14,6 +16,7 @@ import com.fanwe.lib.animator.listener.api.OnEndReset;
 
 public class SimpleDemoActivity extends AppCompatActivity
 {
+    public static final String TAG = SimpleDemoActivity.class.getSimpleName();
 
     View view_target_1, view_target_2, view_target_3;
 
@@ -113,4 +116,31 @@ public class SimpleDemoActivity extends AppCompatActivity
                 .addListener(new OnEndRemoveView()) //动画完成后移除view
                 .chain().setDebug(true).startAsPop();
     }
+
+    private final Animator.AnimatorListener mAnimatorListener = new Animator.AnimatorListener()
+    {
+        @Override
+        public void onAnimationStart(Animator animation)
+        {
+            Log.i(TAG, "onAnimationStart");
+        }
+
+        @Override
+        public void onAnimationEnd(Animator animation)
+        {
+            Log.i(TAG, "onAnimationEnd");
+        }
+
+        @Override
+        public void onAnimationCancel(Animator animation)
+        {
+            Log.i(TAG, "onAnimationCancel");
+        }
+
+        @Override
+        public void onAnimationRepeat(Animator animation)
+        {
+            Log.i(TAG, "onAnimationRepeat");
+        }
+    };
 }
