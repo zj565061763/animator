@@ -62,19 +62,19 @@ public class SimpleNodeAnimator extends BaseAnimator<NodeAnimator> implements No
     @Override
     public NodeAnimator with()
     {
-        return chain().newNode(Type.With, false);
+        return chain().appendNode(Type.With, false);
     }
 
     @Override
     public NodeAnimator withClone()
     {
-        return chain().newNode(Type.With, true);
+        return chain().appendNode(Type.With, true);
     }
 
     @Override
     public NodeAnimator next()
     {
-        return chain().newNode(Type.Next, false);
+        return chain().appendNode(Type.Next, false);
     }
 
     @Override

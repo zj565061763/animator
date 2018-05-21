@@ -52,7 +52,7 @@ abstract class BaseAnimatorChain implements AnimatorChain
     }
 
     @Override
-    public NodeAnimator newNode(NodeAnimator.Type type, boolean clone)
+    public NodeAnimator appendNode(NodeAnimator.Type type, boolean clone)
     {
         checkHeadTarget();
         return createNode(type, clone);
