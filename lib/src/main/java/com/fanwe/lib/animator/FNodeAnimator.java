@@ -41,6 +41,24 @@ public class FNodeAnimator extends BaseAnimator<NodeAnimator> implements NodeAni
     }
 
     @Override
+    public NodeAnimator nodeWith()
+    {
+        return chain().nodeWith();
+    }
+
+    @Override
+    public NodeAnimator nodeWithClone()
+    {
+        return chain().nodeWithClone();
+    }
+
+    @Override
+    public NodeAnimator nodeNext()
+    {
+        return chain().nodeNext();
+    }
+
+    @Override
     public final NodeAnimator cloneToType(Type type)
     {
         final FNodeAnimator clone = (FNodeAnimator) super.clone();

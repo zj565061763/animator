@@ -2,7 +2,7 @@
 对ObjectAnimator和AnimatorSet进行封装
 
 ## Gradle
-`implementation 'com.fanwe.android:animator:1.1.0-rc4'`
+`implementation 'com.fanwe.android:animator:1.1.0-rc5'`
 
 ## 简单demo
 效果图：<br>
@@ -38,15 +38,13 @@ public void onClickBtnAnim(View v)
             .moveToX(mXCenterAligner, v, view_target_1, view_target_2, view_target_3).setDuration(2000)
 
             /**
-             * chain()方法返回的是动画链对象
-             *
              * nodeWith()：创建一个新的节点动画，新动画和上一个动画同时执行
              *
              * nodeWithClone()：在nodeWith()的基础上，复制上一个动画的设置参数，比如动画时长等
              *
              * nodeNext()：创建一个新的节点动画，新动画在上一个动画执行完成后执行
              */
-            .chain().nodeWithClone()
+            .nodeWithClone()
 
             /**
              * 设置动画view的y方向要移动到哪些view的位置
@@ -57,7 +55,7 @@ public void onClickBtnAnim(View v)
             /**
              * 延迟1000毫秒
              */
-            .chain().nodeNext().setDuration(1000)
+            .nodeNext().setDuration(1000)
 
             /**
              * 添加一个动画监听
@@ -70,6 +68,8 @@ public void onClickBtnAnim(View v)
             .addListener(new OnEndReset()) // 动画完成后重置，构造方法可以传入某个指定的view，不传的话默认view是动画view
 
             /**
+             * chain()方法返回的是动画链对象
+             *
              * 开始执行整个动画链
              */
             .chain().start();
