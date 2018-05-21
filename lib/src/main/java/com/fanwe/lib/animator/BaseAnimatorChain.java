@@ -42,7 +42,6 @@ abstract class BaseAnimatorChain implements AnimatorChain
     public BaseAnimatorChain(FNodeAnimator animator)
     {
         checkAnimator(animator, NodeAnimator.Type.Head);
-        checkTarget(animator);
         mListNode.add(animator);
     }
 
@@ -65,15 +64,17 @@ abstract class BaseAnimatorChain implements AnimatorChain
 
     private NodeAnimator createNode(NodeAnimator.Type type, boolean clone)
     {
-        final NodeAnimator animator = clone ? currentNode().cloneToType(type) : onCreateNodeAnimator(type);
+        final NodeAnimator current = currentNode();
+        if (current.getType() == NodeAnimator.Type.Head) checkTarget(current);
+
+        final NodeAnimator animator = clone ? current.cloneToType(type) : onCreateNodeAnimator(type);
 
         checkAnimator(animator, type);
         checkChain(animator);
 
-        final View target = animator.getTarget();
-        if (target == null) animator.setTarget(currentNode().getTarget());
-        mListNode.add(animator);
+        if (animator.getTarget() == null) animator.setTarget(current.getTarget());
 
+        mListNode.add(animator);
         return animator;
     }
 
