@@ -85,4 +85,11 @@ public interface ExtendedPropertyAnimator<T extends ExtendedPropertyAnimator> ex
      * @return
      */
     String getTag();
+
+    /**
+     * 对target截图然后设置给ImageView，让ImageView镜像在android.R.id.content的FrameLayout里面执行动画
+     *
+     * @return 返回新的动画对象，而不是当前对象；如果返回null，表示执行失败
+     */
+    T startAsPop();
 }

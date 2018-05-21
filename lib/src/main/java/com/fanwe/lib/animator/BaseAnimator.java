@@ -19,6 +19,7 @@ import android.animation.Animator;
 import android.animation.ObjectAnimator;
 import android.animation.TimeInterpolator;
 import android.animation.ValueAnimator;
+import android.app.Activity;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.animation.LinearInterpolator;
@@ -346,6 +347,23 @@ abstract class BaseAnimator<T extends ExtendedPropertyAnimator> implements Exten
     {
         if (mTag == null) mTag = "";
         return mTag;
+    }
+
+    @Override
+    public T startAsPop()
+    {
+        final View target = getTarget();
+        if (target != null && (target.getContext() instanceof Activity))
+        {
+            final PopImageView imageView = new PopImageView(target.getContext());
+            imageView.setDrawingCacheView(target);
+            imageView.attachTarget(target);
+
+            final T clone = clone();
+            clone.setTarget(imageView).start();
+            return clone;
+        }
+        return null;
     }
 
     private int[] mTargetLocation;
