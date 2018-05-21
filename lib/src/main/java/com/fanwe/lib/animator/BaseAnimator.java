@@ -39,6 +39,7 @@ class BaseAnimator<T extends SimplePropertyAnimator> implements SimplePropertyAn
 
     public BaseAnimator()
     {
+        mObjectAnimator.setDuration(0);
         mObjectAnimator.setFloatValues(0);
         mObjectAnimator.addListener(new OnStartVisible());
     }
