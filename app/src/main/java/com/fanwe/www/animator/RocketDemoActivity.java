@@ -47,7 +47,6 @@ public class RocketDemoActivity extends AppCompatActivity
         {
             return;
         }
-
         /**
          * true-调试模式，会输出整个动画链的结构，方便开发调试，可以给每个节点动画设置tag，来加强描述
          *
@@ -60,8 +59,8 @@ public class RocketDemoActivity extends AppCompatActivity
          *    Next:(烟雾淡出 alpha:500)
          *
          */
-        mAnimatorChain = new FNodeAnimator(true)
-                .setTarget(fl_rocket_root).alpha(0, 1f).setDuration(500).setTag("火箭淡入")
+        mAnimatorChain = new FNodeAnimator(true).chain();
+        mAnimatorChain.currentNode().setTarget(fl_rocket_root).alpha(0, 1f).setDuration(500).setTag("火箭淡入")
                 .nodeNext().setDuration(500).setTag("延迟500毫秒")
                 .nodeNext().setTarget(tv_number).scaleX(1f, 0f).setRepeatCount(2).setDuration(1000).setTag("开始数字缩放X")
                 .nodeWithClone().scaleY(1f, 0f).setTag("开始数字缩放Y")
