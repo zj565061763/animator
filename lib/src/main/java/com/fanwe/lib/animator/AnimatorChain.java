@@ -37,12 +37,11 @@ public interface AnimatorChain
     NodeAnimator nodeWith();
 
     /**
-     * {@link #nodeWith()}
+     * 在{@link #nodeWith()}的基础上，复制上一个动画的设置参数，比如动画时长等
      *
-     * @param clone 是否复制上一个动画的设置参数，比如动画时长等
      * @return
      */
-    NodeAnimator nodeWith(boolean clone);
+    NodeAnimator nodeWithClone();
 
     /**
      * 创建一个新的节点动画，新动画在上一个动画执行完成后执行

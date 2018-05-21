@@ -40,14 +40,13 @@ public void onClickBtnAnim(View v)
             /**
              * chain()方法返回的是动画链对象
              *
-             * nodeWith(boolean)
-             * 创建一个新的节点动画，新动画和上一个动画同时执行
-             * 参数表示是否复制上一个动画的设置参数，比如动画时长等
+             * nodeWith()：创建一个新的节点动画，新动画和上一个动画同时执行
              *
-             * nodeNext()
-             * 创建一个新的节点动画，新动画在上一个动画执行完成后执行
+             * nodeWithClone()：在nodeWith()的基础上，复制上一个动画的设置参数，比如动画时长等
+             *
+             * nodeNext()：创建一个新的节点动画，新动画在上一个动画执行完成后执行
              */
-            .chain().nodeWith(true)
+            .chain().nodeWithClone()
 
             /**
              * 设置动画view的y方向要移动到哪些view的位置

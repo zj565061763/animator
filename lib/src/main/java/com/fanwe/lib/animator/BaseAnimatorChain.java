@@ -63,7 +63,7 @@ abstract class BaseAnimatorChain implements AnimatorChain
     }
 
     @Override
-    public NodeAnimator nodeWith(boolean clone)
+    public NodeAnimator nodeWithClone()
     {
         return createNode(NodeAnimator.Type.With, true);
     }
