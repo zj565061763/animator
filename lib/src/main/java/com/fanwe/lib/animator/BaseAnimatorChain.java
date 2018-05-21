@@ -65,8 +65,6 @@ abstract class BaseAnimatorChain implements AnimatorChain
             throw new IllegalArgumentException("Illegal type:" + type);
 
         final NodeAnimator current = currentNode();
-        checkHeadTarget(current);
-
         final NodeAnimator animator = clone ? current.cloneToType(type) : onCreateNodeAnimator(type);
 
         checkAnimator(animator, type);
@@ -226,12 +224,6 @@ abstract class BaseAnimatorChain implements AnimatorChain
     {
         if (animator.chain() != this)
             throw new RuntimeException("animator's chain() method must return current instance");
-    }
-
-    private static void checkHeadTarget(NodeAnimator animator)
-    {
-        if (animator.getType() == NodeAnimator.Type.Head)
-            throw new NullPointerException(animator.getType() + " animator's target is null");
     }
 
     //---------- check end ----------
