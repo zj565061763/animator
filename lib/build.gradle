@@ -27,6 +27,7 @@ dependencies {
 publish {
     userOrg = 'zj565061763'
     groupId = 'com.fanwe.android'
+
     artifactId = 'animator'
     publishVersion = '1.1.0-rc9'
     desc = 'android animator library'
