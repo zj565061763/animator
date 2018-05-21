@@ -85,7 +85,7 @@ public class SimpleNodeAnimator extends BaseAnimator<NodeAnimator> implements No
         return clone;
     }
 
-    private final static class InternalAnimatorChain extends BaseAnimatorChain
+    private static final class InternalAnimatorChain extends BaseAnimatorChain
     {
         public InternalAnimatorChain(SimpleNodeAnimator animator)
         {
