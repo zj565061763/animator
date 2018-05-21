@@ -162,6 +162,6 @@ new FNodeAnimator(true)
         })
         .chain().nodeWith().setTarget(iv_rocket_smoke).alpha(0, 1f).setDuration(3000).setStartDelay(500).setTag("烟雾淡入")
         .chain().nodeNext().alpha(1f, 0).setDuration(500).setTag("烟雾淡出")
-        .addListener(new OnEndInvisible(iv_rocket_smoke)) //动画结束隐藏烟雾
+        .addListener(new OnEndInvisible()) //动画结束隐藏烟雾
         .chain().start();
 ```
