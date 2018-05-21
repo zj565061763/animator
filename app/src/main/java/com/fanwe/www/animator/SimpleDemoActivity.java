@@ -57,13 +57,13 @@ public class SimpleDemoActivity extends AppCompatActivity
                 .moveToX(mXCenterAligner, v, view_target_1, view_target_2, view_target_3).setDuration(2000)
 
                 /**
-                 * nodeWith()：创建一个新的节点动画，新动画和上一个动画同时执行
+                 * with()：创建一个新的节点动画，新动画和上一个动画同时执行
                  *
-                 * nodeWithClone()：在nodeWith()的基础上，复制上一个动画的设置参数，比如动画时长等
+                 * withClone()：with()的基础上，复制上一个动画的设置参数，比如动画时长等
                  *
-                 * nodeNext()：创建一个新的节点动画，新动画在上一个动画执行完成后执行
+                 * next()：创建一个新的节点动画，新动画在上一个动画执行完成后执行
                  */
-                .nodeWithClone()
+                .withClone()
 
                 /**
                  * 设置动画view的y方向要移动到哪些view的位置
@@ -74,7 +74,7 @@ public class SimpleDemoActivity extends AppCompatActivity
                 /**
                  * 延迟1000毫秒
                  */
-                .nodeNext().setDuration(1000)
+                .next().setDuration(1000)
 
                 /**
                  * 添加一个动画监听
@@ -114,8 +114,8 @@ public class SimpleDemoActivity extends AppCompatActivity
         new FNodeAnimator()
                 .setTarget(v)
                 .moveToX(mXCenterAligner, v, view_target_1, view_target_2, view_target_3).setDuration(2000).setTag("x移动")
-                .nodeWithClone().moveToY(mYCenterAligner, v, view_target_1, view_target_2, view_target_3).setTag("y移动")
-                .nodeNext().setDuration(1000).setTag("延迟1000毫秒")
+                .withClone().moveToY(mYCenterAligner, v, view_target_1, view_target_2, view_target_3).setTag("y移动")
+                .next().setDuration(1000).setTag("延迟1000毫秒")
                 .addListener(new OnEndRemoveView()) //动画完成后移除view
                 .chain().setDebug(true).startAsPop();
     }

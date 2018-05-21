@@ -39,21 +39,21 @@ public interface NodeAnimator extends SimplePropertyAnimator<NodeAnimator>
      *
      * @return
      */
-    NodeAnimator nodeWith();
+    NodeAnimator with();
 
     /**
-     * 在{@link #nodeWith()}的基础上，复制上一个动画的设置参数，比如动画时长等
+     * 在{@link #with()}的基础上，复制上一个动画的设置参数，比如动画时长等
      *
      * @return
      */
-    NodeAnimator nodeWithClone();
+    NodeAnimator withClone();
 
     /**
      * {@link Type#Next}
      *
      * @return
      */
-    NodeAnimator nodeNext();
+    NodeAnimator next();
 
     /**
      * 克隆为指定类型的动节点画

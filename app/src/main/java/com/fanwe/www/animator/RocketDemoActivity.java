@@ -62,9 +62,9 @@ public class RocketDemoActivity extends AppCompatActivity
         mAnimatorChain = new FNodeAnimator().chain().setDebug(true);
 
         mAnimatorChain.currentNode().setTarget(fl_rocket_root).alpha(0, 1f).setDuration(500).setTag("火箭淡入")
-                .nodeNext().setDuration(500).setTag("延迟500毫秒")
-                .nodeNext().setTarget(tv_number).scaleX(1f, 0f).setRepeatCount(2).setDuration(1000).setTag("开始数字缩放X")
-                .nodeWithClone().scaleY(1f, 0f).setTag("开始数字缩放Y")
+                .next().setDuration(500).setTag("延迟500毫秒")
+                .next().setTarget(tv_number).scaleX(1f, 0f).setRepeatCount(2).setDuration(1000).setTag("开始数字缩放X")
+                .withClone().scaleY(1f, 0f).setTag("开始数字缩放Y")
                 .addListener(new FAnimatorListener()
                 {
                     @Override
@@ -89,7 +89,7 @@ public class RocketDemoActivity extends AppCompatActivity
                         tv_number.setText(String.valueOf(mNumber));
                     }
                 })
-                .nodeNext().setTarget(fl_rocket_root).translationY(0, -getResources().getDisplayMetrics().heightPixels).setTag("火箭起飞")
+                .next().setTarget(fl_rocket_root).translationY(0, -getResources().getDisplayMetrics().heightPixels).setTag("火箭起飞")
                 .setDuration(3000).setInterpolator(new AccelerateInterpolator())
                 .addListener(new OnEndInvisible(), new OnEndReset()) //动画结束隐藏，重置fl_rocket_root
                 .addListener(new FAnimatorListener()
@@ -110,8 +110,8 @@ public class RocketDemoActivity extends AppCompatActivity
                         animationDrawable.stop(); //停止火箭喷火动画
                     }
                 })
-                .nodeWith().setTarget(iv_rocket_smoke).alpha(0, 1f).setDuration(3000).setStartDelay(500).setTag("烟雾淡入")
-                .nodeNext().alpha(1f, 0).setDuration(500).setTag("烟雾淡出")
+                .with().setTarget(iv_rocket_smoke).alpha(0, 1f).setDuration(3000).setStartDelay(500).setTag("烟雾淡入")
+                .next().alpha(1f, 0).setDuration(500).setTag("烟雾淡出")
                 .addListener(new OnEndInvisible()) //动画结束隐藏烟雾
                 .chain().start();
     }
