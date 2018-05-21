@@ -37,23 +37,18 @@ abstract class BaseAnimatorChain implements AnimatorChain
     private final AnimatorSet mAnimatorSet = new AnimatorSet();
     private final List<NodeAnimator> mListNode = new ArrayList<>();
 
-    private NodeAnimator mCurrent;
-
     private boolean mIsDebug;
 
     public BaseAnimatorChain(FNodeAnimator animator)
     {
         checkAnimator(animator, NodeAnimator.Type.Head);
-
-        mCurrent = animator;
-        mAnimatorSet.play(animator.toObjectAnimator());
         mListNode.add(animator);
     }
 
     @Override
     public NodeAnimator currentNode()
     {
-        return mCurrent;
+        return mListNode.get(mListNode.size() - 1);
     }
 
     @Override
@@ -74,57 +69,41 @@ abstract class BaseAnimatorChain implements AnimatorChain
         checkAnimator(animator, type);
         checkChain(animator);
 
-        initNode(animator);
+        final View target = animator.getTarget();
+        if (target == null) animator.setTarget(currentNode().getTarget());
+        mListNode.add(animator);
+
         return animator;
     }
 
     protected abstract NodeAnimator onCreateNodeAnimator(NodeAnimator.Type type);
 
-    private void initNode(NodeAnimator animator)
+    private void orderNode()
     {
-        final View target = animator.getTarget();
-        if (target == null) animator.setTarget(mCurrent.getTarget());
+        ObjectAnimator lastAnimator = null;
 
-        switch (animator.getType())
+        for (NodeAnimator item : mListNode)
         {
-            case With:
-                mAnimatorSet.play(mCurrent.toObjectAnimator()).with(animator.toObjectAnimator());
-                break;
-            case Next:
-                mAnimatorSet.play(animator.toObjectAnimator()).after(mCurrent.toObjectAnimator());
-                break;
-            default:
-                throw new IllegalArgumentException("Illegal animator:" + animator.getType());
+            final ObjectAnimator currentAnimator = item.toObjectAnimator();
+            switch (item.getType())
+            {
+                case Head:
+                    mAnimatorSet.play(currentAnimator);
+                    break;
+                case With:
+                    mAnimatorSet.play(lastAnimator).with(currentAnimator);
+                    break;
+                case Next:
+                    mAnimatorSet.play(currentAnimator).after(lastAnimator);
+                    break;
+            }
+            lastAnimator = currentAnimator;
         }
 
-        mCurrent = animator;
-        mListNode.add(animator);
+        logIfNeed();
     }
 
-    private static void checkAnimator(NodeAnimator animator, NodeAnimator.Type targetType)
-    {
-        if (animator == null)
-            throw new NullPointerException("animator is null");
-        if (targetType == null)
-            throw new NullPointerException("targetType is null");
-        if (animator.getType() != targetType)
-            throw new RuntimeException("animator must be " + targetType + " type");
-    }
-
-    private void checkChain(NodeAnimator animator)
-    {
-        if (animator.chain() != this)
-            throw new RuntimeException("animator's chain() method must return current instance");
-    }
-
-    @Override
-    public AnimatorSet toAnimatorSet()
-    {
-        return mAnimatorSet;
-    }
-
-    @Override
-    public AnimatorChain start()
+    private void logIfNeed()
     {
         if (mIsDebug)
         {
@@ -154,15 +133,28 @@ abstract class BaseAnimatorChain implements AnimatorChain
             }
             Log.i(AnimatorChain.class.getSimpleName(), sb.toString());
         }
+    }
 
-        mAnimatorSet.start();
+    @Override
+    public AnimatorSet toAnimatorSet()
+    {
+        orderNode();
+        return mAnimatorSet;
+    }
+
+    @Override
+    public AnimatorChain start()
+    {
+        toAnimatorSet().start();
         return this;
     }
 
     @Override
     public AnimatorChain startAsPop()
     {
-        final ArrayList<android.animation.Animator> listChild = mAnimatorSet.getChildAnimations();
+        final AnimatorSet animatorSet = toAnimatorSet();
+
+        final ArrayList<android.animation.Animator> listChild = animatorSet.getChildAnimations();
         final HashMap<View, ImageView> mapCache = new HashMap<>();
         for (Animator animator : listChild)
         {
@@ -187,7 +179,7 @@ abstract class BaseAnimatorChain implements AnimatorChain
                 animator.setTarget(cache);
             }
         }
-        start();
+        animatorSet.start();
         return this;
     }
 
@@ -215,4 +207,24 @@ abstract class BaseAnimatorChain implements AnimatorChain
         mIsDebug = debug;
         return this;
     }
+
+    //---------- check start ----------
+
+    private static void checkAnimator(NodeAnimator animator, NodeAnimator.Type targetType)
+    {
+        if (animator == null)
+            throw new NullPointerException("animator is null");
+        if (targetType == null)
+            throw new NullPointerException("targetType is null");
+        if (animator.getType() != targetType)
+            throw new RuntimeException("animator must be " + targetType + " type");
+    }
+
+    private void checkChain(NodeAnimator animator)
+    {
+        if (animator.chain() != this)
+            throw new RuntimeException("animator's chain() method must return current instance");
+    }
+
+    //---------- check end ----------
 }
