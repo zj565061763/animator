@@ -121,13 +121,6 @@ public interface PropertyAnimator<T extends PropertyAnimator> extends Animator<T
     String getPropertyName();
 
     /**
-     * 动画类型参数是否为空
-     *
-     * @return
-     */
-    boolean isEmptyProperty();
-
-    /**
      * 转为{@link ObjectAnimator}
      *
      * @return

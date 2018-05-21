@@ -277,15 +277,9 @@ abstract class BaseAnimator<T extends ExtendedPropertyAnimator> implements Exten
     @Override
     public String getPropertyName()
     {
-        if (isEmptyProperty()) return null;
-        return mObjectAnimator.getPropertyName();
-    }
-
-    @Override
-    public boolean isEmptyProperty()
-    {
         final String propertyName = mObjectAnimator.getPropertyName();
-        return TextUtils.isEmpty(propertyName) || "null".equals(propertyName);
+        if (TextUtils.isEmpty(propertyName) || "null".equals(propertyName)) return null;
+        return propertyName;
     }
 
     @Override
