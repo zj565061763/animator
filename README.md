@@ -2,7 +2,7 @@
 对ObjectAnimator和AnimatorSet进行封装
 
 ## Gradle
-`implementation 'com.fanwe.android:animator:1.1.0-rc3'`
+`implementation 'com.fanwe.android:animator:1.1.0-rc4'`
 
 ## 简单demo
 效果图：<br>
