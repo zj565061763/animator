@@ -17,6 +17,8 @@ package com.fanwe.lib.animator;
 
 import android.view.View;
 
+import com.fanwe.lib.animator.listener.api.OnStartVisible;
+
 /**
  * 节点动画
  */
@@ -55,47 +57,32 @@ public class SimpleNodeAnimator extends BaseAnimator<NodeAnimator> implements No
     @Override
     public final AnimatorChain chain()
     {
-        if (mChain == null) mChain = new InternalAnimatorChain(this);
+        if (mChain == null) mChain = new SimpleAnimatorChain(this);
         return mChain;
     }
 
     @Override
     public NodeAnimator with()
     {
-        return chain().appendNode(Type.With, false);
+        final SimpleNodeAnimator animator = new SimpleNodeAnimator(Type.With, chain());
+        return chain().appendNode(animator);
     }
 
     @Override
     public NodeAnimator withClone()
     {
-        return chain().appendNode(Type.With, true);
+        final SimpleNodeAnimator clone = (SimpleNodeAnimator) super.clone();
+        clone.mType = Type.With;
+        clone.mChain = chain();
+        clone.clearListener();
+        clone.addListener(new OnStartVisible());
+        return chain().appendNode(clone);
     }
 
     @Override
     public NodeAnimator next()
     {
-        return chain().appendNode(Type.Next, false);
-    }
-
-    @Override
-    public final NodeAnimator cloneToType(Type type)
-    {
-        final SimpleNodeAnimator clone = (SimpleNodeAnimator) super.clone();
-        clone.mType = type;
-        return clone;
-    }
-
-    private static final class InternalAnimatorChain extends BaseAnimatorChain
-    {
-        public InternalAnimatorChain(SimpleNodeAnimator animator)
-        {
-            super(animator);
-        }
-
-        @Override
-        protected NodeAnimator onCreateNodeAnimator(Type type)
-        {
-            return new SimpleNodeAnimator(type, this);
-        }
+        final SimpleNodeAnimator animator = new SimpleNodeAnimator(Type.Next, chain());
+        return chain().appendNode(animator);
     }
 }

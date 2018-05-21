@@ -479,10 +479,8 @@ abstract class BaseAnimator<T extends ExtendedPropertyAnimator> implements Exten
         {
             BaseAnimator clone = (BaseAnimator) super.clone();
             clone.mObjectAnimator = mObjectAnimator.clone();
-            clone.clearListener();
-            clone.addListener(new OnStartVisible());
             return (T) clone;
-        } catch (Exception e)
+        } catch (CloneNotSupportedException e)
         {
             e.printStackTrace();
         }

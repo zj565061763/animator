@@ -56,14 +56,6 @@ public interface NodeAnimator extends ExtendedPropertyAnimator<NodeAnimator>
     NodeAnimator next();
 
     /**
-     * 克隆为指定类型的节点动画
-     *
-     * @param type {@link Type}
-     * @return
-     */
-    NodeAnimator cloneToType(Type type);
-
-    /**
      * 节点类型
      */
     enum Type

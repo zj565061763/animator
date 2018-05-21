@@ -32,16 +32,19 @@ import java.util.List;
 /**
  * 动画链
  */
-abstract class BaseAnimatorChain implements AnimatorChain
+final class SimpleAnimatorChain implements AnimatorChain
 {
     private final AnimatorSet mAnimatorSet = new AnimatorSet();
     private final List<NodeAnimator> mListNode = new ArrayList<>();
 
     private boolean mIsDebug;
 
-    public BaseAnimatorChain(SimpleNodeAnimator animator)
+    public SimpleAnimatorChain(NodeAnimator animator)
     {
-        checkAnimator(animator, NodeAnimator.Type.Head);
+        checkNull(animator);
+        if (animator.getType() != NodeAnimator.Type.Head)
+            throw new RuntimeException("animator must be " + NodeAnimator.Type.Head + " type");
+
         mListNode.add(animator);
     }
 
@@ -52,32 +55,19 @@ abstract class BaseAnimatorChain implements AnimatorChain
     }
 
     @Override
-    public NodeAnimator appendNode(NodeAnimator.Type type, boolean clone)
+    public NodeAnimator appendNode(NodeAnimator animator)
     {
-        checkHeadTarget();
-        return createNode(type, clone);
-    }
-
-    private NodeAnimator createNode(NodeAnimator.Type type, boolean clone)
-    {
-        if (type == null)
-            throw new NullPointerException("type is null");
-        if (type == NodeAnimator.Type.Head)
-            throw new IllegalArgumentException("Illegal type:" + type);
-
-        final NodeAnimator current = currentNode();
-        final NodeAnimator animator = clone ? current.cloneToType(type) : onCreateNodeAnimator(type);
-
-        checkAnimator(animator, type);
+        checkNull(animator);
         checkChain(animator);
+        if (animator.getType() == NodeAnimator.Type.Head)
+            throw new RuntimeException("animator must not be " + NodeAnimator.Type.Head + " type");
+        checkHeadTarget();
 
-        if (animator.getTarget() == null) animator.setTarget(current.getTarget());
-
+        if (animator.getTarget() == null) animator.setTarget(currentNode().getTarget());
         mListNode.add(animator);
+
         return animator;
     }
-
-    protected abstract NodeAnimator onCreateNodeAnimator(NodeAnimator.Type type);
 
     private void orderNode()
     {
@@ -212,14 +202,10 @@ abstract class BaseAnimatorChain implements AnimatorChain
 
     //---------- check start ----------
 
-    private static void checkAnimator(NodeAnimator animator, NodeAnimator.Type targetType)
+    private static void checkNull(NodeAnimator animator)
     {
         if (animator == null)
             throw new NullPointerException("animator is null");
-        if (targetType == null)
-            throw new NullPointerException("targetType is null");
-        if (animator.getType() != targetType)
-            throw new RuntimeException("animator must be " + targetType + " type");
     }
 
     private void checkChain(NodeAnimator animator)
