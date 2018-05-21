@@ -115,13 +115,13 @@ class BaseAnimator<T extends SimplePropertyAnimator> implements SimplePropertyAn
     }
 
     @Override
-    public T addListener(Animator.AnimatorListener listener)
+    public T addListener(Animator.AnimatorListener... listeners)
     {
-        if (listener != null)
+        if (listeners != null && listeners.length > 0)
         {
-            if (!containsListener(listener))
+            for (Animator.AnimatorListener item : listeners)
             {
-                mObjectAnimator.addListener(listener);
+                if (!containsListener(item)) mObjectAnimator.addListener(item);
             }
         }
         return (T) this;
@@ -135,9 +135,15 @@ class BaseAnimator<T extends SimplePropertyAnimator> implements SimplePropertyAn
     }
 
     @Override
-    public T removeListener(Animator.AnimatorListener listener)
+    public T removeListener(Animator.AnimatorListener... listeners)
     {
-        mObjectAnimator.removeListener(listener);
+        if (listeners != null && listeners.length > 0)
+        {
+            for (Animator.AnimatorListener item : listeners)
+            {
+                mObjectAnimator.removeListener(item);
+            }
+        }
         return (T) this;
     }
 

@@ -92,8 +92,7 @@ public class RocketDemoActivity extends AppCompatActivity
                 })
                 .chain().nodeNext().setTarget(fl_rocket_root).translationY(0, -getResources().getDisplayMetrics().heightPixels).setTag("火箭起飞")
                 .setDuration(3000).setInterpolator(new AccelerateInterpolator())
-                .addListener(new OnEndInvisible(fl_rocket_root)) //动画结束隐藏fl_rocket_root
-                .addListener(new OnEndReset(fl_rocket_root)) //动画结束重置fl_rocket_root
+                .addListener(new OnEndInvisible(), new OnEndReset()) //动画结束隐藏，重置fl_rocket_root
                 .addListener(new FAnimatorListener()
                 {
                     @Override
@@ -114,7 +113,7 @@ public class RocketDemoActivity extends AppCompatActivity
                 })
                 .chain().nodeWith().setTarget(iv_rocket_smoke).alpha(0, 1f).setDuration(3000).setStartDelay(500).setTag("烟雾淡入")
                 .chain().nodeNext().alpha(1f, 0).setDuration(500).setTag("烟雾淡出")
-                .addListener(new OnEndInvisible(iv_rocket_smoke)) //动画结束隐藏烟雾
+                .addListener(new OnEndInvisible()) //动画结束隐藏烟雾
                 .chain().start();
     }
 }

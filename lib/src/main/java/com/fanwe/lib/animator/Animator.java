@@ -101,17 +101,17 @@ public interface Animator<T extends Animator> extends Cloneable
     /**
      * 添加动画监听
      *
-     * @param listener
+     * @param listeners
      * @return
      */
-    T addListener(android.animation.Animator.AnimatorListener listener);
+    T addListener(android.animation.Animator.AnimatorListener... listeners);
 
     /**
      * 移除动画监听
      *
-     * @param listener
+     * @param listeners
      */
-    T removeListener(android.animation.Animator.AnimatorListener listener);
+    T removeListener(android.animation.Animator.AnimatorListener... listeners);
 
     /**
      * 清空监听
