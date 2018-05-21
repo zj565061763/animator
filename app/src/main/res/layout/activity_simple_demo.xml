@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -11,7 +10,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="200dp"
         android:layout_marginTop="150dp"
-        android:text="btn_target_1"/>
+        android:text="btn_target_1" />
 
     <Button
         android:id="@+id/btn_target_2"
@@ -19,7 +18,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="100dp"
         android:layout_marginTop="250dp"
-        android:text="btn_target_2"/>
+        android:text="btn_target_2" />
 
     <Button
         android:id="@+id/btn_target_3"
@@ -27,23 +26,26 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="250dp"
         android:layout_marginTop="320dp"
-        android:text="btn_target_3"/>
+        android:text="btn_target_3" />
 
     <Button
+        android:id="@+id/btn"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:onClick="onClickBtnAnim"
-        android:text="1"/>
+        android:text="1" />
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="50dp">
+
         <Button
+            android:id="@+id/btn_inside"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:onClick="onClickBtnAnimInside"
-            android:text="2"/>
+            android:text="2" />
     </LinearLayout>
 
 </FrameLayout>
