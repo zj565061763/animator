@@ -280,42 +280,42 @@ class BaseAnimator<T extends SimplePropertyAnimator> implements SimplePropertyAn
     @Override
     public T moveToX(float... values)
     {
-        moveTo(X_COORDINATE, values);
+        moveTo(Coordinate.X, values);
         return (T) this;
     }
 
     @Override
     public T moveToY(float... values)
     {
-        moveTo(Y_COORDINATE, values);
+        moveTo(Coordinate.Y, values);
         return (T) this;
     }
 
     @Override
     public T moveToX(Aligner aligner, View... views)
     {
-        moveTo(X_COORDINATE, aligner, views);
+        moveTo(Coordinate.X, aligner, views);
         return (T) this;
     }
 
     @Override
     public T moveToY(Aligner aligner, View... views)
     {
-        moveTo(Y_COORDINATE, aligner, views);
+        moveTo(Coordinate.Y, aligner, views);
         return (T) this;
     }
 
     @Override
     public T scaleX(View... views)
     {
-        scale(X_COORDINATE, views);
+        scale(Coordinate.X, views);
         return (T) this;
     }
 
     @Override
     public T scaleY(View... views)
     {
-        scale(Y_COORDINATE, views);
+        scale(Coordinate.Y, views);
         return (T) this;
     }
 
@@ -333,9 +333,6 @@ class BaseAnimator<T extends SimplePropertyAnimator> implements SimplePropertyAn
         return mTag;
     }
 
-    private static final int X_COORDINATE = 0;
-    private static final int Y_COORDINATE = 1;
-
     private int[] mTargetLocation;
     private int[] mTempLocation;
 
@@ -351,7 +348,7 @@ class BaseAnimator<T extends SimplePropertyAnimator> implements SimplePropertyAn
         view.getLocationOnScreen(mTempLocation);
     }
 
-    private void moveTo(int coordinate, float... values)
+    private void moveTo(Coordinate coordinate, float... values)
     {
         if (values != null && values.length > 0)
         {
@@ -360,25 +357,25 @@ class BaseAnimator<T extends SimplePropertyAnimator> implements SimplePropertyAn
             final float[] realValues = new float[values.length];
             for (int i = 0; i < values.length; i++)
             {
-                if (coordinate == X_COORDINATE)
+                if (coordinate == Coordinate.X)
                 {
                     realValues[i] = (values[i] - mTargetLocation[0]) + getTarget().getTranslationX();
-                } else if (coordinate == Y_COORDINATE)
+                } else if (coordinate == Coordinate.Y)
                 {
                     realValues[i] = (values[i] - mTargetLocation[1]) + getTarget().getTranslationY();
                 }
             }
-            if (coordinate == X_COORDINATE)
+            if (coordinate == Coordinate.X)
             {
                 translationX(realValues);
-            } else if (coordinate == Y_COORDINATE)
+            } else if (coordinate == Coordinate.Y)
             {
                 translationY(realValues);
             }
         }
     }
 
-    private void moveTo(int coordinate, Aligner aligner, View... views)
+    private void moveTo(Coordinate coordinate, Aligner aligner, View... views)
     {
         if (views != null && views.length > 0)
         {
@@ -391,11 +388,11 @@ class BaseAnimator<T extends SimplePropertyAnimator> implements SimplePropertyAn
                 if (aligner == null) aligner = Aligner.DEFAULT;
 
                 saveTempLocation(view);
-                if (coordinate == X_COORDINATE)
+                if (coordinate == Coordinate.X)
                 {
                     float value = aligner.align(getTarget(), view, mTempLocation[0]);
                     list.add(value);
-                } else if (coordinate == Y_COORDINATE)
+                } else if (coordinate == Coordinate.Y)
                 {
                     float value = aligner.align(getTarget(), view, mTempLocation[1]);
                     list.add(value);
@@ -410,10 +407,10 @@ class BaseAnimator<T extends SimplePropertyAnimator> implements SimplePropertyAn
                 {
                     values[i] = list.get(i);
                 }
-                if (coordinate == X_COORDINATE)
+                if (coordinate == Coordinate.X)
                 {
                     moveToX(values);
-                } else if (coordinate == Y_COORDINATE)
+                } else if (coordinate == Coordinate.Y)
                 {
                     moveToY(values);
                 }
@@ -421,7 +418,7 @@ class BaseAnimator<T extends SimplePropertyAnimator> implements SimplePropertyAn
         }
     }
 
-    private void scale(int coordinate, View... views)
+    private void scale(Coordinate coordinate, View... views)
     {
         if (views != null && views.length > 0)
         {
@@ -429,18 +426,18 @@ class BaseAnimator<T extends SimplePropertyAnimator> implements SimplePropertyAn
             final float[] values = new float[views.length];
             for (int i = 0; i < views.length; i++)
             {
-                if (coordinate == X_COORDINATE)
+                if (coordinate == Coordinate.X)
                 {
                     values[i] = ((float) views[i].getWidth()) / ((float) getTarget().getWidth());
-                } else if (coordinate == Y_COORDINATE)
+                } else if (coordinate == Coordinate.Y)
                 {
                     values[i] = ((float) views[i].getHeight()) / ((float) getTarget().getHeight());
                 }
             }
-            if (coordinate == X_COORDINATE)
+            if (coordinate == Coordinate.X)
             {
                 scaleX(values);
-            } else if (coordinate == Y_COORDINATE)
+            } else if (coordinate == Coordinate.Y)
             {
                 scaleY(values);
             }
@@ -451,6 +448,11 @@ class BaseAnimator<T extends SimplePropertyAnimator> implements SimplePropertyAn
     {
         if (getTarget() == null)
             throw new NullPointerException("target view must be provided before this, see the Animator.setTarget(View) method");
+    }
+
+    private enum Coordinate
+    {
+        X, Y
     }
 
     //---------- SimplePropertyAnimator End ----------

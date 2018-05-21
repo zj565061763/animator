@@ -41,7 +41,7 @@ abstract class BaseAnimatorChain implements AnimatorChain
 
     public BaseAnimatorChain(boolean isDebug, FNodeAnimator animator)
     {
-        checkAnimator(animator, NodeAnimator.Type.HEAD);
+        checkAnimator(animator, NodeAnimator.Type.Head);
 
         mIsDebug = isDebug;
         mCurrent = animator;
@@ -58,19 +58,19 @@ abstract class BaseAnimatorChain implements AnimatorChain
     @Override
     public NodeAnimator nodeWith()
     {
-        return createNode(NodeAnimator.Type.WITH, false);
+        return createNode(NodeAnimator.Type.With, false);
     }
 
     @Override
     public NodeAnimator nodeWith(boolean clone)
     {
-        return createNode(NodeAnimator.Type.WITH, true);
+        return createNode(NodeAnimator.Type.With, true);
     }
 
     @Override
     public NodeAnimator nodeNext()
     {
-        return createNode(NodeAnimator.Type.NEXT, false);
+        return createNode(NodeAnimator.Type.Next, false);
     }
 
     private NodeAnimator createNode(NodeAnimator.Type type, boolean clone)
@@ -93,10 +93,10 @@ abstract class BaseAnimatorChain implements AnimatorChain
 
         switch (animator.getType())
         {
-            case WITH:
+            case With:
                 mAnimatorSet.play(mCurrent.toObjectAnimator()).with(animator.toObjectAnimator());
                 break;
-            case NEXT:
+            case Next:
                 mAnimatorSet.play(animator.toObjectAnimator()).after(mCurrent.toObjectAnimator());
                 break;
             default:
@@ -150,13 +150,13 @@ abstract class BaseAnimatorChain implements AnimatorChain
                 {
                     switch (item.getType())
                     {
-                        case HEAD:
+                        case Head:
                             sb.append("\r\n").append("Head:").append(item.getTag());
                             break;
-                        case NEXT:
+                        case Next:
                             sb.append("\r\n").append("Next:").append(item.getTag());
                             break;
-                        case WITH:
+                        case With:
                             sb.append(" With:").append(item.getTag());
                             break;
                     }

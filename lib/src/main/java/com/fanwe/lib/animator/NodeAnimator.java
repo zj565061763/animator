@@ -47,14 +47,14 @@ public interface NodeAnimator extends SimplePropertyAnimator<NodeAnimator>
      */
     enum Type
     {
-        HEAD,
+        Head,
         /**
          * 新动画和上一个动画同时执行
          */
-        WITH,
+        With,
         /**
          * 新动画在上一个动画执行完成后执行
          */
-        NEXT
+        Next
     }
 }

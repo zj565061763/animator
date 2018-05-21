@@ -17,7 +17,7 @@ public class FNodeAnimator extends BaseAnimator<NodeAnimator> implements NodeAni
 
     public FNodeAnimator(boolean isDebug)
     {
-        this(Type.HEAD, null);
+        this(Type.Head, null);
         mIsDebug = isDebug;
     }
 
