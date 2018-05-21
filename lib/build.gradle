@@ -28,7 +28,7 @@ publish {
     userOrg = 'zj565061763'
     groupId = 'com.fanwe.android'
     artifactId = 'animator'
-    publishVersion = '1.1.0-rc5'
+    publishVersion = '1.1.0-rc6'
     desc = 'android animator library'
     website = 'https://github.com/zj565061763/animator'
 }

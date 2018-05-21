@@ -2,7 +2,7 @@
 对ObjectAnimator和AnimatorSet进行封装
 
 ## Gradle
-`implementation 'com.fanwe.android:animator:1.1.0-rc5'`
+`implementation 'com.fanwe.android:animator:1.1.0-rc6'`
 
 ## 简单demo
 效果图：<br>
@@ -114,7 +114,8 @@ public void onclickStartRocket(View v)
      *    Next:(烟雾淡出 alpha:500)
      *
      */
-    mAnimatorChain = new FNodeAnimator(true).chain();
+    mAnimatorChain = new FNodeAnimator().chain().setDebug(true);
+
     mAnimatorChain.currentNode().setTarget(fl_rocket_root).alpha(0, 1f).setDuration(500).setTag("火箭淡入")
             .nodeNext().setDuration(500).setTag("延迟500毫秒")
             .nodeNext().setTarget(tv_number).scaleX(1f, 0f).setRepeatCount(2).setDuration(1000).setTag("开始数字缩放X")
