@@ -20,6 +20,7 @@ import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.app.Activity;
 import android.content.Context;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
@@ -151,15 +152,23 @@ abstract class BaseAnimatorChain implements AnimatorChain
                     switch (item.getType())
                     {
                         case Head:
-                            sb.append("\r\n").append("Head:").append(item.getTag());
+                            sb.append("\r\n").append("Head:");
                             break;
                         case Next:
-                            sb.append("\r\n").append("Next:").append(item.getTag());
+                            sb.append("\r\n").append("Next:");
                             break;
                         case With:
-                            sb.append(" With:").append(item.getTag());
+                            sb.append(" With:");
                             break;
                     }
+
+                    sb.append("(");
+                    if (!TextUtils.isEmpty(item.getTag()))
+                        sb.append(item.getTag()).append(" ");
+                    sb.append(item.getPropertyName()).append(":").append(String.valueOf(item.getDuration()));
+                    if (item.getStartDelay() > 0)
+                        sb.append(" startDelay:").append(String.valueOf(item.getStartDelay()));
+                    sb.append(")");
                 }
                 Log.i(AnimatorChain.class.getSimpleName(), sb.toString());
             }

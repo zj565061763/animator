@@ -53,11 +53,11 @@ public class RocketDemoActivity extends AppCompatActivity
          *
          * demo中的日志输入如下：
          *
-         *    Head:火箭淡入
-         *    Next:延迟500毫秒
-         *    Next:开始数字缩放X With:开始数字缩放Y
-         *    Next:火箭起飞 With:烟雾淡入
-         *    Next:烟雾淡出
+         *    Head:(火箭淡入 alpha:500)
+         *    Next:(延迟500毫秒 null:500)
+         *    Next:(开始数字缩放X scaleX:1000) With:(开始数字缩放Y scaleY:1000)
+         *    Next:(火箭起飞 translationY:3000) With:(烟雾淡入 alpha:3000 startDelay:500)
+         *    Next:(烟雾淡出 alpha:500)
          *
          */
         mAnimatorChain = new FNodeAnimator(true)

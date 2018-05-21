@@ -261,9 +261,15 @@ class BaseAnimator<T extends SimplePropertyAnimator> implements SimplePropertyAn
     }
 
     @Override
+    public String getPropertyName()
+    {
+        return mObjectAnimator.getPropertyName();
+    }
+
+    @Override
     public boolean isEmptyProperty()
     {
-        final String propertyName = mObjectAnimator.getPropertyName();
+        final String propertyName = getPropertyName();
         return TextUtils.isEmpty(propertyName) || "null".equals(propertyName);
     }
 

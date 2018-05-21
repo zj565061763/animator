@@ -114,6 +114,13 @@ public interface PropertyAnimator<T extends PropertyAnimator> extends Animator<T
     T rotationY(float... values);
 
     /**
+     * 返回属性名称
+     *
+     * @return
+     */
+    String getPropertyName();
+
+    /**
      * 动画类型参数是否为空
      *
      * @return
