@@ -141,8 +141,7 @@ new FNodeAnimator(true)
         })
         .chain().nodeNext().setTarget(fl_rocket_root).translationY(0, -getResources().getDisplayMetrics().heightPixels).setTag("火箭起飞")
         .setDuration(3000).setInterpolator(new AccelerateInterpolator())
-        .addListener(new OnEndInvisible(fl_rocket_root)) //动画结束隐藏fl_rocket_root
-        .addListener(new OnEndReset(fl_rocket_root)) //动画结束重置fl_rocket_root
+        .addListener(new OnEndInvisible(), new OnEndReset()) //动画结束隐藏，重置fl_rocket_root
         .addListener(new FAnimatorListener()
         {
             @Override
