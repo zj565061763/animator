@@ -5,8 +5,8 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
-import com.fanwe.lib.animator.FNodeAnimator;
 import com.fanwe.lib.animator.NodeAnimator;
+import com.fanwe.lib.animator.SimpleNodeAnimator;
 import com.fanwe.lib.animator.aligner.XCenterAligner;
 import com.fanwe.lib.animator.aligner.YCenterAligner;
 import com.fanwe.lib.animator.listener.api.OnEndRemoveView;
@@ -42,14 +42,9 @@ public class SimpleDemoActivity extends AppCompatActivity
         /**
          * 创建一个节点动画
          */
-        final NodeAnimator nodeAnimator = new FNodeAnimator();
+        final NodeAnimator nodeAnimator = new SimpleNodeAnimator(v);
 
         nodeAnimator
-                /**
-                 * 设置要执行动画的view
-                 */
-                .setTarget(v)
-
                 /**
                  * 设置动画view的x方向要移动到哪些view的位置
                  * 第一个参数为动画view和对齐view的对齐方式，默认左边对齐，库中还提供了中心点对齐的实现类
@@ -111,8 +106,7 @@ public class SimpleDemoActivity extends AppCompatActivity
 
     public void onClickBtnAnimInside(View v)
     {
-        new FNodeAnimator()
-                .setTarget(v)
+        new SimpleNodeAnimator(v)
                 .moveToX(mXCenterAligner, v, view_target_1, view_target_2, view_target_3).setDuration(2000).setTag("x移动")
                 .withClone().moveToY(mYCenterAligner, v, view_target_1, view_target_2, view_target_3).setTag("y移动")
                 .next().setDuration(1000).setTag("延迟1000毫秒")

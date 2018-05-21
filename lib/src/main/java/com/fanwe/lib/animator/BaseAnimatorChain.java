@@ -39,7 +39,7 @@ abstract class BaseAnimatorChain implements AnimatorChain
 
     private boolean mIsDebug;
 
-    public BaseAnimatorChain(FNodeAnimator animator)
+    public BaseAnimatorChain(SimpleNodeAnimator animator)
     {
         checkAnimator(animator, NodeAnimator.Type.Head);
         mListNode.add(animator);

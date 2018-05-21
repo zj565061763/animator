@@ -15,20 +15,23 @@
  */
 package com.fanwe.lib.animator;
 
+import android.view.View;
+
 /**
  * 节点动画
  */
-public class FNodeAnimator extends BaseAnimator<NodeAnimator> implements NodeAnimator
+public class SimpleNodeAnimator extends BaseAnimator<NodeAnimator> implements NodeAnimator
 {
     private Type mType;
     private AnimatorChain mChain;
 
-    public FNodeAnimator()
+    public SimpleNodeAnimator(View target)
     {
         this(Type.Head, null);
+        setTarget(target);
     }
 
-    private FNodeAnimator(Type type, AnimatorChain chain)
+    private SimpleNodeAnimator(Type type, AnimatorChain chain)
     {
         mType = type;
         mChain = chain;
@@ -77,14 +80,14 @@ public class FNodeAnimator extends BaseAnimator<NodeAnimator> implements NodeAni
     @Override
     public final NodeAnimator cloneToType(Type type)
     {
-        final FNodeAnimator clone = (FNodeAnimator) super.clone();
+        final SimpleNodeAnimator clone = (SimpleNodeAnimator) super.clone();
         clone.mType = type;
         return clone;
     }
 
     private final static class InternalAnimatorChain extends BaseAnimatorChain
     {
-        public InternalAnimatorChain(FNodeAnimator animator)
+        public InternalAnimatorChain(SimpleNodeAnimator animator)
         {
             super(animator);
         }
@@ -92,7 +95,7 @@ public class FNodeAnimator extends BaseAnimator<NodeAnimator> implements NodeAni
         @Override
         protected NodeAnimator onCreateNodeAnimator(Type type)
         {
-            return new FNodeAnimator(type, this);
+            return new SimpleNodeAnimator(type, this);
         }
     }
 }

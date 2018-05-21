@@ -10,7 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.fanwe.lib.animator.AnimatorChain;
-import com.fanwe.lib.animator.FNodeAnimator;
+import com.fanwe.lib.animator.SimpleNodeAnimator;
 import com.fanwe.lib.animator.listener.FAnimatorListener;
 import com.fanwe.lib.animator.listener.api.OnEndInvisible;
 import com.fanwe.lib.animator.listener.api.OnEndReset;
@@ -59,9 +59,9 @@ public class RocketDemoActivity extends AppCompatActivity
          *    Next:(烟雾淡出 alpha:500)
          *
          */
-        mAnimatorChain = new FNodeAnimator().chain().setDebug(true);
+        mAnimatorChain = new SimpleNodeAnimator(fl_rocket_root).chain().setDebug(true);
 
-        mAnimatorChain.currentNode().setTarget(fl_rocket_root).alpha(0, 1f).setDuration(500).setTag("火箭淡入")
+        mAnimatorChain.currentNode().alpha(0, 1f).setDuration(500).setTag("火箭淡入")
                 .next().setDuration(500).setTag("延迟500毫秒")
                 .next().setTarget(tv_number).scaleX(1f, 0f).setRepeatCount(2).setDuration(1000).setTag("开始数字缩放X")
                 .withClone().scaleY(1f, 0f).setTag("开始数字缩放Y")
