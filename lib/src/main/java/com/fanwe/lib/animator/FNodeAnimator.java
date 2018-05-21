@@ -41,6 +41,15 @@ public class FNodeAnimator extends BaseAnimator<NodeAnimator> implements NodeAni
     }
 
     @Override
+    public void start()
+    {
+        if (mChain == null)
+            super.start();
+        else
+            throw new UnsupportedOperationException("you must call chain().start() instead, because current animator has been added to the chain");
+    }
+
+    @Override
     public final AnimatorChain chain()
     {
         if (mChain == null) mChain = new InternalAnimatorChain(this);
