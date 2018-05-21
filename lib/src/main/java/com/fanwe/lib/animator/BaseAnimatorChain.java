@@ -54,6 +54,7 @@ abstract class BaseAnimatorChain implements AnimatorChain
     @Override
     public NodeAnimator newNode(NodeAnimator.Type type, boolean clone)
     {
+        checkHeadTarget();
         return createNode(type, clone);
     }
 
@@ -138,6 +139,7 @@ abstract class BaseAnimatorChain implements AnimatorChain
     @Override
     public AnimatorSet toAnimatorSet()
     {
+        checkHeadTarget();
         orderNode();
         return mAnimatorSet;
     }
@@ -224,6 +226,13 @@ abstract class BaseAnimatorChain implements AnimatorChain
     {
         if (animator.chain() != this)
             throw new RuntimeException("animator's chain() method must return current instance");
+    }
+
+    private void checkHeadTarget()
+    {
+        final NodeAnimator animator = currentNode();
+        if (animator.getType() == NodeAnimator.Type.Head && animator.getTarget() == null)
+            throw new NullPointerException(NodeAnimator.Type.Head + " animator's target must not be null");
     }
 
     //---------- check end ----------
