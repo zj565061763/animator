@@ -99,7 +99,7 @@ public interface Animator<T extends Animator> extends Cloneable
     long getStartDelay();
 
     /**
-     * 添加动画监听
+     * 添加动画监听，内部不会进行{@link #containsListener(android.animation.Animator.AnimatorListener...)}的判断
      *
      * @param listeners
      * @return
@@ -112,6 +112,14 @@ public interface Animator<T extends Animator> extends Cloneable
      * @param listeners
      */
     T removeListener(android.animation.Animator.AnimatorListener... listeners);
+
+    /**
+     * 是否包含动画监听
+     *
+     * @param listeners
+     * @return
+     */
+    boolean containsListener(android.animation.Animator.AnimatorListener... listeners);
 
     /**
      * 清空监听

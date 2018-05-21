@@ -117,27 +117,20 @@ class BaseAnimator<T extends SimplePropertyAnimator> implements SimplePropertyAn
     @Override
     public T addListener(Animator.AnimatorListener... listeners)
     {
-        if (listeners != null && listeners.length > 0)
+        if (listeners != null)
         {
             for (Animator.AnimatorListener item : listeners)
             {
-                if (!containsListener(item)) mObjectAnimator.addListener(item);
+                mObjectAnimator.addListener(item);
             }
         }
         return (T) this;
     }
 
-    private boolean containsListener(Animator.AnimatorListener listener)
-    {
-        final ArrayList<Animator.AnimatorListener> list = mObjectAnimator.getListeners();
-        if (list == null) return false;
-        return list.contains(listener);
-    }
-
     @Override
     public T removeListener(Animator.AnimatorListener... listeners)
     {
-        if (listeners != null && listeners.length > 0)
+        if (listeners != null)
         {
             for (Animator.AnimatorListener item : listeners)
             {
@@ -145,6 +138,20 @@ class BaseAnimator<T extends SimplePropertyAnimator> implements SimplePropertyAn
             }
         }
         return (T) this;
+    }
+
+    @Override
+    public boolean containsListener(Animator.AnimatorListener... listeners)
+    {
+        if (listeners == null) return false;
+        final ArrayList<Animator.AnimatorListener> list = mObjectAnimator.getListeners();
+        if (list == null) return false;
+
+        for (Animator.AnimatorListener item : listeners)
+        {
+            if (list.contains(item)) return true;
+        }
+        return false;
     }
 
     @Override
