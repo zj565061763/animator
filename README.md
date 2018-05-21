@@ -113,7 +113,7 @@ new FNodeAnimator(true)
         .alpha(0, 1f).setDuration(500).setTag("火箭淡入")
         .chain().nodeNext().setDuration(500).setTag("延迟500毫秒")
         .chain().nodeNext().setTarget(tv_number).scaleX(1f, 0f).setRepeatCount(2).setDuration(1000).setTag("开始数字缩放X")
-        .chain().nodeWith(true).scaleY(1f, 0f).setTag("开始数字缩放Y")
+        .chain().nodeWithClone().scaleY(1f, 0f).setTag("开始数字缩放Y")
         .addListener(new FAnimatorListener()
         {
             @Override
