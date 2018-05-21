@@ -35,28 +35,28 @@ public interface NodeAnimator extends ExtendedPropertyAnimator<NodeAnimator>
     AnimatorChain chain();
 
     /**
-     * {@link Type#With}
+     * 添加一个新的节点动画，新动画和当前动画同时执行
      *
      * @return
      */
     NodeAnimator with();
 
     /**
-     * 在{@link #with()}的基础上，复制上一个动画的设置参数，比如动画时长等
+     * {@link #with()}的基础上，复制当前动画的设置参数，比如动画时长等
      *
      * @return
      */
     NodeAnimator withClone();
 
     /**
-     * {@link Type#Next}
+     * 添加一个新的节点动画，新动画在当前动画执行完成后执行
      *
      * @return
      */
     NodeAnimator next();
 
     /**
-     * 克隆为指定类型的动节点画
+     * 克隆为指定类型的节点动画
      *
      * @param type {@link Type}
      * @return

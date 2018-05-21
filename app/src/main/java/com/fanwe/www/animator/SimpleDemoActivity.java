@@ -52,11 +52,11 @@ public class SimpleDemoActivity extends AppCompatActivity
                 .moveToX(mXCenterAligner, v, view_target_1, view_target_2, view_target_3).setDuration(2000)
 
                 /**
-                 * with()：创建一个新的节点动画，新动画和上一个动画同时执行
+                 * with()：添加一个新的节点动画，新动画和当前动画同时执行
                  *
-                 * withClone()：with()的基础上，复制上一个动画的设置参数，比如动画时长等
+                 * withClone()：with()的基础上，复制当前动画的设置参数，比如动画时长等
                  *
-                 * next()：创建一个新的节点动画，新动画在上一个动画执行完成后执行
+                 * next()：添加一个新的节点动画，新动画在当前动画执行完成后执行
                  */
                 .withClone()
 
