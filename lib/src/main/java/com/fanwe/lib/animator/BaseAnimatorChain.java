@@ -35,19 +35,19 @@ import java.util.List;
 abstract class BaseAnimatorChain implements AnimatorChain
 {
     private final AnimatorSet mAnimatorSet = new AnimatorSet();
+    private final List<NodeAnimator> mListNode = new ArrayList<>();
+
     private NodeAnimator mCurrent;
 
-    private final boolean mIsDebug;
-    private List<NodeAnimator> mListNode;
+    private boolean mIsDebug;
 
-    public BaseAnimatorChain(boolean isDebug, FNodeAnimator animator)
+    public BaseAnimatorChain(FNodeAnimator animator)
     {
         checkAnimator(animator, NodeAnimator.Type.Head);
 
-        mIsDebug = isDebug;
         mCurrent = animator;
         mAnimatorSet.play(animator.toObjectAnimator());
-        addNodeIfNeed(animator);
+        mListNode.add(animator);
     }
 
     @Override
@@ -69,7 +69,7 @@ abstract class BaseAnimatorChain implements AnimatorChain
 
     private NodeAnimator createNode(NodeAnimator.Type type, boolean clone)
     {
-        final NodeAnimator animator = clone ? mCurrent.cloneToType(type) : onCreateNodeAnimator(type);
+        final NodeAnimator animator = clone ? currentNode().cloneToType(type) : onCreateNodeAnimator(type);
 
         checkAnimator(animator, type);
         checkChain(animator);
@@ -98,16 +98,7 @@ abstract class BaseAnimatorChain implements AnimatorChain
         }
 
         mCurrent = animator;
-        addNodeIfNeed(animator);
-    }
-
-    private void addNodeIfNeed(NodeAnimator animator)
-    {
-        if (mIsDebug)
-        {
-            if (mListNode == null) mListNode = new ArrayList<>();
-            mListNode.add(animator);
-        }
+        mListNode.add(animator);
     }
 
     private static void checkAnimator(NodeAnimator animator, NodeAnimator.Type targetType)
@@ -137,34 +128,31 @@ abstract class BaseAnimatorChain implements AnimatorChain
     {
         if (mIsDebug)
         {
-            if (mListNode != null)
+            final StringBuilder sb = new StringBuilder("----------");
+            for (NodeAnimator item : mListNode)
             {
-                final StringBuilder sb = new StringBuilder("----------");
-                for (NodeAnimator item : mListNode)
+                switch (item.getType())
                 {
-                    switch (item.getType())
-                    {
-                        case Head:
-                            sb.append("\r\n").append("Head:");
-                            break;
-                        case With:
-                            sb.append(" With:");
-                            break;
-                        case Next:
-                            sb.append("\r\n").append("Next:");
-                            break;
-                    }
-
-                    sb.append("(");
-                    if (!TextUtils.isEmpty(item.getTag()))
-                        sb.append(item.getTag()).append(" ");
-                    sb.append(item.getPropertyName()).append(":").append(String.valueOf(item.getDuration()));
-                    if (item.getStartDelay() > 0)
-                        sb.append(" startDelay:").append(String.valueOf(item.getStartDelay()));
-                    sb.append(")");
+                    case Head:
+                        sb.append("\r\n").append("Head:");
+                        break;
+                    case With:
+                        sb.append(" With:");
+                        break;
+                    case Next:
+                        sb.append("\r\n").append("Next:");
+                        break;
                 }
-                Log.i(AnimatorChain.class.getSimpleName(), sb.toString());
+
+                sb.append("(");
+                if (!TextUtils.isEmpty(item.getTag()))
+                    sb.append(item.getTag()).append(" ");
+                sb.append(item.getPropertyName()).append(":").append(String.valueOf(item.getDuration()));
+                if (item.getStartDelay() > 0)
+                    sb.append(" startDelay:").append(String.valueOf(item.getStartDelay()));
+                sb.append(")");
             }
+            Log.i(AnimatorChain.class.getSimpleName(), sb.toString());
         }
 
         mAnimatorSet.start();
@@ -219,5 +207,12 @@ abstract class BaseAnimatorChain implements AnimatorChain
     public void cancel()
     {
         mAnimatorSet.cancel();
+    }
+
+    @Override
+    public AnimatorChain setDebug(boolean debug)
+    {
+        mIsDebug = debug;
+        return this;
     }
 }

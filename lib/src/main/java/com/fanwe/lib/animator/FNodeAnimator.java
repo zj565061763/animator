@@ -1,3 +1,18 @@
+/*
+ * Copyright (C) 2017 zhengjun, fanwe (http://www.fanwe.com)
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package com.fanwe.lib.animator;
 
 /**
@@ -8,17 +23,9 @@ public class FNodeAnimator extends BaseAnimator<NodeAnimator> implements NodeAni
     private Type mType;
     private AnimatorChain mChain;
 
-    private boolean mIsDebug;
-
     public FNodeAnimator()
     {
-        this(false);
-    }
-
-    public FNodeAnimator(boolean isDebug)
-    {
         this(Type.Head, null);
-        mIsDebug = isDebug;
     }
 
     private FNodeAnimator(Type type, AnimatorChain chain)
@@ -36,7 +43,7 @@ public class FNodeAnimator extends BaseAnimator<NodeAnimator> implements NodeAni
     @Override
     public final AnimatorChain chain()
     {
-        if (mChain == null) mChain = new InternalAnimatorChain(mIsDebug, this);
+        if (mChain == null) mChain = new InternalAnimatorChain(this);
         return mChain;
     }
 
@@ -68,9 +75,9 @@ public class FNodeAnimator extends BaseAnimator<NodeAnimator> implements NodeAni
 
     private final static class InternalAnimatorChain extends BaseAnimatorChain
     {
-        public InternalAnimatorChain(boolean isDebug, FNodeAnimator animator)
+        public InternalAnimatorChain(FNodeAnimator animator)
         {
-            super(isDebug, animator);
+            super(animator);
         }
 
         @Override

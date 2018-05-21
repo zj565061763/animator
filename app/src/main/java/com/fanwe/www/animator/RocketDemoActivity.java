@@ -59,7 +59,8 @@ public class RocketDemoActivity extends AppCompatActivity
          *    Next:(烟雾淡出 alpha:500)
          *
          */
-        mAnimatorChain = new FNodeAnimator(true).chain();
+        mAnimatorChain = new FNodeAnimator().chain().setDebug(true);
+
         mAnimatorChain.currentNode().setTarget(fl_rocket_root).alpha(0, 1f).setDuration(500).setTag("火箭淡入")
                 .nodeNext().setDuration(500).setTag("延迟500毫秒")
                 .nodeNext().setTarget(tv_number).scaleX(1f, 0f).setRepeatCount(2).setDuration(1000).setTag("开始数字缩放X")
