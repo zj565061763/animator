@@ -32,7 +32,7 @@ import java.util.List;
 /**
  * 对ObjectAnimator进行封装提供更方便的调用方法
  */
-class BaseAnimator<T extends SimplePropertyAnimator> implements SimplePropertyAnimator<T>
+abstract class BaseAnimator<T extends ExtendedPropertyAnimator> implements ExtendedPropertyAnimator<T>
 {
     private ObjectAnimator mObjectAnimator = new ObjectAnimator();
     private String mTag;
@@ -296,7 +296,7 @@ class BaseAnimator<T extends SimplePropertyAnimator> implements SimplePropertyAn
 
     //---------- PropertyAnimator End ----------
 
-    //---------- SimplePropertyAnimator Start ----------
+    //---------- ExtendedPropertyAnimator Start ----------
 
     @Override
     public T moveToX(float... values)
@@ -476,7 +476,7 @@ class BaseAnimator<T extends SimplePropertyAnimator> implements SimplePropertyAn
         X, Y
     }
 
-    //---------- SimplePropertyAnimator End ----------
+    //---------- ExtendedPropertyAnimator End ----------
 
     @Override
     public T clone()

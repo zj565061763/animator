@@ -19,7 +19,7 @@ import android.view.View;
 
 import com.fanwe.lib.animator.aligner.Aligner;
 
-public interface SimplePropertyAnimator<T extends SimplePropertyAnimator> extends PropertyAnimator<T>
+public interface ExtendedPropertyAnimator<T extends ExtendedPropertyAnimator> extends PropertyAnimator<T>
 {
     /**
      * 移动到屏幕x坐标

@@ -18,7 +18,7 @@ package com.fanwe.lib.animator;
 /**
  * 节点动画，可以在动画链{@link AnimatorChain}上一起执行，也可以单独执行
  */
-public interface NodeAnimator extends SimplePropertyAnimator<NodeAnimator>
+public interface NodeAnimator extends ExtendedPropertyAnimator<NodeAnimator>
 {
     /**
      * 返回节点类型{@link Type}
