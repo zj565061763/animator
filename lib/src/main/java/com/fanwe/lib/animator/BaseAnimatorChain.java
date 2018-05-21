@@ -61,6 +61,8 @@ abstract class BaseAnimatorChain implements AnimatorChain
     {
         if (type == null)
             throw new NullPointerException("type is null");
+        if (type == NodeAnimator.Type.Head)
+            throw new IllegalArgumentException("Illegal type:" + type);
 
         return createNode(type, clone);
     }
