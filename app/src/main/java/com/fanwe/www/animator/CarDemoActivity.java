@@ -14,6 +14,8 @@ import com.fanwe.lib.animator.listener.api.OnEndReset;
 
 public class CarDemoActivity extends AppCompatActivity
 {
+    public static final String TAG = CarDemoActivity.class.getSimpleName();
+
     private View fl_down_car;
     private ImageView iv_down_car_front_tyre;
     private ImageView iv_down_car_back_tyre;

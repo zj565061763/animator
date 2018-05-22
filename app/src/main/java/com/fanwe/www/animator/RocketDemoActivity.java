@@ -21,6 +21,8 @@ import com.fanwe.lib.animator.listener.api.OnEndReset;
 
 public class RocketDemoActivity extends AppCompatActivity
 {
+    public static final String TAG = RocketDemoActivity.class.getSimpleName();
+
     private View fl_rocket_root;
     private TextView tv_number;
     private ImageView iv_rocket;
