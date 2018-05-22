@@ -97,7 +97,8 @@ public interface ExtendedPropertyAnimator<T extends ExtendedPropertyAnimator> ex
      * 参数说明： <br>
      * clone == true，克隆当前对象执行，返回克隆的对象 <br>
      * clone == false，执行当前对象，返回当前对象 <br>
-     * 不克隆的性能会好一点，但是会修改当前动画对象的target，开发者可以根据具体的应用场景来决定是否克隆
+     * <br>
+     * 注意：不克隆的性能会好一点，但是会修改当前动画对象的target，开发者可以根据具体的应用场景来决定是否克隆
      *
      * @param clone
      * @return 如果返回不为null，表示返回的是克隆对象或者当前对象，取决于传入的参数；如果返回null，表示执行失败
