@@ -5,45 +5,55 @@
     android:orientation="vertical">
 
     <Button
-        android:id="@+id/btn_target_1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="200dp"
-        android:layout_marginTop="150dp"
-        android:text="btn_target_1" />
-
-    <Button
-        android:id="@+id/btn_target_2"
+        android:id="@+id/view_target_1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="100dp"
-        android:layout_marginTop="250dp"
-        android:text="btn_target_2" />
+        android:layout_marginTop="100dp"
+        android:background="@color/colorPrimary"
+        android:padding="50dp"
+        android:text="view_target_1"
+        android:textAllCaps="false" />
 
     <Button
-        android:id="@+id/btn_target_3"
+        android:id="@+id/view_target_2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="50dp"
+        android:layout_marginTop="250dp"
+        android:background="@color/colorPrimary"
+        android:padding="30dp"
+        android:text="view_target_2" />
+
+    <Button
+        android:id="@+id/view_target_3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="250dp"
-        android:layout_marginTop="320dp"
-        android:text="btn_target_3" />
+        android:layout_marginTop="350dp"
+        android:background="@color/colorPrimary"
+        android:text="view_target_3" />
 
     <Button
         android:id="@+id/btn"
         android:layout_width="50dp"
         android:layout_height="50dp"
+        android:background="@color/colorAccent"
         android:onClick="onClickBtnAnim"
         android:text="1" />
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="50dp">
+        android:layout_marginTop="50dp"
+        android:background="@color/colorPrimary"
+        android:padding="10dp">
 
         <Button
             android:id="@+id/btn_inside"
             android:layout_width="50dp"
             android:layout_height="50dp"
+            android:background="@color/colorAccent"
             android:onClick="onClickBtnAnimInside"
             android:text="2" />
     </LinearLayout>
