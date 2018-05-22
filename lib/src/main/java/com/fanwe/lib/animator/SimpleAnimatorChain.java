@@ -32,10 +32,10 @@ import java.util.List;
 /**
  * 动画链
  */
-final class SimpleAnimatorChain implements AnimatorChain
+final class SimpleAnimatorChain implements AnimatorChain, Cloneable
 {
-    private final AnimatorSet mAnimatorSet = new AnimatorSet();
-    private final List<NodeAnimator> mListNode = new ArrayList<>();
+    private AnimatorSet mAnimatorSet = new AnimatorSet();
+    private List<NodeAnimator> mListNode = new ArrayList<>();
 
     private boolean mIsDebug;
 
@@ -142,12 +142,13 @@ final class SimpleAnimatorChain implements AnimatorChain
     }
 
     @Override
-    public AnimatorChain startAsPop()
+    public AnimatorChain startAsPop(boolean clone)
     {
-        final AnimatorSet animatorSet = toAnimatorSet();
+        final AnimatorChain chain = clone ? clone() : this;
+        final AnimatorSet animatorSet = chain.toAnimatorSet();
 
-        final ArrayList<android.animation.Animator> listChild = animatorSet.getChildAnimations();
         final HashMap<View, ImageView> mapCache = new HashMap<>();
+        final ArrayList<android.animation.Animator> listChild = animatorSet.getChildAnimations();
         for (Animator animator : listChild)
         {
             final View target = (View) ((ObjectAnimator) animator).getTarget();
@@ -171,8 +172,15 @@ final class SimpleAnimatorChain implements AnimatorChain
                 animator.setTarget(cache);
             }
         }
-        animatorSet.start();
-        return this;
+
+        if (!mapCache.isEmpty())
+        {
+            animatorSet.start();
+            return chain;
+        } else
+        {
+            return null;
+        }
     }
 
     @Override
@@ -198,6 +206,21 @@ final class SimpleAnimatorChain implements AnimatorChain
     {
         mIsDebug = debug;
         return this;
+    }
+
+    @Override
+    protected SimpleAnimatorChain clone()
+    {
+        try
+        {
+            final SimpleAnimatorChain chain = (SimpleAnimatorChain) super.clone();
+            chain.mAnimatorSet = mAnimatorSet.clone();
+            chain.mListNode = new ArrayList<>(mListNode);
+            return chain;
+        } catch (CloneNotSupportedException e)
+        {
+        }
+        return null;
     }
 
     //---------- check start ----------

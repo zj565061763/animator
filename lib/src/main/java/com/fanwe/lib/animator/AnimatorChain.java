@@ -52,11 +52,11 @@ public interface AnimatorChain
     AnimatorChain start();
 
     /**
-     * 对target截图然后设置给ImageView，让ImageView镜像在android.R.id.content的FrameLayout里面执行动画
+     * {@link ExtendedPropertyAnimator#startAsPop(boolean)}
      *
      * @return
      */
-    AnimatorChain startAsPop();
+    AnimatorChain startAsPop(boolean clone);
 
     /**
      * 动画是否处于运行中

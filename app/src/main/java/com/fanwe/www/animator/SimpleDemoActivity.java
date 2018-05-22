@@ -115,7 +115,7 @@ public class SimpleDemoActivity extends AppCompatActivity
                 .withClone().moveToY(mYCenterAligner, v, view_target_1, view_target_2, view_target_3).setTag("y移动")
                 .next().setDuration(1000).setTag("延迟1000毫秒")
                 .addListener(new OnEndRemoveView()) //动画完成后移除view
-                .chain().setDebug(true).startAsPop();
+                .chain().setDebug(true).startAsPop(true);
     }
 
     private final Animator.AnimatorListener mAnimatorListener = new Animator.AnimatorListener()
