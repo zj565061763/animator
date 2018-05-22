@@ -70,7 +70,7 @@ public abstract class FAnimatorListener extends AnimatorListenerAdapter
     public final View getAnimatorTarget()
     {
         final Animator animator = getAnimator();
-        if (animator != null && animator instanceof ObjectAnimator)
+        if (animator instanceof ObjectAnimator)
         {
             final Object targetObj = ((ObjectAnimator) animator).getTarget();
             if (targetObj instanceof View)
