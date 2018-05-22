@@ -50,7 +50,7 @@ public class RocketDemoActivity extends AppCompatActivity
         /**
          * true-调试模式，会输出整个动画链的结构，方便开发调试，可以给每个节点动画设置tag，来加强描述
          *
-         * demo中的日志输入如下：
+         * 过滤tag：AnimatorChain，demo中的日志输入如下：
          *
          *    Head:(火箭淡入 alpha:500)
          *    Next:(延迟500毫秒 null:500)
