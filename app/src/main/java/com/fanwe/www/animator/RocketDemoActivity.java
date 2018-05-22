@@ -43,7 +43,7 @@ public class RocketDemoActivity extends AppCompatActivity
 
     public void onclickStart(View v)
     {
-        if (mAnimatorChain != null && mAnimatorChain.isStarted())
+        if (mAnimatorChain != null && mAnimatorChain.isRunning())
         {
             return;
         }

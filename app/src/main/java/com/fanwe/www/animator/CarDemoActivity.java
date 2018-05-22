@@ -41,7 +41,7 @@ public class CarDemoActivity extends AppCompatActivity
 
     public void onclickStart(View v)
     {
-        if (mAnimatorChain != null && mAnimatorChain.isStarted())
+        if (mAnimatorChain != null && mAnimatorChain.isRunning())
         {
             return;
         }
@@ -71,11 +71,11 @@ public class CarDemoActivity extends AppCompatActivity
                 .rotation(-360).setRepeatCount(-1).setDuration(1000).setTag("下-前轮旋转")
                 .withClone().setTarget(iv_down_car_back_tyre)
                 //右上角移动到屏幕中央
-                .with().setTarget(fl_down_car).moveToX(carDownX1, carDownX2).setDuration(2000).setInterpolator(new DecelerateInterpolator())
+                .with().setTarget(fl_down_car).moveToX(carDownX1, carDownX2).setDuration(1500).setInterpolator(new DecelerateInterpolator())
                 .withClone().moveToY(carDownY1, carDownY2)
-                .next().setDuration(1500)
+                .next().setDuration(1000)
                 //屏幕中央移动到左下角
-                .next().moveToX(carDownX2, carDownX3).setDuration(2000).setInterpolator(new AccelerateInterpolator())
+                .next().moveToX(carDownX2, carDownX3).setDuration(1500).setInterpolator(new AccelerateInterpolator())
                 .withClone().moveToY(carDownY2, carDownY3)
                 .addListener(new OnEndInvisible(fl_down_car))
                 .addListener(new OnEndReset(fl_down_car))
@@ -84,11 +84,11 @@ public class CarDemoActivity extends AppCompatActivity
                 //轮胎旋转
                 .rotation(360).setRepeatCount(-1).setDuration(1000).withClone().setTarget(iv_up_car_back_tyre)
                 //左下角移动到屏幕中央
-                .with().setTarget(fl_up_car).moveToX(carUpX1, carUpX2).setDuration(2000).setInterpolator(new DecelerateInterpolator())
+                .with().setTarget(fl_up_car).moveToX(carUpX1, carUpX2).setDuration(1500).setInterpolator(new DecelerateInterpolator())
                 .withClone().moveToY(carUpY1, carUpY2)
-                .next().setDuration(1500)
+                .next().setDuration(1000)
                 //屏幕中央移动到右上角
-                .next().moveToX(carUpX2, carUpX3).setDuration(2000).setInterpolator(new AccelerateInterpolator())
+                .next().moveToX(carUpX2, carUpX3).setDuration(1500).setInterpolator(new AccelerateInterpolator())
                 .withClone().moveToY(carUpY2, carUpY3)
                 .addListener(new OnEndInvisible(fl_up_car), new OnEndReset(fl_up_car))
                 .chain().start();
