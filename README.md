@@ -6,14 +6,14 @@
 
 ## 关于startAsPop(boolean clone)
 为了解决view没办法超出父布局边界来执行动画的问题，提供了这个方法
-
-###实现原理：
-1. 对target截图然后设置给ImageView <br>
-2. 把ImageView添加到Activity中android.R.id.content的FrameLayout里面 <br>
-注意：这里的Activity对象是从原target获取，所以要保证原target的getContext()返回的是Activity对象，否则会失败 <br>
+<br><br>
+实现原理：
+1. 对target截图然后设置给ImageView
+2. 把ImageView添加到Activity中android.R.id.content的FrameLayout里面<br>
+注意：这里的Activity对象是从原target获取，所以要保证原target的getContext()返回的是Activity对象，否则会失败
 3. 根据传入的参数是否克隆，来决定把ImageView设置给哪个动画对象执行
 <br>
-###参数说明：
+参数说明：
 * clone == true，克隆当前对象执行，返回克隆的对象
 * clone == false，执行当前对象，返回当前对象
 <br>
