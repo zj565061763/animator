@@ -152,13 +152,7 @@ abstract class BaseAnimator<T extends ExtendedPropertyAnimator> implements Exten
     public T clearListener()
     {
         final ArrayList<Animator.AnimatorListener> listeners = getListeners();
-        if (listeners != null)
-        {
-            for (Animator.AnimatorListener item : listeners)
-            {
-                removeListener(item);
-            }
-        }
+        if (listeners != null) listeners.clear();
         return (T) this;
     }
 
