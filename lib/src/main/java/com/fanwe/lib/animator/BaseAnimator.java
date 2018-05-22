@@ -157,13 +157,6 @@ abstract class BaseAnimator<T extends ExtendedPropertyAnimator> implements Exten
     }
 
     @Override
-    public T start()
-    {
-        mObjectAnimator.start();
-        return (T) this;
-    }
-
-    @Override
     public boolean isRunning()
     {
         return mObjectAnimator.isRunning();
@@ -179,6 +172,33 @@ abstract class BaseAnimator<T extends ExtendedPropertyAnimator> implements Exten
     public void cancel()
     {
         mObjectAnimator.cancel();
+    }
+
+    @Override
+    public T start()
+    {
+        mObjectAnimator.start();
+        return (T) this;
+    }
+
+    @Override
+    public T startAsPop(boolean clone)
+    {
+        final View target = getTarget();
+        if (target != null && (target.getContext() instanceof Activity))
+        {
+            final PopImageView imageView = new PopImageView(target.getContext());
+            imageView.setDrawingCacheView(target);
+            imageView.attachTarget(target);
+            imageView.setVisibility(target.isShown() ? View.VISIBLE : View.INVISIBLE);
+
+            T animator = (T) this;
+            if (clone)
+                animator = clone();
+            animator.setTarget(imageView).start();
+            return animator;
+        }
+        return null;
     }
 
     //---------- Animator End ----------
@@ -340,26 +360,6 @@ abstract class BaseAnimator<T extends ExtendedPropertyAnimator> implements Exten
     {
         if (mTag == null) mTag = "";
         return mTag;
-    }
-
-    @Override
-    public T startAsPop(boolean clone)
-    {
-        final View target = getTarget();
-        if (target != null && (target.getContext() instanceof Activity))
-        {
-            final PopImageView imageView = new PopImageView(target.getContext());
-            imageView.setDrawingCacheView(target);
-            imageView.attachTarget(target);
-            imageView.setVisibility(target.isShown() ? View.VISIBLE : View.INVISIBLE);
-
-            T animator = (T) this;
-            if (clone)
-                animator = clone();
-            animator.setTarget(imageView).start();
-            return animator;
-        }
-        return null;
     }
 
     private int[] mTargetLocation;
