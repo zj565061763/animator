@@ -157,9 +157,10 @@ abstract class BaseAnimator<T extends ExtendedPropertyAnimator> implements Exten
     }
 
     @Override
-    public void start()
+    public T start()
     {
         mObjectAnimator.start();
+        return (T) this;
     }
 
     @Override

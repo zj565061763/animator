@@ -46,10 +46,10 @@ public class SimpleNodeAnimator extends BaseAnimator<NodeAnimator> implements No
     }
 
     @Override
-    public void start()
+    public NodeAnimator start()
     {
         if (mChain == null)
-            super.start();
+            return super.start();
         else
             throw new UnsupportedOperationException("you must call chain().start() instead, because current animator has been added to the chain");
     }

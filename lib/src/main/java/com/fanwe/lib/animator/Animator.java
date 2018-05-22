@@ -131,8 +131,10 @@ public interface Animator<T extends Animator> extends Cloneable
 
     /**
      * 开始执行动画
+     *
+     * @return
      */
-    void start();
+    T start();
 
     /**
      * 动画是否处于运行中
