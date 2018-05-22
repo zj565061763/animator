@@ -7,14 +7,11 @@ import android.view.View;
 
 public class MainActivity extends AppCompatActivity
 {
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
     }
 
     public void onClickSimpleDemo(View v)
@@ -27,4 +24,8 @@ public class MainActivity extends AppCompatActivity
         startActivity(new Intent(this, RocketDemoActivity.class));
     }
 
+    public void onClickCarDemo(View v)
+    {
+        startActivity(new Intent(this, CarDemoActivity.class));
+    }
 }

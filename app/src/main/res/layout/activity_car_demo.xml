@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/fl_car_down"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:visibility="invisible">
+
+            <FrameLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:layout_width="220dp"
+                    android:layout_height="220dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/ic_anim_car1_down_body" />
+
+                <ImageView
+                    android:id="@+id/iv_car_down_front_tyre"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_gravity="left|center"
+                    android:layout_marginLeft="80dp"
+                    android:layout_marginTop="15dp"
+                    android:src="@drawable/ic_anim_car1_front_tyre" />
+
+                <ImageView
+                    android:id="@+id/iv_car_down_back_tyre"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_gravity="left"
+                    android:layout_marginLeft="185dp"
+                    android:layout_marginTop="90dp"
+                    android:src="@drawable/ic_anim_car1_back_tyre" />
+            </FrameLayout>
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/fl_car_up"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left|bottom"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:visibility="invisible">
+
+            <FrameLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/iv_car_up_front_tyre"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_gravity="left|center"
+                    android:layout_marginLeft="98dp"
+                    android:layout_marginTop="18dp"
+                    android:src="@drawable/ic_anim_car1_front_tyre" />
+
+                <ImageView
+                    android:id="@+id/iv_car_up_back_tyre"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_gravity="left"
+                    android:layout_marginLeft="188dp"
+                    android:layout_marginTop="82dp"
+                    android:src="@drawable/ic_anim_car1_back_tyre" />
+
+                <ImageView
+                    android:layout_width="220dp"
+                    android:layout_height="220dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/ic_anim_car1_up_body" />
+            </FrameLayout>
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="onclickStart"
+        android:text="start"/>
+
+</FrameLayout>

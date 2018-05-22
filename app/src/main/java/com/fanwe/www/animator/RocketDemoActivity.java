@@ -41,7 +41,7 @@ public class RocketDemoActivity extends AppCompatActivity
         iv_rocket_smoke = findViewById(R.id.iv_rocket_smoke);
     }
 
-    public void onclickStartRocket(View v)
+    public void onclickStart(View v)
     {
         if (mAnimatorChain != null && mAnimatorChain.isStarted())
         {

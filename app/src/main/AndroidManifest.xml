@@ -19,6 +19,7 @@
 
         <activity android:name=".SimpleDemoActivity"/>
         <activity android:name=".RocketDemoActivity"/>
+        <activity android:name=".CarDemoActivity"/>
 
     </application>
 
