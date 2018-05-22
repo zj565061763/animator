@@ -189,66 +189,66 @@ abstract class BaseAnimator<T extends ExtendedPropertyAnimator> implements Exten
     //---------- PropertyAnimator Start ----------
 
     @Override
+    public T alpha(float... values)
+    {
+        setPropertyName(ALPHA);
+        setFloatValues(values);
+        return (T) this;
+    }
+
+    @Override
     public T x(float... values)
     {
-        mObjectAnimator.setPropertyName(X);
-        mObjectAnimator.setFloatValues(values);
+        setPropertyName(X);
+        setFloatValues(values);
         return (T) this;
     }
 
     @Override
     public T y(float... values)
     {
-        mObjectAnimator.setPropertyName(Y);
-        mObjectAnimator.setFloatValues(values);
+        setPropertyName(Y);
+        setFloatValues(values);
         return (T) this;
     }
 
     @Override
     public T translationX(float... values)
     {
-        mObjectAnimator.setPropertyName(TRANSLATION_X);
-        mObjectAnimator.setFloatValues(values);
+        setPropertyName(TRANSLATION_X);
+        setFloatValues(values);
         return (T) this;
     }
 
     @Override
     public T translationY(float... values)
     {
-        mObjectAnimator.setPropertyName(TRANSLATION_Y);
-        mObjectAnimator.setFloatValues(values);
-        return (T) this;
-    }
-
-    @Override
-    public T alpha(float... values)
-    {
-        mObjectAnimator.setPropertyName(ALPHA);
-        mObjectAnimator.setFloatValues(values);
+        setPropertyName(TRANSLATION_Y);
+        setFloatValues(values);
         return (T) this;
     }
 
     @Override
     public T scaleX(float... values)
     {
-        mObjectAnimator.setPropertyName(SCALE_X);
-        mObjectAnimator.setFloatValues(values);
+        setPropertyName(SCALE_X);
+        setFloatValues(values);
         return (T) this;
     }
 
     @Override
     public T scaleY(float... values)
     {
-        mObjectAnimator.setPropertyName(SCALE_Y);
-        mObjectAnimator.setFloatValues(values);
+        setPropertyName(SCALE_Y);
+        setFloatValues(values);
         return (T) this;
     }
 
     @Override
     public T rotation(float... values)
     {
-        mObjectAnimator.setPropertyName(ROTATION);
-        mObjectAnimator.setFloatValues(values);
+        setPropertyName(ROTATION);
+        setFloatValues(values);
         setInterpolator(new LinearInterpolator());
         return (T) this;
     }
@@ -256,8 +256,8 @@ abstract class BaseAnimator<T extends ExtendedPropertyAnimator> implements Exten
     @Override
     public T rotationX(float... values)
     {
-        mObjectAnimator.setPropertyName(ROTATION_X);
-        mObjectAnimator.setFloatValues(values);
+        setPropertyName(ROTATION_X);
+        setFloatValues(values);
         setInterpolator(new LinearInterpolator());
         return (T) this;
     }
@@ -265,10 +265,45 @@ abstract class BaseAnimator<T extends ExtendedPropertyAnimator> implements Exten
     @Override
     public T rotationY(float... values)
     {
-        mObjectAnimator.setPropertyName(ROTATION_Y);
-        mObjectAnimator.setFloatValues(values);
+        setPropertyName(ROTATION_Y);
+        setFloatValues(values);
         setInterpolator(new LinearInterpolator());
         return (T) this;
+    }
+
+    @Override
+    public T setFloatValues(float... values)
+    {
+        mObjectAnimator.setFloatValues(values);
+        return (T) this;
+    }
+
+    @Override
+    public T setPropertyName(String propertyName)
+    {
+        if (!TextUtils.isEmpty(propertyName))
+        {
+            if (propertyName.equals(ALPHA)
+                    || propertyName.equals(X) || propertyName.equals(Y)
+                    || propertyName.equals(TRANSLATION_X) || propertyName.equals(TRANSLATION_Y)
+                    || propertyName.equals(SCALE_X) || propertyName.equals(SCALE_Y)
+                    || propertyName.equals(ROTATION) || propertyName.equals(ROTATION_X) || propertyName.equals(ROTATION_Y))
+            {
+                mObjectAnimator.setPropertyName(propertyName);
+            } else
+            {
+                throw new IllegalArgumentException("Illegal propertyName:" + propertyName);
+            }
+        }
+        return (T) this;
+    }
+
+    @Override
+    public String getPropertyName()
+    {
+        final String propertyName = mObjectAnimator.getPropertyName();
+        if (TextUtils.isEmpty(propertyName) || "null".equals(propertyName)) return null;
+        return propertyName;
     }
 
     @Override
@@ -286,14 +321,6 @@ abstract class BaseAnimator<T extends ExtendedPropertyAnimator> implements Exten
     public int getRepeatCount()
     {
         return mObjectAnimator.getRepeatCount();
-    }
-
-    @Override
-    public String getPropertyName()
-    {
-        final String propertyName = mObjectAnimator.getPropertyName();
-        if (TextUtils.isEmpty(propertyName) || "null".equals(propertyName)) return null;
-        return propertyName;
     }
 
     @Override

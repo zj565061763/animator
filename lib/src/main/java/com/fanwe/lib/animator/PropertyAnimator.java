@@ -22,16 +22,24 @@ import android.animation.ObjectAnimator;
  */
 public interface PropertyAnimator<T extends PropertyAnimator> extends Animator<T>
 {
+    String ALPHA = "alpha";
     String X = "x";
     String Y = "y";
     String TRANSLATION_X = "translationX";
     String TRANSLATION_Y = "translationY";
-    String ALPHA = "alpha";
     String SCALE_X = "scaleX";
     String SCALE_Y = "scaleY";
     String ROTATION = "rotation";
     String ROTATION_X = "rotationX";
     String ROTATION_Y = "rotationY";
+
+    /**
+     * 设置透明度
+     *
+     * @param values
+     * @return
+     */
+    T alpha(float... values);
 
     /**
      * 设置x坐标（相对于父容器）
@@ -64,14 +72,6 @@ public interface PropertyAnimator<T extends PropertyAnimator> extends Animator<T
      * @return
      */
     T translationY(float... values);
-
-    /**
-     * 设置透明度
-     *
-     * @param values
-     * @return
-     */
-    T alpha(float... values);
 
     /**
      * 设置缩放x
@@ -114,6 +114,29 @@ public interface PropertyAnimator<T extends PropertyAnimator> extends Animator<T
     T rotationY(float... values);
 
     /**
+     * 设置float参数
+     *
+     * @param values
+     * @return
+     */
+    T setFloatValues(float... values);
+
+    /**
+     * 设置属性名称
+     *
+     * @param propertyName
+     * @return
+     */
+    T setPropertyName(String propertyName);
+
+    /**
+     * 返回属性名称
+     *
+     * @return
+     */
+    String getPropertyName();
+
+    /**
      * 设置重复次数
      *
      * @param count 如果count小于0则无限重复
@@ -127,13 +150,6 @@ public interface PropertyAnimator<T extends PropertyAnimator> extends Animator<T
      * @return
      */
     int getRepeatCount();
-
-    /**
-     * 返回属性名称
-     *
-     * @return
-     */
-    String getPropertyName();
 
     /**
      * 转为{@link ObjectAnimator}
