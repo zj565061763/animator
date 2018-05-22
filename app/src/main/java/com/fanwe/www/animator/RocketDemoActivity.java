@@ -63,7 +63,8 @@ public class RocketDemoActivity extends AppCompatActivity
          */
         mAnimatorChain = new SimpleNodeAnimator(fl_rocket_root).chain().setDebug(true);
 
-        mAnimatorChain.currentNode().alpha(0, 1f).setDuration(500).setTag("火箭淡入")
+        mAnimatorChain.currentNode()
+                .alpha(0, 1f).setDuration(500).setTag("火箭淡入")
                 .next().setDuration(500).setTag("延迟500毫秒")
                 .next().setTarget(tv_number).scaleX(1f, 0f).setRepeatCount(2).setDuration(1000).setTag("开始数字缩放X")
                 .withClone().scaleY(1f, 0f).setTag("开始数字缩放Y")
@@ -81,6 +82,7 @@ public class RocketDemoActivity extends AppCompatActivity
                     {
                         super.onAnimationEnd(animation);
                         mNumber = 3;
+                        tv_number.setVisibility(View.INVISIBLE);
                     }
 
                     @Override
