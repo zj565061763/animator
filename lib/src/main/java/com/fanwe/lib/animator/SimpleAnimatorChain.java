@@ -39,6 +39,7 @@ final class SimpleAnimatorChain implements AnimatorChain, Cloneable
     private TimeInterpolator mTimeInterpolator;
 
     private List<NodeAnimator> mListNode = new ArrayList<>();
+    private boolean mHasOrder;
 
     private boolean mIsDebug;
 
@@ -74,24 +75,27 @@ final class SimpleAnimatorChain implements AnimatorChain, Cloneable
 
     private void orderNode()
     {
-        ObjectAnimator lastAnimator = null;
-
-        for (NodeAnimator item : mListNode)
+        if (!mHasOrder)
         {
-            final ObjectAnimator currentAnimator = item.toObjectAnimator();
-            switch (item.getType())
+            ObjectAnimator lastAnimator = null;
+            for (NodeAnimator item : mListNode)
             {
-                case Head:
-                    mAnimatorSet.play(currentAnimator);
-                    break;
-                case With:
-                    mAnimatorSet.play(lastAnimator).with(currentAnimator);
-                    break;
-                case Next:
-                    mAnimatorSet.play(currentAnimator).after(lastAnimator);
-                    break;
+                final ObjectAnimator currentAnimator = item.toObjectAnimator();
+                switch (item.getType())
+                {
+                    case Head:
+                        mAnimatorSet.play(currentAnimator);
+                        break;
+                    case With:
+                        mAnimatorSet.play(lastAnimator).with(currentAnimator);
+                        break;
+                    case Next:
+                        mAnimatorSet.play(currentAnimator).after(lastAnimator);
+                        break;
+                }
+                lastAnimator = currentAnimator;
             }
-            lastAnimator = currentAnimator;
+            mHasOrder = true;
         }
 
         logIfNeed();
