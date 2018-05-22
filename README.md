@@ -30,7 +30,7 @@ T startAsPop(boolean clone);
 
 ## 简单demo
 效果图：<br>
-![](http://thumbsnap.com/i/wOZ62RgA.gif?0814)<br>
+![](http://thumbsnap.com/i/sK3VSRT3.gif?0521)<br>
 
 ```java
 /**
