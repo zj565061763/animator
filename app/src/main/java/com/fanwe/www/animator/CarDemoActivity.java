@@ -71,29 +71,36 @@ public class CarDemoActivity extends AppCompatActivity
         mAnimatorChain = new SimpleNodeAnimator(iv_down_car_front_tyre).chain().setDebug(true);
 
         mAnimatorChain.currentNode()
-                //轮胎旋转
-                .rotation(-360).setRepeatCount(-1).setDuration(1000).setTag("下-前轮旋转")
+                .rotation(-360).setRepeatCount(-1).setDuration(1000)
+                .addListener(new OnEndReset(), new OnEndInvisible()).setTag("下-前轮旋转")
                 .withClone().setTarget(iv_down_car_back_tyre)
-                //右上角移动到屏幕中央
-                .with().setTarget(fl_down_car).moveToX(carDownX1, carDownX2).setDuration(1500).setInterpolator(new DecelerateInterpolator())
-                .withClone().moveToY(carDownY1, carDownY2)
-                .next().setDuration(500)
-                //屏幕中央移动到左下角
-                .next().moveToX(carDownX2, carDownX3).setDuration(1500).setInterpolator(new AccelerateInterpolator())
+                .addListener(new OnEndReset(), new OnEndInvisible()).setTag("下-后轮旋转")
+
+                .with().setTarget(fl_down_car).moveToX(carDownX1, carDownX2)
+                .setDuration(1500).setInterpolator(new DecelerateInterpolator()).setTag("X右上角移动到屏幕中央")
+                .withClone().moveToY(carDownY1, carDownY2).setTag("Y右上角移动到屏幕中央")
+
+                .next().setDuration(500).setTag("屏幕中央停止500毫秒")
+
+                .next().moveToX(carDownX2, carDownX3)
+                .setDuration(1500).setInterpolator(new AccelerateInterpolator()).setTag("X屏幕中央移动到左下角")
                 .withClone().moveToY(carDownY2, carDownY3)
-                .addListener(new OnEndInvisible(fl_down_car))
-                .addListener(new OnEndReset(fl_down_car))
-                //汽车上去
-                .next().setTarget(iv_up_car_front_tyre)
-                //轮胎旋转
-                .rotation(360).setRepeatCount(-1).setDuration(1000).withClone().setTarget(iv_up_car_back_tyre)
-                //左下角移动到屏幕中央
-                .with().setTarget(fl_up_car).moveToX(carUpX1, carUpX2).setDuration(1500).setInterpolator(new DecelerateInterpolator())
-                .withClone().moveToY(carUpY1, carUpY2)
-                .next().setDuration(500)
-                //屏幕中央移动到右上角
-                .next().moveToX(carUpX2, carUpX3).setDuration(1500).setInterpolator(new AccelerateInterpolator())
-                .withClone().moveToY(carUpY2, carUpY3)
+                .addListener(new OnEndInvisible(), new OnEndReset()).setTag("Y屏幕中央移动到左下角")
+
+                .next().setTarget(iv_up_car_front_tyre).rotation(360).setRepeatCount(-1).setDuration(1000)
+                .addListener(new OnEndReset(), new OnEndInvisible()).setTag("上-前轮旋转")
+                .withClone().setTarget(iv_up_car_back_tyre)
+                .addListener(new OnEndReset(), new OnEndInvisible()).setTag("上-后轮旋转")
+
+                .with().setTarget(fl_up_car).moveToX(carUpX1, carUpX2)
+                .setDuration(1500).setInterpolator(new DecelerateInterpolator()).setTag("X左下角移动到屏幕中央")
+                .withClone().moveToY(carUpY1, carUpY2).setTag("Y左下角移动到屏幕中央")
+
+                .next().setDuration(500).setTag("屏幕中央停止500毫秒")
+
+                .next().moveToX(carUpX2, carUpX3)
+                .setDuration(1500).setInterpolator(new AccelerateInterpolator()).setTag("X屏幕中央移动到右上角")
+                .withClone().moveToY(carUpY2, carUpY3).setTag("Y屏幕中央移动到右上角")
                 .addListener(new OnEndInvisible(fl_up_car), new OnEndReset(fl_up_car), new FAnimatorListener()
                 {
                     @Override
