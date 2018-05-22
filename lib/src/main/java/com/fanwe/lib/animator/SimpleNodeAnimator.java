@@ -55,6 +55,15 @@ public class SimpleNodeAnimator extends BaseAnimator<NodeAnimator> implements No
     }
 
     @Override
+    public NodeAnimator startAsPop(boolean clone)
+    {
+        if (mChain == null)
+            return super.startAsPop(clone);
+        else
+            throw new UnsupportedOperationException("you must call chain().startAsPop(boolean) instead, because current animator has been added to the chain");
+    }
+
+    @Override
     public final AnimatorChain chain()
     {
         if (mChain == null) mChain = new SimpleAnimatorChain(this);
@@ -64,25 +73,28 @@ public class SimpleNodeAnimator extends BaseAnimator<NodeAnimator> implements No
     @Override
     public NodeAnimator with()
     {
-        final SimpleNodeAnimator animator = new SimpleNodeAnimator(Type.With, chain());
-        return chain().appendNode(animator);
+        final AnimatorChain chain = chain();
+        return chain.appendNode(new SimpleNodeAnimator(Type.With, chain));
     }
 
     @Override
     public NodeAnimator withClone()
     {
+        final AnimatorChain chain = chain();
+
         final SimpleNodeAnimator clone = (SimpleNodeAnimator) super.clone();
         clone.mType = Type.With;
-        clone.mChain = chain(); // 这里要进行赋值
+        clone.mChain = chain;
         clone.clearListener();
         clone.addListener(new OnStartVisible());
-        return chain().appendNode(clone);
+
+        return chain.appendNode(clone);
     }
 
     @Override
     public NodeAnimator next()
     {
-        final SimpleNodeAnimator animator = new SimpleNodeAnimator(Type.Next, chain());
-        return chain().appendNode(animator);
+        final AnimatorChain chain = chain();
+        return chain.appendNode(new SimpleNodeAnimator(Type.Next, chain));
     }
 }
