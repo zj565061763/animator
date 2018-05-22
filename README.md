@@ -2,7 +2,7 @@
 对ObjectAnimator和AnimatorSet进行封装
 
 ## Gradle
-`implementation 'com.fanwe.android:animator:1.1.0-rc10'`
+`implementation 'com.fanwe.android:animator:1.1.0-rc11'`
 
 ## 关于startAsPop(boolean clone)
 为了解决view没办法超出父布局边界来执行动画的问题，提供了这个方法
@@ -28,10 +28,12 @@
 T startAsPop(boolean clone);
 ```
 
-## 简单demo
-效果图：<br>
-![](http://thumbsnap.com/i/sK3VSRT3.gif?0521)<br>
+## 效果
+![](http://thumbsnap.com/i/sK3VSRT3.gif?0521)
+![](http://thumbsnap.com/i/cD2NW5lZ.gif?0815)
+![](http://thumbsnap.com/i/4SvypvW0.gif?0522)
 
+## 简单demo
 ```java
 /**
  * 动画view和target在同一个父布局里面
@@ -109,10 +111,6 @@ public void onClickBtnAnimInside(View v)
 }
 ```
 ## 火箭动画demo
-效果图：<br>
-git太大了有点卡，具体可以看demo<br>
-![](http://thumbsnap.com/i/cD2NW5lZ.gif?0815)<br>
-
 ```java
 public void onclickStart(View v)
 {
@@ -191,3 +189,77 @@ public void onclickStart(View v)
             .chain().start();
 }
 ```
+## 汽车动画demo
+```java
+public void onclickStart(View v)
+{
+    if (mAnimatorChain != null && mAnimatorChain.isRunning())
+    {
+        return;
+    }
+
+    //汽车下来
+    int carDownX1 = getScreenWidth();
+    int carDownX2 = getScreenWidth() / 2 - fl_down_car.getWidth() / 2;
+    int carDownX3 = -fl_down_car.getWidth();
+
+    int carDownY1 = -fl_down_car.getHeight();
+    int carDownY2 = getScreenHeight() / 2 - fl_down_car.getHeight() / 2;
+    int carDownY3 = getScreenHeight();
+
+    //汽车上去
+    int carUpX1 = -fl_down_car.getWidth();
+    int carUpX2 = getScreenWidth() / 2 - fl_down_car.getWidth() / 2;
+    int carUpX3 = getScreenWidth();
+
+    int carUpY1 = getScreenHeight();
+    int carUpY2 = getScreenHeight() / 2 - fl_down_car.getHeight() / 2;
+    int carUpY3 = -fl_down_car.getHeight();
+
+    mAnimatorChain = new SimpleNodeAnimator(iv_down_car_front_tyre).chain().setDebug(true);
+
+    mAnimatorChain.currentNode()
+            .rotation(-360).setRepeatCount(-1).setDuration(1000)
+            .addListener(new OnEndReset(), new OnEndInvisible()).setTag("下-前轮旋转")
+            .withClone().setTarget(iv_down_car_back_tyre)
+            .addListener(new OnEndReset(), new OnEndInvisible()).setTag("下-后轮旋转")
+
+            .with().setTarget(fl_down_car).moveToX(carDownX1, carDownX2)
+            .setDuration(1500).setInterpolator(new DecelerateInterpolator()).setTag("X右上角移动到屏幕中央")
+            .withClone().moveToY(carDownY1, carDownY2).setTag("Y右上角移动到屏幕中央")
+
+            .next().setDuration(500).setTag("屏幕中央停止500毫秒")
+
+            .next().moveToX(carDownX2, carDownX3)
+            .setDuration(1500).setInterpolator(new AccelerateInterpolator()).setTag("X屏幕中央移动到左下角")
+            .withClone().moveToY(carDownY2, carDownY3)
+            .addListener(new OnEndInvisible(), new OnEndReset()).setTag("Y屏幕中央移动到左下角")
+
+            .next().setTarget(iv_up_car_front_tyre).rotation(360).setRepeatCount(-1).setDuration(1000)
+            .addListener(new OnEndReset(), new OnEndInvisible()).setTag("上-前轮旋转")
+            .withClone().setTarget(iv_up_car_back_tyre)
+            .addListener(new OnEndReset(), new OnEndInvisible()).setTag("上-后轮旋转")
+
+            .with().setTarget(fl_up_car).moveToX(carUpX1, carUpX2)
+            .setDuration(1500).setInterpolator(new DecelerateInterpolator()).setTag("X左下角移动到屏幕中央")
+            .withClone().moveToY(carUpY1, carUpY2).setTag("Y左下角移动到屏幕中央")
+
+            .next().setDuration(500).setTag("屏幕中央停止500毫秒")
+
+            .next().moveToX(carUpX2, carUpX3)
+            .setDuration(1500).setInterpolator(new AccelerateInterpolator()).setTag("X屏幕中央移动到右上角")
+            .withClone().moveToY(carUpY2, carUpY3).setTag("Y屏幕中央移动到右上角")
+            .addListener(new OnEndInvisible(fl_up_car), new OnEndReset(fl_up_car), new FAnimatorListener()
+            {
+                @Override
+                public void onAnimationEnd(Animator animation)
+                {
+                    super.onAnimationEnd(animation);
+                    // 最后一个动画执行完成后，停止动画链，要不然轮子无限旋转，判断的时候动画链一直处于运行中
+                    mAnimatorChain.cancel();
+                }
+            })
+            .chain().start();
+}
+```
+
