@@ -114,6 +114,21 @@ public interface PropertyAnimator<T extends PropertyAnimator> extends Animator<T
     T rotationY(float... values);
 
     /**
+     * 设置重复次数
+     *
+     * @param count 如果count小于0则无限重复
+     * @return
+     */
+    T setRepeatCount(int count);
+
+    /**
+     * 获得重复次数
+     *
+     * @return
+     */
+    int getRepeatCount();
+
+    /**
      * 返回属性名称
      *
      * @return

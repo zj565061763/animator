@@ -74,23 +74,6 @@ abstract class BaseAnimator<T extends ExtendedPropertyAnimator> implements Exten
     }
 
     @Override
-    public T setRepeatCount(int count)
-    {
-        if (count < 0)
-        {
-            count = ValueAnimator.INFINITE;
-        }
-        mObjectAnimator.setRepeatCount(count);
-        return (T) this;
-    }
-
-    @Override
-    public int getRepeatCount()
-    {
-        return mObjectAnimator.getRepeatCount();
-    }
-
-    @Override
     public T setInterpolator(TimeInterpolator interpolator)
     {
         mObjectAnimator.setInterpolator(interpolator);
@@ -286,6 +269,23 @@ abstract class BaseAnimator<T extends ExtendedPropertyAnimator> implements Exten
         mObjectAnimator.setFloatValues(values);
         setInterpolator(new LinearInterpolator());
         return (T) this;
+    }
+
+    @Override
+    public T setRepeatCount(int count)
+    {
+        if (count < 0)
+        {
+            count = ValueAnimator.INFINITE;
+        }
+        mObjectAnimator.setRepeatCount(count);
+        return (T) this;
+    }
+
+    @Override
+    public int getRepeatCount()
+    {
+        return mObjectAnimator.getRepeatCount();
     }
 
     @Override

@@ -20,7 +20,7 @@ import android.animation.AnimatorSet;
 /**
  * 动画链
  */
-public interface AnimatorChain
+public interface AnimatorChain extends Animator<AnimatorChain>
 {
     /**
      * 返回当前节点动画
@@ -43,39 +43,6 @@ public interface AnimatorChain
      * @return
      */
     AnimatorSet toAnimatorSet();
-
-    /**
-     * 开始动画
-     *
-     * @return
-     */
-    AnimatorChain start();
-
-    /**
-     * {@link ExtendedPropertyAnimator#startAsPop(boolean)}
-     *
-     * @return
-     */
-    AnimatorChain startAsPop(boolean clone);
-
-    /**
-     * 动画是否处于运行中
-     *
-     * @return
-     */
-    boolean isRunning();
-
-    /**
-     * 动画是否已经被启动
-     *
-     * @return
-     */
-    boolean isStarted();
-
-    /**
-     * 取消动画
-     */
-    void cancel();
 
     /**
      * 设置是否调试模式

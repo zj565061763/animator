@@ -18,6 +18,7 @@ package com.fanwe.lib.animator;
 import android.animation.Animator;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
+import android.animation.TimeInterpolator;
 import android.app.Activity;
 import android.content.Context;
 import android.text.TextUtils;
@@ -35,6 +36,8 @@ import java.util.List;
 final class SimpleAnimatorChain implements AnimatorChain, Cloneable
 {
     private AnimatorSet mAnimatorSet = new AnimatorSet();
+    private TimeInterpolator mTimeInterpolator;
+
     private List<NodeAnimator> mListNode = new ArrayList<>();
 
     private boolean mIsDebug;
@@ -135,6 +138,126 @@ final class SimpleAnimatorChain implements AnimatorChain, Cloneable
     }
 
     @Override
+    public AnimatorChain setDebug(boolean debug)
+    {
+        mIsDebug = debug;
+        return this;
+    }
+
+    //---------- Animator Start ----------
+
+    @Override
+    public AnimatorChain setTarget(View target)
+    {
+        mAnimatorSet.setTarget(target);
+        return null;
+    }
+
+    @Override
+    public View getTarget()
+    {
+        return null;
+    }
+
+    @Override
+    public AnimatorChain setDuration(long duration)
+    {
+        mAnimatorSet.setDuration(duration);
+        return this;
+    }
+
+    @Override
+    public long getDuration()
+    {
+        return mAnimatorSet.getDuration();
+    }
+
+    @Override
+    public AnimatorChain setInterpolator(TimeInterpolator interpolator)
+    {
+        mAnimatorSet.setInterpolator(interpolator);
+        mTimeInterpolator = interpolator;
+        return this;
+    }
+
+    @Override
+    public TimeInterpolator getInterpolator()
+    {
+        return mTimeInterpolator;
+    }
+
+    @Override
+    public AnimatorChain setStartDelay(long delay)
+    {
+        mAnimatorSet.setStartDelay(delay);
+        return this;
+    }
+
+    @Override
+    public long getStartDelay()
+    {
+        return mAnimatorSet.getStartDelay();
+    }
+
+    @Override
+    public AnimatorChain addListener(Animator.AnimatorListener... listeners)
+    {
+        if (listeners != null)
+        {
+            for (Animator.AnimatorListener item : listeners)
+            {
+                mAnimatorSet.addListener(item);
+            }
+        }
+        return this;
+    }
+
+    @Override
+    public AnimatorChain removeListener(Animator.AnimatorListener... listeners)
+    {
+        if (listeners != null)
+        {
+            for (Animator.AnimatorListener item : listeners)
+            {
+                mAnimatorSet.removeListener(item);
+            }
+        }
+        return this;
+    }
+
+    @Override
+    public ArrayList<Animator.AnimatorListener> getListeners()
+    {
+        return mAnimatorSet.getListeners();
+    }
+
+    @Override
+    public AnimatorChain clearListener()
+    {
+        final ArrayList<Animator.AnimatorListener> listeners = getListeners();
+        if (listeners != null) listeners.clear();
+        return this;
+    }
+
+    @Override
+    public boolean isRunning()
+    {
+        return mAnimatorSet.isRunning();
+    }
+
+    @Override
+    public boolean isStarted()
+    {
+        return mAnimatorSet.isStarted();
+    }
+
+    @Override
+    public void cancel()
+    {
+        mAnimatorSet.cancel();
+    }
+
+    @Override
     public AnimatorChain start()
     {
         toAnimatorSet().start();
@@ -185,32 +308,7 @@ final class SimpleAnimatorChain implements AnimatorChain, Cloneable
     }
 
     @Override
-    public boolean isRunning()
-    {
-        return mAnimatorSet.isRunning();
-    }
-
-    @Override
-    public boolean isStarted()
-    {
-        return mAnimatorSet.isStarted();
-    }
-
-    @Override
-    public void cancel()
-    {
-        mAnimatorSet.cancel();
-    }
-
-    @Override
-    public AnimatorChain setDebug(boolean debug)
-    {
-        mIsDebug = debug;
-        return this;
-    }
-
-    @Override
-    protected SimpleAnimatorChain clone()
+    public SimpleAnimatorChain clone()
     {
         try
         {
@@ -224,7 +322,9 @@ final class SimpleAnimatorChain implements AnimatorChain, Cloneable
         return null;
     }
 
-    //---------- check start ----------
+    //---------- Animator End ----------
+
+    //---------- Check Start ----------
 
     private static void checkNull(NodeAnimator animator)
     {
@@ -245,5 +345,5 @@ final class SimpleAnimatorChain implements AnimatorChain, Cloneable
             throw new NullPointerException(NodeAnimator.Type.Head + " animator's target must not be null");
     }
 
-    //---------- check end ----------
+    //---------- Check End ----------
 }

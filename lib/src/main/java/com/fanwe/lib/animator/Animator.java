@@ -56,21 +56,6 @@ public interface Animator<T extends Animator> extends Cloneable
     long getDuration();
 
     /**
-     * 设置重复次数
-     *
-     * @param count 如果count小于0则无限重复
-     * @return
-     */
-    T setRepeatCount(int count);
-
-    /**
-     * 获得重复次数
-     *
-     * @return
-     */
-    int getRepeatCount();
-
-    /**
      * 设置插值器
      *
      * @param interpolator
