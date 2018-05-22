@@ -1,5 +1,6 @@
 package com.fanwe.www.animator;
 
+import android.animation.Animator;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -9,6 +10,7 @@ import android.widget.ImageView;
 
 import com.fanwe.lib.animator.AnimatorChain;
 import com.fanwe.lib.animator.SimpleNodeAnimator;
+import com.fanwe.lib.animator.listener.FAnimatorListener;
 import com.fanwe.lib.animator.listener.api.OnEndInvisible;
 import com.fanwe.lib.animator.listener.api.OnEndReset;
 
@@ -92,7 +94,16 @@ public class CarDemoActivity extends AppCompatActivity
                 //屏幕中央移动到右上角
                 .next().moveToX(carUpX2, carUpX3).setDuration(1500).setInterpolator(new AccelerateInterpolator())
                 .withClone().moveToY(carUpY2, carUpY3)
-                .addListener(new OnEndInvisible(fl_up_car), new OnEndReset(fl_up_car))
+                .addListener(new OnEndInvisible(fl_up_car), new OnEndReset(fl_up_car), new FAnimatorListener()
+                {
+                    @Override
+                    public void onAnimationEnd(Animator animation)
+                    {
+                        super.onAnimationEnd(animation);
+                        // 最后一个动画执行完成后，停止动画链，要不然轮子无限旋转，判断的时候动画链一直处于运行中
+                        mAnimatorChain.cancel();
+                    }
+                })
                 .chain().start();
     }
 
