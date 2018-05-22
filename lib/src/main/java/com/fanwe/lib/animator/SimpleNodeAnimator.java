@@ -73,7 +73,7 @@ public class SimpleNodeAnimator extends BaseAnimator<NodeAnimator> implements No
     {
         final SimpleNodeAnimator clone = (SimpleNodeAnimator) super.clone();
         clone.mType = Type.With;
-        clone.mChain = chain();
+        clone.mChain = chain(); // 这里要进行赋值
         clone.clearListener();
         clone.addListener(new OnStartVisible());
         return chain().appendNode(clone);

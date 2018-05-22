@@ -87,9 +87,19 @@ public interface ExtendedPropertyAnimator<T extends ExtendedPropertyAnimator> ex
     String getTag();
 
     /**
-     * 对target截图然后设置给ImageView，让ImageView镜像在android.R.id.content的FrameLayout里面执行动画
+     * 实现原理：<br>
+     * 1.对target截图然后设置给ImageView <br>
+     * 2.把ImageView添加到Activity中android.R.id.content的FrameLayout里面，这里的Activity对象是从原target获取，所以要保证原target的getContext()返回的是Activity对象，否则会失败 <br>
+     * 3.根据传入的参数是否克隆，来决定把ImageView设置给哪个动画对象执行 <br> <br>
+     * 参数说明：<br>
+     * clone == true，克隆当前对象执行，返回克隆的对象
+     * <br>
+     * clone == false，执行当前对象，返回当前对象
+     * <p>
+     * 不克隆的性能会比较好一点，但是会修改当前动画对象的target，开发者可以根据具体的应用场景来决定是否克隆
      *
-     * @return 返回新的动画对象，而不是当前对象；如果返回null，表示执行失败
+     * @param clone
+     * @return 如果返回不为null，表示返回的是克隆对象或者当前对象，取决于传入的参数；如果返回null，表示执行失败
      */
-    T startAsPop();
+    T startAsPop(boolean clone);
 }

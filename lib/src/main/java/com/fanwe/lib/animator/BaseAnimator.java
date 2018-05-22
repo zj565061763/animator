@@ -350,7 +350,7 @@ abstract class BaseAnimator<T extends ExtendedPropertyAnimator> implements Exten
     }
 
     @Override
-    public T startAsPop()
+    public T startAsPop(boolean clone)
     {
         final View target = getTarget();
         if (target != null && (target.getContext() instanceof Activity))
@@ -359,9 +359,11 @@ abstract class BaseAnimator<T extends ExtendedPropertyAnimator> implements Exten
             imageView.setDrawingCacheView(target);
             imageView.attachTarget(target);
 
-            final T clone = clone();
-            clone.setTarget(imageView).start();
-            return clone;
+            T animator = (T) this;
+            if (clone)
+                animator = clone();
+            animator.setTarget(imageView).start();
+            return animator;
         }
         return null;
     }
