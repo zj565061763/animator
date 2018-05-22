@@ -42,7 +42,7 @@ public interface NodeAnimator extends ExtendedPropertyAnimator<NodeAnimator>
     NodeAnimator with();
 
     /**
-     * {@link #with()}的基础上，复制当前动画的设置参数，比如动画时长等
+     * {@link #with()}的基础上，复制当前动画的设置参数，比如动画时长等，监听对象不会被复制
      *
      * @return
      */
