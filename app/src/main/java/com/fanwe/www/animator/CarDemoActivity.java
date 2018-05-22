@@ -45,8 +45,10 @@ public class CarDemoActivity extends AppCompatActivity
 
     public void onclickStart(View v)
     {
-        if (mAnimatorChain != null && mAnimatorChain.isRunning())
+        if (mAnimatorChain != null)
         {
+            if (!mAnimatorChain.isRunning())
+                mAnimatorChain.start();
             return;
         }
 
