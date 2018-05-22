@@ -29,7 +29,7 @@ publish {
     groupId = 'com.fanwe.android'
 
     artifactId = 'animator'
-    publishVersion = '1.1.0-rc12'
+    publishVersion = '1.1.0-rc13'
     desc = 'android animator library'
     website = 'https://github.com/zj565061763/animator'
 }
