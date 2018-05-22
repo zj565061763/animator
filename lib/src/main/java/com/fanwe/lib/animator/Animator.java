@@ -18,6 +18,8 @@ package com.fanwe.lib.animator;
 import android.animation.TimeInterpolator;
 import android.view.View;
 
+import java.util.ArrayList;
+
 /**
  * 动画接口
  */
@@ -99,7 +101,7 @@ public interface Animator<T extends Animator> extends Cloneable
     long getStartDelay();
 
     /**
-     * 添加动画监听，内部不会进行{@link #containsListener(android.animation.Animator.AnimatorListener...)}的判断
+     * 添加动画监听，内部不会进行监听是否重复的判断
      *
      * @param listeners
      * @return
@@ -114,12 +116,11 @@ public interface Animator<T extends Animator> extends Cloneable
     T removeListener(android.animation.Animator.AnimatorListener... listeners);
 
     /**
-     * 是否包含动画监听
+     * 返回保存的监听对象
      *
-     * @param listeners
      * @return
      */
-    boolean containsListener(android.animation.Animator.AnimatorListener... listeners);
+    ArrayList<android.animation.Animator.AnimatorListener> getListeners();
 
     /**
      * 清空监听
@@ -153,7 +154,7 @@ public interface Animator<T extends Animator> extends Cloneable
     void cancel();
 
     /**
-     * 克隆动画，监听对象不会被克隆
+     * 克隆动画
      *
      * @return
      */

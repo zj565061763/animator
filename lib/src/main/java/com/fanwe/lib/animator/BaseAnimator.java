@@ -143,24 +143,22 @@ abstract class BaseAnimator<T extends ExtendedPropertyAnimator> implements Exten
     }
 
     @Override
-    public boolean containsListener(Animator.AnimatorListener... listeners)
+    public ArrayList<Animator.AnimatorListener> getListeners()
     {
-        if (listeners == null) return false;
-        final ArrayList<Animator.AnimatorListener> list = mObjectAnimator.getListeners();
-        if (list == null) return false;
-
-        for (Animator.AnimatorListener item : listeners)
-        {
-            if (list.contains(item)) return true;
-        }
-        return false;
+        return mObjectAnimator.getListeners();
     }
 
     @Override
     public T clearListener()
     {
-        final ArrayList<Animator.AnimatorListener> list = mObjectAnimator.getListeners();
-        if (list != null) list.clear();
+        final ArrayList<Animator.AnimatorListener> listeners = getListeners();
+        if (listeners != null)
+        {
+            for (Animator.AnimatorListener item : listeners)
+            {
+                removeListener(item);
+            }
+        }
         return (T) this;
     }
 
