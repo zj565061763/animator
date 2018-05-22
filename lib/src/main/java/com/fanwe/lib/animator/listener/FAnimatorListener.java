@@ -39,6 +39,11 @@ public abstract class FAnimatorListener extends AnimatorListenerAdapter
         setTarget(target);
     }
 
+    /**
+     * 设置target
+     *
+     * @param target
+     */
     public final void setTarget(View target)
     {
         mTarget = target == null ? null : new WeakReference<>(target);
@@ -54,6 +59,16 @@ public abstract class FAnimatorListener extends AnimatorListenerAdapter
         final View targetSpec = mTarget == null ? null : mTarget.get();
         if (targetSpec != null) return targetSpec;
 
+        return getAnimatorTarget();
+    }
+
+    /**
+     * 返回动画对象中的target
+     *
+     * @return
+     */
+    public final View getAnimatorTarget()
+    {
         final Animator animator = getAnimator();
         if (animator != null && animator instanceof ObjectAnimator)
         {
@@ -63,7 +78,6 @@ public abstract class FAnimatorListener extends AnimatorListenerAdapter
                 return (View) targetObj;
             }
         }
-
         return null;
     }
 
