@@ -28,7 +28,6 @@ public class SimpleDemoActivity extends AppCompatActivity
         view_target_1 = findViewById(R.id.btn_target_1);
         view_target_2 = findViewById(R.id.btn_target_2);
         view_target_3 = findViewById(R.id.btn_target_3);
-
     }
 
     /**
@@ -92,19 +91,9 @@ public class SimpleDemoActivity extends AppCompatActivity
                 .chain().start();
 
         /**
-         * 为了解决view没办法超出父布局边界来执行动画的问题，提供了这个方法
-         *
-         * 内部实现原理：
-         *
-         * 1.对动画View截图然后设置给ImageView
-         * 2.让镜像ImageView添加到android.R.id.content的FrameLayout里面，并对齐覆盖在动画view上面
-         * 3.让镜像ImageView执行动画
-         *
-         * 注意：如果调用此方法的话，要记得在最后的动画结束后移除镜像ImageView，除非业务需求就是不移除
+         * 可以得到原生的动画对象
          */
-        //    nodeAnimator.chain().startAsPop();
-
-        AnimatorSet animatorSet = nodeAnimator.chain().toAnimatorSet(); // 也可以得到原生的动画对象
+        AnimatorSet animatorSet = nodeAnimator.chain().toAnimatorSet();
     }
 
     public void onClickBtnAnimInside(View v)
