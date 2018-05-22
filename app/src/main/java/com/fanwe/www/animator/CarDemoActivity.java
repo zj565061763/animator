@@ -9,7 +9,7 @@ import android.view.animation.DecelerateInterpolator;
 import android.widget.ImageView;
 
 import com.fanwe.lib.animator.AnimatorChain;
-import com.fanwe.lib.animator.SimpleNodeAnimator;
+import com.fanwe.lib.animator.FNodeAnimator;
 import com.fanwe.lib.animator.listener.FAnimatorListener;
 import com.fanwe.lib.animator.listener.api.OnEndInvisible;
 import com.fanwe.lib.animator.listener.api.OnEndReset;
@@ -70,7 +70,7 @@ public class CarDemoActivity extends AppCompatActivity
         int carUpY2 = getScreenHeight() / 2 - fl_down_car.getHeight() / 2;
         int carUpY3 = -fl_down_car.getHeight();
 
-        mAnimatorChain = new SimpleNodeAnimator(iv_down_car_front_tyre).chain().setDebug(true);
+        mAnimatorChain = new FNodeAnimator(iv_down_car_front_tyre).chain().setDebug(true);
 
         mAnimatorChain.currentNode()
                 .rotation(-360).setRepeatCount(-1).setDuration(1000)

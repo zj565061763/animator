@@ -43,7 +43,7 @@ public void onClickBtnAnim(View v)
     /**
      * 创建一个节点动画
      */
-    final NodeAnimator nodeAnimator = new SimpleNodeAnimator(v);
+    final NodeAnimator nodeAnimator = new FNodeAnimator(v);
 
     nodeAnimator
             /**
@@ -100,7 +100,7 @@ public void onClickBtnAnim(View v)
  */
 public void onClickBtnAnimInside(View v)
 {
-    new SimpleNodeAnimator(v)
+    new FNodeAnimator(v)
             .moveToX(new XCenterAligner(), v, view_target_1, view_target_2, view_target_3).setDuration(1500).setTag("x移动")
             .withClone().moveToY(new YCenterAligner(), v, view_target_1, view_target_2, view_target_3).setTag("y移动")
             .with().scaleX(v, view_target_1, view_target_2, view_target_3).setDuration(1500).setTag("x缩放")
@@ -130,7 +130,7 @@ public void onclickStart(View v)
      *    Next:(烟雾淡出 alpha:500)
      *
      */
-    mAnimatorChain = new SimpleNodeAnimator(fl_rocket_root).chain().setDebug(true);
+    mAnimatorChain = new FNodeAnimator(fl_rocket_root).chain().setDebug(true);
 
     mAnimatorChain.currentNode()
             .alpha(0, 1f).setDuration(500).setTag("火箭淡入")
@@ -218,7 +218,7 @@ public void onclickStart(View v)
     int carUpY2 = getScreenHeight() / 2 - fl_down_car.getHeight() / 2;
     int carUpY3 = -fl_down_car.getHeight();
 
-    mAnimatorChain = new SimpleNodeAnimator(iv_down_car_front_tyre).chain().setDebug(true);
+    mAnimatorChain = new FNodeAnimator(iv_down_car_front_tyre).chain().setDebug(true);
 
     mAnimatorChain.currentNode()
             .rotation(-360).setRepeatCount(-1).setDuration(1000)

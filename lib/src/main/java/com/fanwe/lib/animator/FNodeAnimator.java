@@ -22,18 +22,18 @@ import com.fanwe.lib.animator.listener.api.OnStartVisible;
 /**
  * 节点动画
  */
-public class SimpleNodeAnimator extends BaseAnimator<NodeAnimator> implements NodeAnimator
+public class FNodeAnimator extends BaseAnimator<NodeAnimator> implements NodeAnimator
 {
     private Type mType;
     private AnimatorChain mChain;
 
-    public SimpleNodeAnimator(View target)
+    public FNodeAnimator(View target)
     {
         this(Type.Head, null);
         setTarget(target);
     }
 
-    private SimpleNodeAnimator(Type type, AnimatorChain chain)
+    private FNodeAnimator(Type type, AnimatorChain chain)
     {
         mType = type;
         mChain = chain;
@@ -74,7 +74,7 @@ public class SimpleNodeAnimator extends BaseAnimator<NodeAnimator> implements No
     public NodeAnimator with()
     {
         final AnimatorChain chain = chain();
-        return chain.appendNode(new SimpleNodeAnimator(Type.With, chain));
+        return chain.appendNode(new FNodeAnimator(Type.With, chain));
     }
 
     @Override
@@ -82,7 +82,7 @@ public class SimpleNodeAnimator extends BaseAnimator<NodeAnimator> implements No
     {
         final AnimatorChain chain = chain();
 
-        final SimpleNodeAnimator clone = (SimpleNodeAnimator) super.clone();
+        final FNodeAnimator clone = (FNodeAnimator) super.clone();
         clone.mType = Type.With;
         clone.mChain = chain;
         clone.clearListener();
@@ -95,6 +95,6 @@ public class SimpleNodeAnimator extends BaseAnimator<NodeAnimator> implements No
     public NodeAnimator next()
     {
         final AnimatorChain chain = chain();
-        return chain.appendNode(new SimpleNodeAnimator(Type.Next, chain));
+        return chain.appendNode(new FNodeAnimator(Type.Next, chain));
     }
 }

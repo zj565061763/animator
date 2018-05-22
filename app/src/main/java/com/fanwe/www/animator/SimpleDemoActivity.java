@@ -6,7 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
 import com.fanwe.lib.animator.NodeAnimator;
-import com.fanwe.lib.animator.SimpleNodeAnimator;
+import com.fanwe.lib.animator.FNodeAnimator;
 import com.fanwe.lib.animator.aligner.XCenterAligner;
 import com.fanwe.lib.animator.aligner.YCenterAligner;
 import com.fanwe.lib.animator.listener.api.OnEndRemoveView;
@@ -36,7 +36,7 @@ public class SimpleDemoActivity extends AppCompatActivity
         /**
          * 创建一个节点动画
          */
-        final NodeAnimator nodeAnimator = new SimpleNodeAnimator(v);
+        final NodeAnimator nodeAnimator = new FNodeAnimator(v);
 
         nodeAnimator
                 /**
@@ -93,7 +93,7 @@ public class SimpleDemoActivity extends AppCompatActivity
      */
     public void onClickBtnAnimInside(View v)
     {
-        new SimpleNodeAnimator(v)
+        new FNodeAnimator(v)
                 .moveToX(new XCenterAligner(), v, view_target_1, view_target_2, view_target_3).setDuration(1500).setTag("x移动")
                 .withClone().moveToY(new YCenterAligner(), v, view_target_1, view_target_2, view_target_3).setTag("y移动")
                 .with().scaleX(v, view_target_1, view_target_2, view_target_3).setDuration(1500).setTag("x缩放")
