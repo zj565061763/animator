@@ -41,7 +41,6 @@ public class PopImageView extends ImageView
      * 设置要截图的view
      *
      * @param view
-     * @return
      */
     public void setDrawingCacheView(View view)
     {
