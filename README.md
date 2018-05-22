@@ -114,9 +114,9 @@ git太大了有点卡，具体可以看demo<br>
 ![](http://thumbsnap.com/i/cD2NW5lZ.gif?0815)<br>
 
 ```java
-public void onclickStartRocket(View v)
+public void onclickStart(View v)
 {
-    if (mAnimatorChain != null && mAnimatorChain.isStarted())
+    if (mAnimatorChain != null && mAnimatorChain.isRunning())
     {
         return;
     }
@@ -134,7 +134,8 @@ public void onclickStartRocket(View v)
      */
     mAnimatorChain = new SimpleNodeAnimator(fl_rocket_root).chain().setDebug(true);
 
-    mAnimatorChain.currentNode().alpha(0, 1f).setDuration(500).setTag("火箭淡入")
+    mAnimatorChain.currentNode()
+            .alpha(0, 1f).setDuration(500).setTag("火箭淡入")
             .next().setDuration(500).setTag("延迟500毫秒")
             .next().setTarget(tv_number).scaleX(1f, 0f).setRepeatCount(2).setDuration(1000).setTag("开始数字缩放X")
             .withClone().scaleY(1f, 0f).setTag("开始数字缩放Y")
@@ -152,6 +153,7 @@ public void onclickStartRocket(View v)
                 {
                     super.onAnimationEnd(animation);
                     mNumber = 3;
+                    tv_number.setVisibility(View.INVISIBLE);
                 }
 
                 @Override
