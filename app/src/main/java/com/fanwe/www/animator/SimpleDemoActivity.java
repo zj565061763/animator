@@ -43,7 +43,7 @@ public class SimpleDemoActivity extends AppCompatActivity
                  * 设置动画view的x方向要移动到哪些view的位置
                  * 第一个参数为动画view和对齐view的对齐方式，默认左边对齐，库中还提供了中心点对齐的实现类
                  */
-                .moveToX(new XCenterAligner(), v, view_target_1, view_target_2, view_target_3).setDuration(2000)
+                .moveToX(new XCenterAligner(), v, view_target_1, view_target_2, view_target_3).setDuration(1500)
 
                 /**
                  * with()：添加一个新的节点动画，新动画和当前动画同时执行
@@ -94,9 +94,9 @@ public class SimpleDemoActivity extends AppCompatActivity
     public void onClickBtnAnimInside(View v)
     {
         new SimpleNodeAnimator(v)
-                .moveToX(new XCenterAligner(), v, view_target_1, view_target_2, view_target_3).setDuration(2000).setTag("x移动")
+                .moveToX(new XCenterAligner(), v, view_target_1, view_target_2, view_target_3).setDuration(1500).setTag("x移动")
                 .withClone().moveToY(new YCenterAligner(), v, view_target_1, view_target_2, view_target_3).setTag("y移动")
-                .with().scaleX(v, view_target_1, view_target_2, view_target_3).setDuration(2000).setTag("x缩放")
+                .with().scaleX(v, view_target_1, view_target_2, view_target_3).setDuration(1500).setTag("x缩放")
                 .withClone().scaleY(v, view_target_1, view_target_2, view_target_3).setTag("y缩放")
                 .next().setDuration(500).setTag("延迟500毫秒")
                 .addListener(new OnEndRemoveView()) //动画完成后移除view
