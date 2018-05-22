@@ -23,7 +23,7 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 
-class PopImageView extends ImageView
+public class PopImageView extends ImageView
 {
     private final FrameLayout mFrameLayout;
 

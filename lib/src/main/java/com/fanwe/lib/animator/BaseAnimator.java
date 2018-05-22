@@ -358,6 +358,7 @@ abstract class BaseAnimator<T extends ExtendedPropertyAnimator> implements Exten
             final PopImageView imageView = new PopImageView(target.getContext());
             imageView.setDrawingCacheView(target);
             imageView.attachTarget(target);
+            imageView.setVisibility(target.getVisibility());
 
             T animator = (T) this;
             if (clone)
