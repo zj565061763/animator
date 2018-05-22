@@ -22,9 +22,13 @@ import android.view.View;
 
 import java.lang.ref.WeakReference;
 
+/**
+ * 动画监听，重写此类的方法要记得先调用super的方法
+ */
 public abstract class FAnimatorListener extends AnimatorListenerAdapter
 {
     private WeakReference<View> mTarget;
+    private WeakReference<Animator> mAnimator;
 
     public FAnimatorListener()
     {
@@ -37,34 +41,85 @@ public abstract class FAnimatorListener extends AnimatorListenerAdapter
 
     public final void setTarget(View target)
     {
-        if (target != null)
+        mTarget = target == null ? null : new WeakReference<>(target);
+    }
+
+    /**
+     * 优先返回设置的target，如果为null的话，返回动画对象中的target
+     *
+     * @return
+     */
+    public final View getTarget()
+    {
+        final View targetSpec = mTarget == null ? null : mTarget.get();
+        if (targetSpec != null) return targetSpec;
+
+        final Animator animator = getAnimator();
+        if (animator != null && animator instanceof ObjectAnimator)
         {
-            mTarget = new WeakReference<>(target);
-        } else
+            final Object targetObj = ((ObjectAnimator) animator).getTarget();
+            if (targetObj instanceof View)
+            {
+                return (View) targetObj;
+            }
+        }
+
+        return null;
+    }
+
+    private void setAnimator(Animator animator)
+    {
+        final Animator old = getAnimator();
+        if (old != animator)
         {
-            mTarget = null;
+            mAnimator = animator == null ? null : new WeakReference<>(animator);
         }
     }
 
-    public final View getTarget()
+    private Animator getAnimator()
     {
-        return mTarget == null ? null : mTarget.get();
+        return mAnimator == null ? null : mAnimator.get();
     }
 
     @Override
     public void onAnimationStart(Animator animation)
     {
         super.onAnimationStart(animation);
-        if (animation instanceof ObjectAnimator)
-        {
-            final Object target = ((ObjectAnimator) animation).getTarget();
-            if (target != null && (target instanceof View))
-            {
-                if (getTarget() == null)
-                {
-                    setTarget((View) target);
-                }
-            }
-        }
+        setAnimator(animation);
+    }
+
+    @Override
+    public void onAnimationCancel(Animator animation)
+    {
+        super.onAnimationCancel(animation);
+        setAnimator(animation);
+    }
+
+    @Override
+    public void onAnimationEnd(Animator animation)
+    {
+        super.onAnimationEnd(animation);
+        setAnimator(animation);
+    }
+
+    @Override
+    public void onAnimationRepeat(Animator animation)
+    {
+        super.onAnimationRepeat(animation);
+        setAnimator(animation);
+    }
+
+    @Override
+    public void onAnimationPause(Animator animation)
+    {
+        super.onAnimationPause(animation);
+        setAnimator(animation);
+    }
+
+    @Override
+    public void onAnimationResume(Animator animation)
+    {
+        super.onAnimationResume(animation);
+        setAnimator(animation);
     }
 }

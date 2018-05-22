@@ -94,10 +94,7 @@ public abstract class LifecycleListener extends FAnimatorListener
 
     private void onAnimationLifecycle(int lifecycle, Animator animator)
     {
-        if (lifecycle == mLifecycle)
-        {
-            onAnimationLifecycle(animator);
-        }
+        if (lifecycle == mLifecycle) onAnimationLifecycle(animator);
     }
 
     public abstract void onAnimationLifecycle(Animator animator);

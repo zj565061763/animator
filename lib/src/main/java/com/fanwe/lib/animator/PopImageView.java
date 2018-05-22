@@ -34,7 +34,7 @@ public class PopImageView extends ImageView
         {
             throw new IllegalArgumentException("context must be instance of Activity");
         }
-        mFrameLayout = (FrameLayout) ((Activity) context).findViewById(android.R.id.content);
+        mFrameLayout = ((Activity) context).findViewById(android.R.id.content);
     }
 
     /**
