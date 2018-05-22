@@ -163,7 +163,7 @@ final class SimpleAnimatorChain implements AnimatorChain, Cloneable
                     PopImageView imageView = new PopImageView(context);
                     imageView.setDrawingCacheView(target);
                     imageView.attachTarget(target);
-                    imageView.setVisibility(target.getVisibility());
+                    imageView.setVisibility(target.isShown() ? View.VISIBLE : View.INVISIBLE);
 
                     animator.setTarget(imageView);
                     mapCache.put(target, imageView);
