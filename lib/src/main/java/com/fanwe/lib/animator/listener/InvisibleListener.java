@@ -20,12 +20,12 @@ import android.view.View;
 
 public class InvisibleListener extends LifecycleListener
 {
-    public InvisibleListener(int lifecycle)
+    public InvisibleListener(Lifecycle lifecycle)
     {
         super(lifecycle);
     }
 
-    public InvisibleListener(int lifecycle, View target)
+    public InvisibleListener(Lifecycle lifecycle, View target)
     {
         super(lifecycle, target);
     }

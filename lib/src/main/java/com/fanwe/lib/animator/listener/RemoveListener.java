@@ -21,12 +21,12 @@ import android.view.ViewGroup;
 
 public class RemoveListener extends LifecycleListener
 {
-    public RemoveListener(int lifecycle)
+    public RemoveListener(Lifecycle lifecycle)
     {
         super(lifecycle);
     }
 
-    public RemoveListener(int lifecycle, View target)
+    public RemoveListener(Lifecycle lifecycle, View target)
     {
         super(lifecycle, target);
     }

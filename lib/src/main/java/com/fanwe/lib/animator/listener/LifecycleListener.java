@@ -20,32 +20,20 @@ import android.view.View;
 
 public abstract class LifecycleListener extends FAnimatorListener
 {
-    private final int mLifecycle;
+    private final Lifecycle mLifecycle;
 
-    public LifecycleListener(int lifecycle)
+    public LifecycleListener(Lifecycle lifecycle)
     {
         this(lifecycle, null);
     }
 
-    public LifecycleListener(int lifecycle, View target)
+    public LifecycleListener(Lifecycle lifecycle, View target)
     {
         super(target);
-
-        if (lifecycle == Lifecycle.START
-                || lifecycle == Lifecycle.PAUSE
-                || lifecycle == Lifecycle.RESUME
-                || lifecycle == Lifecycle.REPEAT
-                || lifecycle == Lifecycle.CANCEL
-                || lifecycle == Lifecycle.END)
-        {
-            mLifecycle = lifecycle;
-        } else
-        {
-            throw new IllegalArgumentException("lifecycle must be value of LifecycleListener.Lifecycle.XXX");
-        }
+        mLifecycle = lifecycle;
     }
 
-    public final int getLifecycle()
+    public final Lifecycle getLifecycle()
     {
         return mLifecycle;
     }
@@ -92,20 +80,20 @@ public abstract class LifecycleListener extends FAnimatorListener
         onAnimationLifecycle(Lifecycle.END, animation);
     }
 
-    private void onAnimationLifecycle(int lifecycle, Animator animator)
+    private void onAnimationLifecycle(Lifecycle lifecycle, Animator animator)
     {
         if (lifecycle == mLifecycle) onAnimationLifecycle(animator);
     }
 
     public abstract void onAnimationLifecycle(Animator animator);
 
-    public static final class Lifecycle
+    public enum Lifecycle
     {
-        public static final int START = 0;
-        public static final int PAUSE = 1;
-        public static final int RESUME = 2;
-        public static final int REPEAT = 3;
-        public static final int CANCEL = 4;
-        public static final int END = 5;
+        START,
+        PAUSE,
+        RESUME,
+        REPEAT,
+        CANCEL,
+        END
     }
 }

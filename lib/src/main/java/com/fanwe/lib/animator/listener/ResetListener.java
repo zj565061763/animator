@@ -20,12 +20,12 @@ import android.view.View;
 
 public class ResetListener extends LifecycleListener
 {
-    public ResetListener(int lifecycle)
+    public ResetListener(Lifecycle lifecycle)
     {
         super(lifecycle);
     }
 
-    public ResetListener(int lifecycle, View target)
+    public ResetListener(Lifecycle lifecycle, View target)
     {
         super(lifecycle, target);
     }

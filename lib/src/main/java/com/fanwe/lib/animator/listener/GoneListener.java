@@ -20,12 +20,12 @@ import android.view.View;
 
 public class GoneListener extends LifecycleListener
 {
-    public GoneListener(int lifecycle)
+    public GoneListener(Lifecycle lifecycle)
     {
         super(lifecycle);
     }
 
-    public GoneListener(int lifecycle, View target)
+    public GoneListener(Lifecycle lifecycle, View target)
     {
         super(lifecycle, target);
     }
