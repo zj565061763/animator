@@ -73,7 +73,7 @@ public class CarDemoActivity extends AppCompatActivity
                 //右上角移动到屏幕中央
                 .with().setTarget(fl_down_car).moveToX(carDownX1, carDownX2).setDuration(1500).setInterpolator(new DecelerateInterpolator())
                 .withClone().moveToY(carDownY1, carDownY2)
-                .next().setDuration(1000)
+                .next().setDuration(500)
                 //屏幕中央移动到左下角
                 .next().moveToX(carDownX2, carDownX3).setDuration(1500).setInterpolator(new AccelerateInterpolator())
                 .withClone().moveToY(carDownY2, carDownY3)
@@ -86,7 +86,7 @@ public class CarDemoActivity extends AppCompatActivity
                 //左下角移动到屏幕中央
                 .with().setTarget(fl_up_car).moveToX(carUpX1, carUpX2).setDuration(1500).setInterpolator(new DecelerateInterpolator())
                 .withClone().moveToY(carUpY1, carUpY2)
-                .next().setDuration(1000)
+                .next().setDuration(500)
                 //屏幕中央移动到右上角
                 .next().moveToX(carUpX2, carUpX3).setDuration(1500).setInterpolator(new AccelerateInterpolator())
                 .withClone().moveToY(carUpY2, carUpY3)
