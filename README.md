@@ -193,8 +193,10 @@ public void onclickStart(View v)
 ```java
 public void onclickStart(View v)
 {
-    if (mAnimatorChain != null && mAnimatorChain.isRunning())
+    if (mAnimatorChain != null)
     {
+        if (!mAnimatorChain.isRunning())
+            mAnimatorChain.start();
         return;
     }
 
