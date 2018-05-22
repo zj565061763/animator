@@ -34,14 +34,8 @@ T startAsPop(boolean clone);
 
 ```java
 /**
- * x方向中心点对齐
+ * 动画view和target在同一个父布局里面
  */
-private final XCenterAligner mXCenterAligner = new XCenterAligner();
-/**
- * y方向中心点对齐
- */
-private final YCenterAligner mYCenterAligner = new YCenterAligner();
-
 public void onClickBtnAnim(View v)
 {
     /**
@@ -54,7 +48,7 @@ public void onClickBtnAnim(View v)
              * 设置动画view的x方向要移动到哪些view的位置
              * 第一个参数为动画view和对齐view的对齐方式，默认左边对齐，库中还提供了中心点对齐的实现类
              */
-            .moveToX(mXCenterAligner, v, view_target_1, view_target_2, view_target_3).setDuration(2000)
+            .moveToX(new XCenterAligner(), v, view_target_1, view_target_2, view_target_3).setDuration(1500)
 
             /**
              * with()：添加一个新的节点动画，新动画和当前动画同时执行
@@ -69,12 +63,12 @@ public void onClickBtnAnim(View v)
              * 设置动画view的y方向要移动到哪些view的位置
              * 第一个参数为动画view和对齐view的对齐方式，默认顶部对齐，库中还提供了中心点对齐的实现类
              */
-            .moveToY(mYCenterAligner, v, view_target_1, view_target_2, view_target_3)
+            .moveToY(new YCenterAligner(), v, view_target_1, view_target_2, view_target_3)
 
             /**
-             * 延迟1000毫秒
+             * 延迟500毫秒
              */
-            .next().setDuration(1000)
+            .next().setDuration(500)
 
             /**
              * 添加一个动画监听
@@ -97,6 +91,21 @@ public void onClickBtnAnim(View v)
      * 可以得到原生的动画对象
      */
     AnimatorSet animatorSet = nodeAnimator.chain().toAnimatorSet();
+}
+
+/**
+ * 动画view和target不在同一个父布局
+ */
+public void onClickBtnAnimInside(View v)
+{
+    new SimpleNodeAnimator(v)
+            .moveToX(new XCenterAligner(), v, view_target_1, view_target_2, view_target_3).setDuration(1500).setTag("x移动")
+            .withClone().moveToY(new YCenterAligner(), v, view_target_1, view_target_2, view_target_3).setTag("y移动")
+            .with().scaleX(v, view_target_1, view_target_2, view_target_3).setDuration(1500).setTag("x缩放")
+            .withClone().scaleY(v, view_target_1, view_target_2, view_target_3).setTag("y缩放")
+            .next().setDuration(500).setTag("延迟500毫秒")
+            .addListener(new OnEndRemoveView()) //动画完成后移除view
+            .chain().setDebug(true).startAsPop(true);
 }
 ```
 ## 火箭动画demo
