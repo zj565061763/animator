@@ -17,10 +17,12 @@ package com.fanwe.lib.animator.aligner;
 
 import android.view.View;
 
+import com.fanwe.lib.animator.ExtendedPropertyAnimator;
+
 /**
  * x方向动画view和对齐view中心点对齐
  */
-public class XCenterAligner implements Aligner
+public class XCenterAligner implements ExtendedPropertyAnimator.Aligner
 {
     @Override
     public int align(View animatorView, View alignView, int alignViewPosition)

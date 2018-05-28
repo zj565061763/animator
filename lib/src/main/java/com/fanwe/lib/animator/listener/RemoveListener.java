@@ -37,7 +37,8 @@ public class RemoveListener extends LifecycleListener
         try
         {
             final View target = getTarget();
-            ((ViewGroup) target.getParent()).removeView(target);
+            if (target != null)
+                ((ViewGroup) target.getParent()).removeView(target);
         } catch (Exception e)
         {
         }

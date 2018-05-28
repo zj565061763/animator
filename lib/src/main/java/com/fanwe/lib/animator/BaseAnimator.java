@@ -24,7 +24,6 @@ import android.text.TextUtils;
 import android.view.View;
 import android.view.animation.LinearInterpolator;
 
-import com.fanwe.lib.animator.aligner.Aligner;
 import com.fanwe.lib.animator.listener.api.OnStartVisible;
 
 import java.util.ArrayList;
