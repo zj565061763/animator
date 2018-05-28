@@ -35,8 +35,6 @@ public class VisibleListener extends LifecycleListener
     {
         final View target = getTarget();
         if (target != null)
-        {
             target.setVisibility(View.VISIBLE);
-        }
     }
 }

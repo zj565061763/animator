@@ -40,7 +40,6 @@ public class RemoveListener extends LifecycleListener
             ((ViewGroup) target.getParent()).removeView(target);
         } catch (Exception e)
         {
-            e.printStackTrace();
         }
     }
 }

@@ -57,7 +57,8 @@ public abstract class FAnimatorListener extends AnimatorListenerAdapter
     public final View getTarget()
     {
         final View targetSpec = mTarget == null ? null : mTarget.get();
-        if (targetSpec != null) return targetSpec;
+        if (targetSpec != null)
+            return targetSpec;
 
         return getAnimatorTarget();
     }
@@ -74,9 +75,7 @@ public abstract class FAnimatorListener extends AnimatorListenerAdapter
         {
             final Object targetObj = ((ObjectAnimator) animator).getTarget();
             if (targetObj instanceof View)
-            {
                 return (View) targetObj;
-            }
         }
         return null;
     }
@@ -85,9 +84,7 @@ public abstract class FAnimatorListener extends AnimatorListenerAdapter
     {
         final Animator old = getAnimator();
         if (old != animator)
-        {
             mAnimator = animator == null ? null : new WeakReference<>(animator);
-        }
     }
 
     private Animator getAnimator()

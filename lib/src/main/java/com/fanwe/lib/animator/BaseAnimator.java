@@ -135,7 +135,9 @@ abstract class BaseAnimator<T extends ExtendedPropertyAnimator> implements Exten
     public T clearListener()
     {
         final ArrayList<Animator.AnimatorListener> listeners = getListeners();
-        if (listeners != null) listeners.clear();
+        if (listeners != null)
+            listeners.clear();
+
         return (T) this;
     }
 
@@ -178,6 +180,7 @@ abstract class BaseAnimator<T extends ExtendedPropertyAnimator> implements Exten
             T animator = (T) this;
             if (clone)
                 animator = clone();
+
             animator.setTarget(imageView).start();
             return animator;
         }
@@ -302,7 +305,9 @@ abstract class BaseAnimator<T extends ExtendedPropertyAnimator> implements Exten
     public String getPropertyName()
     {
         final String propertyName = mObjectAnimator.getPropertyName();
-        if (TextUtils.isEmpty(propertyName) || "null".equals(propertyName)) return null;
+        if (TextUtils.isEmpty(propertyName) || "null".equals(propertyName))
+            return null;
+
         return propertyName;
     }
 
@@ -310,9 +315,8 @@ abstract class BaseAnimator<T extends ExtendedPropertyAnimator> implements Exten
     public T setRepeatCount(int count)
     {
         if (count < 0)
-        {
             count = ValueAnimator.INFINITE;
-        }
+
         mObjectAnimator.setRepeatCount(count);
         return (T) this;
     }
@@ -385,7 +389,8 @@ abstract class BaseAnimator<T extends ExtendedPropertyAnimator> implements Exten
     @Override
     public String getTag()
     {
-        if (mTag == null) mTag = "";
+        if (mTag == null)
+            mTag = "";
         return mTag;
     }
 
@@ -394,18 +399,25 @@ abstract class BaseAnimator<T extends ExtendedPropertyAnimator> implements Exten
 
     private void saveTargetLocation()
     {
-        if (mTargetLocation == null) mTargetLocation = new int[]{0, 0};
+        if (mTargetLocation == null)
+            mTargetLocation = new int[]{0, 0};
+
         getTarget().getLocationOnScreen(mTargetLocation);
     }
 
     private void saveTempLocation(View view)
     {
-        if (mTempLocation == null) mTempLocation = new int[]{0, 0};
+        if (mTempLocation == null)
+            mTempLocation = new int[]{0, 0};
+
         view.getLocationOnScreen(mTempLocation);
     }
 
     private void moveTo(Coordinate coordinate, float... values)
     {
+        if (coordinate == null)
+            throw new NullPointerException("coordinate is null");
+
         if (values != null && values.length > 0)
         {
             checkTarget();
@@ -414,25 +426,25 @@ abstract class BaseAnimator<T extends ExtendedPropertyAnimator> implements Exten
             for (int i = 0; i < values.length; i++)
             {
                 if (coordinate == Coordinate.X)
-                {
                     realValues[i] = (values[i] - mTargetLocation[0]) + getTarget().getTranslationX();
-                } else if (coordinate == Coordinate.Y)
-                {
+                else
                     realValues[i] = (values[i] - mTargetLocation[1]) + getTarget().getTranslationY();
-                }
             }
+
             if (coordinate == Coordinate.X)
-            {
                 translationX(realValues);
-            } else if (coordinate == Coordinate.Y)
-            {
+            else
                 translationY(realValues);
-            }
         }
     }
 
     private void moveTo(Coordinate coordinate, Aligner aligner, View... views)
     {
+        if (coordinate == null)
+            throw new NullPointerException("coordinate is null");
+        if (aligner == null)
+            aligner = Aligner.DEFAULT;
+
         if (views != null && views.length > 0)
         {
             checkTarget();
@@ -440,15 +452,15 @@ abstract class BaseAnimator<T extends ExtendedPropertyAnimator> implements Exten
             for (int i = 0; i < views.length; i++)
             {
                 final View view = views[i];
-                if (view == null) continue;
-                if (aligner == null) aligner = Aligner.DEFAULT;
+                if (view == null)
+                    continue;
 
                 saveTempLocation(view);
                 if (coordinate == Coordinate.X)
                 {
                     float value = aligner.align(getTarget(), view, mTempLocation[0]);
                     list.add(value);
-                } else if (coordinate == Coordinate.Y)
+                } else
                 {
                     float value = aligner.align(getTarget(), view, mTempLocation[1]);
                     list.add(value);
@@ -463,13 +475,11 @@ abstract class BaseAnimator<T extends ExtendedPropertyAnimator> implements Exten
                 {
                     values[i] = list.get(i);
                 }
+
                 if (coordinate == Coordinate.X)
-                {
                     moveToX(values);
-                } else if (coordinate == Coordinate.Y)
-                {
+                else
                     moveToY(values);
-                }
             }
         }
     }
@@ -482,21 +492,20 @@ abstract class BaseAnimator<T extends ExtendedPropertyAnimator> implements Exten
             final float[] values = new float[views.length];
             for (int i = 0; i < views.length; i++)
             {
+                final View view = views[i];
+                if (view == null)
+                    continue;
+
                 if (coordinate == Coordinate.X)
-                {
-                    values[i] = ((float) views[i].getWidth()) / ((float) getTarget().getWidth());
-                } else if (coordinate == Coordinate.Y)
-                {
-                    values[i] = ((float) views[i].getHeight()) / ((float) getTarget().getHeight());
-                }
+                    values[i] = (float) view.getWidth() / getTarget().getWidth();
+                else
+                    values[i] = (float) view.getHeight() / getTarget().getHeight();
             }
+
             if (coordinate == Coordinate.X)
-            {
                 scaleX(values);
-            } else if (coordinate == Coordinate.Y)
-            {
+            else
                 scaleY(values);
-            }
         }
     }
 

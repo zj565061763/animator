@@ -66,7 +66,8 @@ public class FNodeAnimator extends BaseAnimator<NodeAnimator> implements NodeAni
     @Override
     public final AnimatorChain chain()
     {
-        if (mChain == null) mChain = new SimpleAnimatorChain(this);
+        if (mChain == null)
+            mChain = new SimpleAnimatorChain(this);
         return mChain;
     }
 

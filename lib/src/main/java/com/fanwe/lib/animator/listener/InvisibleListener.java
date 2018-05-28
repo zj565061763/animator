@@ -35,8 +35,6 @@ public class InvisibleListener extends LifecycleListener
     {
         final View target = getTarget();
         if (target != null)
-        {
             target.setVisibility(View.INVISIBLE);
-        }
     }
 }
