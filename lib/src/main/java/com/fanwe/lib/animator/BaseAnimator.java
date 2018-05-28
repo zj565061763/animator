@@ -176,11 +176,9 @@ abstract class BaseAnimator<T extends ExtendedPropertyAnimator> implements Exten
             imageView.attachTarget(target);
             imageView.setVisibility(target.isShown() ? View.VISIBLE : View.INVISIBLE);
 
-            T animator = (T) this;
-            if (clone)
-                animator = clone();
-
+            final T animator = clone ? clone() : (T) this;
             animator.setTarget(imageView).start();
+
             return animator;
         }
         return null;
