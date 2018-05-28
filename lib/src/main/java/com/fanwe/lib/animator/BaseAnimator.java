@@ -556,7 +556,6 @@ abstract class BaseAnimator<T extends ExtendedPropertyAnimator> implements Exten
             return (T) clone;
         } catch (CloneNotSupportedException e)
         {
-            e.printStackTrace();
         }
         return null;
     }
