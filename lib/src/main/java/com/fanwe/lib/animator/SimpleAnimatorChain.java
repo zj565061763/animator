@@ -67,7 +67,9 @@ final class SimpleAnimatorChain implements AnimatorChain, Cloneable
             throw new RuntimeException("animator must not be " + NodeAnimator.Type.Head + " type");
         checkHeadTarget();
 
-        if (animator.getTarget() == null) animator.setTarget(currentNode().getTarget());
+        if (animator.getTarget() == null)
+            animator.setTarget(currentNode().getTarget());
+
         mListNode.add(animator);
 
         return animator;
@@ -122,11 +124,15 @@ final class SimpleAnimatorChain implements AnimatorChain, Cloneable
                 }
 
                 sb.append("(");
+
                 if (!TextUtils.isEmpty(item.getTag()))
                     sb.append(item.getTag()).append(" ");
+
                 sb.append(item.getPropertyName()).append(":").append(String.valueOf(item.getDuration()));
+
                 if (item.getStartDelay() > 0)
                     sb.append(" startDelay:").append(String.valueOf(item.getStartDelay()));
+
                 sb.append(")");
             }
             Log.i(AnimatorChain.class.getSimpleName(), sb.toString());
@@ -239,7 +245,8 @@ final class SimpleAnimatorChain implements AnimatorChain, Cloneable
     public AnimatorChain clearListener()
     {
         final ArrayList<Animator.AnimatorListener> listeners = getListeners();
-        if (listeners != null) listeners.clear();
+        if (listeners != null)
+            listeners.clear();
         return this;
     }
 
@@ -279,7 +286,8 @@ final class SimpleAnimatorChain implements AnimatorChain, Cloneable
         for (Animator animator : listChild)
         {
             final View target = (View) ((ObjectAnimator) animator).getTarget();
-            if (target == null) continue;
+            if (target == null)
+                continue;
 
             final ImageView cache = mapCache.get(target);
             if (cache == null)
