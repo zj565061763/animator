@@ -37,9 +37,7 @@ final class SimpleAnimatorChain implements AnimatorChain, Cloneable
 {
     private AnimatorSet mAnimatorSet = new AnimatorSet();
     private TimeInterpolator mTimeInterpolator;
-
-    private List<NodeAnimator> mListNode = new ArrayList<>();
-    private boolean mHasOrder;
+    private List<NodeAnimator> mListNode = new ArrayList<>(5);
 
     private boolean mIsDebug;
 
@@ -47,9 +45,9 @@ final class SimpleAnimatorChain implements AnimatorChain, Cloneable
     {
         checkNull(animator);
         if (animator.getType() != NodeAnimator.Type.Head)
-            throw new RuntimeException("animator must be " + NodeAnimator.Type.Head + " type");
+            throw new IllegalArgumentException("animator must be " + NodeAnimator.Type.Head + " type");
 
-        mListNode.add(animator);
+        addNodeInternal(animator);
     }
 
     @Override
@@ -62,45 +60,31 @@ final class SimpleAnimatorChain implements AnimatorChain, Cloneable
     public NodeAnimator appendNode(NodeAnimator animator)
     {
         checkNull(animator);
-        checkChain(animator);
-        if (animator.getType() == NodeAnimator.Type.Head)
-            throw new RuntimeException("animator must not be " + NodeAnimator.Type.Head + " type");
-        checkHeadTarget();
+        if (animator.chain() != this)
+            throw new IllegalArgumentException("animator's chain() method must return current instance");
 
         if (animator.getTarget() == null)
             animator.setTarget(currentNode().getTarget());
 
-        mListNode.add(animator);
-
+        addNodeInternal(animator);
         return animator;
     }
 
-    private void orderNode()
+    private void addNodeInternal(NodeAnimator animator)
     {
-        if (!mHasOrder)
+        switch (animator.getType())
         {
-            ObjectAnimator lastAnimator = null;
-            for (NodeAnimator item : mListNode)
-            {
-                final ObjectAnimator currentAnimator = item.toObjectAnimator();
-                switch (item.getType())
-                {
-                    case Head:
-                        mAnimatorSet.play(currentAnimator);
-                        break;
-                    case With:
-                        mAnimatorSet.play(lastAnimator).with(currentAnimator);
-                        break;
-                    case Next:
-                        mAnimatorSet.play(currentAnimator).after(lastAnimator);
-                        break;
-                }
-                lastAnimator = currentAnimator;
-            }
-            mHasOrder = true;
+            case Head:
+                mAnimatorSet.play(animator.toObjectAnimator());
+                break;
+            case With:
+                mAnimatorSet.play(currentNode().toObjectAnimator()).with(animator.toObjectAnimator());
+                break;
+            case Next:
+                mAnimatorSet.play(animator.toObjectAnimator()).after(currentNode().toObjectAnimator());
+                break;
         }
-
-        logIfNeed();
+        mListNode.add(animator);
     }
 
     private void logIfNeed()
@@ -142,8 +126,7 @@ final class SimpleAnimatorChain implements AnimatorChain, Cloneable
     @Override
     public AnimatorSet toAnimatorSet()
     {
-        checkHeadTarget();
-        orderNode();
+        logIfNeed();
         return mAnimatorSet;
     }
 
@@ -309,13 +292,13 @@ final class SimpleAnimatorChain implements AnimatorChain, Cloneable
             }
         }
 
-        if (!mapCache.isEmpty())
+        if (mapCache.isEmpty())
+        {
+            return null;
+        } else
         {
             animatorSet.start();
             return chain;
-        } else
-        {
-            return null;
         }
     }
 
@@ -342,19 +325,6 @@ final class SimpleAnimatorChain implements AnimatorChain, Cloneable
     {
         if (animator == null)
             throw new NullPointerException("animator is null");
-    }
-
-    private void checkChain(NodeAnimator animator)
-    {
-        if (animator.chain() != this)
-            throw new RuntimeException("animator's chain() method must return current instance");
-    }
-
-    private void checkHeadTarget()
-    {
-        final NodeAnimator animator = currentNode();
-        if (animator.getType() == NodeAnimator.Type.Head && animator.getTarget() == null)
-            throw new NullPointerException(NodeAnimator.Type.Head + " animator's target must not be null");
     }
 
     //---------- Check End ----------
