@@ -414,12 +414,11 @@ abstract class BaseAnimator<T extends ExtendedPropertyAnimator> implements Exten
 
     private void moveTo(Coordinate coordinate, float... values)
     {
-        if (coordinate == null)
-            throw new NullPointerException("coordinate is null");
+        checkCoordinate(coordinate);
+        checkTarget();
 
         if (values != null && values.length > 0)
         {
-            checkTarget();
             saveTargetLocation();
             final float[] realValues = new float[values.length];
             for (int i = 0; i < values.length; i++)
@@ -439,14 +438,13 @@ abstract class BaseAnimator<T extends ExtendedPropertyAnimator> implements Exten
 
     private void moveTo(Coordinate coordinate, Aligner aligner, View... views)
     {
-        if (coordinate == null)
-            throw new NullPointerException("coordinate is null");
+        checkCoordinate(coordinate);
+        checkTarget();
         if (aligner == null)
             aligner = Aligner.DEFAULT;
 
         if (views != null && views.length > 0)
         {
-            checkTarget();
             final List<Float> list = new ArrayList<>();
             for (int i = 0; i < views.length; i++)
             {
@@ -485,10 +483,16 @@ abstract class BaseAnimator<T extends ExtendedPropertyAnimator> implements Exten
 
     private void scale(Coordinate coordinate, View... views)
     {
+        checkCoordinate(coordinate);
+        checkTarget();
+        if (coordinate == Coordinate.X && getTarget().getWidth() <= 0)
+            return;
+        if (coordinate == Coordinate.Y && getTarget().getHeight() <= 0)
+            return;
+
         if (views != null && views.length > 0)
         {
-            checkTarget();
-            final float[] values = new float[views.length];
+            final List<Float> list = new ArrayList<>();
             for (int i = 0; i < views.length; i++)
             {
                 final View view = views[i];
@@ -496,15 +500,30 @@ abstract class BaseAnimator<T extends ExtendedPropertyAnimator> implements Exten
                     continue;
 
                 if (coordinate == Coordinate.X)
-                    values[i] = (float) view.getWidth() / getTarget().getWidth();
-                else
-                    values[i] = (float) view.getHeight() / getTarget().getHeight();
+                {
+                    float value = ((float) view.getWidth()) / getTarget().getWidth();
+                    list.add(value);
+                } else
+                {
+                    float value = ((float) view.getHeight()) / getTarget().getHeight();
+                    list.add(value);
+                }
             }
 
-            if (coordinate == Coordinate.X)
-                scaleX(values);
-            else
-                scaleY(values);
+            final int count = list.size();
+            if (count > 0)
+            {
+                final float[] values = new float[count];
+                for (int i = 0; i < count; i++)
+                {
+                    values[i] = list.get(i);
+                }
+
+                if (coordinate == Coordinate.X)
+                    scaleX(values);
+                else
+                    scaleY(values);
+            }
         }
     }
 
@@ -512,6 +531,12 @@ abstract class BaseAnimator<T extends ExtendedPropertyAnimator> implements Exten
     {
         if (getTarget() == null)
             throw new NullPointerException("target view must be provided before this, see the Animator.setTarget(View) method");
+    }
+
+    private void checkCoordinate(Coordinate coordinate)
+    {
+        if (coordinate == null)
+            throw new NullPointerException("coordinate is null");
     }
 
     private enum Coordinate
