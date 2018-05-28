@@ -440,6 +440,7 @@ abstract class BaseAnimator<T extends ExtendedPropertyAnimator> implements Exten
     {
         checkCoordinate(coordinate);
         checkTarget();
+
         if (aligner == null)
             aligner = Aligner.DEFAULT;
 
@@ -485,6 +486,7 @@ abstract class BaseAnimator<T extends ExtendedPropertyAnimator> implements Exten
     {
         checkCoordinate(coordinate);
         checkTarget();
+
         if (coordinate == Coordinate.X && getTarget().getWidth() <= 0)
             return;
         if (coordinate == Coordinate.Y && getTarget().getHeight() <= 0)
