@@ -37,7 +37,7 @@ final class SimpleAnimatorChain implements AnimatorChain, Cloneable
 {
     private AnimatorSet mAnimatorSet = new AnimatorSet();
     private TimeInterpolator mTimeInterpolator;
-    private List<NodeAnimator> mListNode = new ArrayList<>(5);
+    private List<NodeAnimator> mListNode = new ArrayList<>(6);
 
     private boolean mIsDebug;
 
@@ -46,7 +46,8 @@ final class SimpleAnimatorChain implements AnimatorChain, Cloneable
         if (animator.getType() != NodeAnimator.Type.Head)
             throw new IllegalArgumentException("animator must be " + NodeAnimator.Type.Head + " type");
 
-        addNodeInternal(animator);
+        mAnimatorSet.play(animator.toObjectAnimator());
+        mListNode.add(animator);
     }
 
     @Override
@@ -58,35 +59,27 @@ final class SimpleAnimatorChain implements AnimatorChain, Cloneable
     @Override
     public NodeAnimator appendNode(NodeAnimator animator)
     {
-        if (mListNode.size() <= 0)
-            throw new RuntimeException("Head animator has not been specified");
-        if (animator.getType() == NodeAnimator.Type.Head)
-            throw new IllegalArgumentException("Illegal type:" + animator.getType());
         if (animator.chain() != this)
             throw new IllegalArgumentException("animator's chain() method must return current instance");
 
+        final NodeAnimator current = currentNode();
         if (animator.getTarget() == null)
-            animator.setTarget(currentNode().getTarget());
+            animator.setTarget(current.getTarget());
 
-        addNodeInternal(animator);
-        return animator;
-    }
-
-    private void addNodeInternal(NodeAnimator animator)
-    {
         switch (animator.getType())
         {
-            case Head:
-                mAnimatorSet.play(animator.toObjectAnimator());
-                break;
             case With:
-                mAnimatorSet.play(currentNode().toObjectAnimator()).with(animator.toObjectAnimator());
+                mAnimatorSet.play(current.toObjectAnimator()).with(animator.toObjectAnimator());
                 break;
             case Next:
-                mAnimatorSet.play(animator.toObjectAnimator()).after(currentNode().toObjectAnimator());
+                mAnimatorSet.play(animator.toObjectAnimator()).after(current.toObjectAnimator());
                 break;
+            default:
+                throw new IllegalArgumentException("Illegal type:" + animator.getType());
         }
         mListNode.add(animator);
+
+        return animator;
     }
 
     private void logIfNeed()
