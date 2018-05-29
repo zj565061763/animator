@@ -28,7 +28,7 @@ import android.widget.ImageView;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
+import java.util.LinkedList;
 
 /**
  * 动画链
@@ -37,7 +37,7 @@ final class SimpleAnimatorChain implements AnimatorChain, Cloneable
 {
     private AnimatorSet mAnimatorSet = new AnimatorSet();
     private TimeInterpolator mTimeInterpolator;
-    private List<NodeAnimator> mListNode = new ArrayList<>(6);
+    private LinkedList<NodeAnimator> mListNode = new LinkedList<>();
 
     private boolean mIsDebug;
 
@@ -53,7 +53,7 @@ final class SimpleAnimatorChain implements AnimatorChain, Cloneable
     @Override
     public NodeAnimator currentNode()
     {
-        return mListNode.get(mListNode.size() - 1);
+        return mListNode.getLast();
     }
 
     @Override
@@ -304,7 +304,7 @@ final class SimpleAnimatorChain implements AnimatorChain, Cloneable
         {
             final SimpleAnimatorChain chain = (SimpleAnimatorChain) super.clone();
             chain.mAnimatorSet = mAnimatorSet.clone();
-            chain.mListNode = new ArrayList<>(mListNode);
+            chain.mListNode = new LinkedList<>(mListNode);
             return chain;
         } catch (CloneNotSupportedException e)
         {
