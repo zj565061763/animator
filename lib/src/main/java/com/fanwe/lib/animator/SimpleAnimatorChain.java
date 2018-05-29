@@ -43,7 +43,6 @@ final class SimpleAnimatorChain implements AnimatorChain, Cloneable
 
     public SimpleAnimatorChain(NodeAnimator animator)
     {
-        checkNull(animator);
         if (animator.getType() != NodeAnimator.Type.Head)
             throw new IllegalArgumentException("animator must be " + NodeAnimator.Type.Head + " type");
 
@@ -59,7 +58,8 @@ final class SimpleAnimatorChain implements AnimatorChain, Cloneable
     @Override
     public NodeAnimator appendNode(NodeAnimator animator)
     {
-        checkNull(animator);
+        if (mListNode.size() <= 0)
+            throw new RuntimeException("Head animator has not been specified");
         if (animator.getType() == NodeAnimator.Type.Head)
             throw new IllegalArgumentException("Illegal type:" + animator.getType());
         if (animator.chain() != this)
@@ -320,14 +320,4 @@ final class SimpleAnimatorChain implements AnimatorChain, Cloneable
     }
 
     //---------- Animator End ----------
-
-    //---------- Check Start ----------
-
-    private static void checkNull(NodeAnimator animator)
-    {
-        if (animator == null)
-            throw new NullPointerException("animator is null");
-    }
-
-    //---------- Check End ----------
 }
