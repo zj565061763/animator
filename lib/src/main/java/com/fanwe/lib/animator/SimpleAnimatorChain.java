@@ -60,6 +60,8 @@ final class SimpleAnimatorChain implements AnimatorChain, Cloneable
     public NodeAnimator appendNode(NodeAnimator animator)
     {
         checkNull(animator);
+        if (animator.getType() == NodeAnimator.Type.Head)
+            throw new IllegalArgumentException("Illegal type:" + animator.getType());
         if (animator.chain() != this)
             throw new IllegalArgumentException("animator's chain() method must return current instance");
 
