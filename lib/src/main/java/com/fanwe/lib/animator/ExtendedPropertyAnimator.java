@@ -70,19 +70,19 @@ public interface ExtendedPropertyAnimator<T extends ExtendedPropertyAnimator> ex
     T scaleY(View... views);
 
     /**
-     * 设置tag
+     * 设置描述
      *
-     * @param tag
+     * @param desc
      * @return
      */
-    T setTag(String tag);
+    T setDesc(String desc);
 
     /**
-     * 返回设置的tag{@link #setTag(String)}
+     * 返回设置的描述{@link #setDesc(String)}
      *
      * @return
      */
-    String getTag();
+    String getDesc();
 
     interface Aligner
     {

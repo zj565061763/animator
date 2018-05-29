@@ -35,7 +35,7 @@ import java.util.List;
 abstract class BaseAnimator<T extends ExtendedPropertyAnimator> implements ExtendedPropertyAnimator<T>
 {
     private ObjectAnimator mObjectAnimator = new ObjectAnimator();
-    private String mTag;
+    private String mDesc;
 
     public BaseAnimator()
     {
@@ -377,18 +377,18 @@ abstract class BaseAnimator<T extends ExtendedPropertyAnimator> implements Exten
     }
 
     @Override
-    public T setTag(String tag)
+    public T setDesc(String desc)
     {
-        mTag = tag;
+        mDesc = desc;
         return (T) this;
     }
 
     @Override
-    public String getTag()
+    public String getDesc()
     {
-        if (mTag == null)
-            mTag = "";
-        return mTag;
+        if (mDesc == null)
+            mDesc = "";
+        return mDesc;
     }
 
     private int[] mTargetLocation;

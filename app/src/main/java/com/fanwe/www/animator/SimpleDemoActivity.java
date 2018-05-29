@@ -94,11 +94,11 @@ public class SimpleDemoActivity extends AppCompatActivity
     public void onClickBtnAnimInside(View v)
     {
         new FNodeAnimator(v)
-                .moveToX(new XCenterAligner(), v, view_target_1, view_target_2, view_target_3).setDuration(1500).setTag("x移动")
-                .withClone().moveToY(new YCenterAligner(), v, view_target_1, view_target_2, view_target_3).setTag("y移动")
-                .with().scaleX(v, view_target_1, view_target_2, view_target_3).setDuration(1500).setTag("x缩放")
-                .withClone().scaleY(v, view_target_1, view_target_2, view_target_3).setTag("y缩放")
-                .next().setDuration(500).setTag("延迟500毫秒")
+                .moveToX(new XCenterAligner(), v, view_target_1, view_target_2, view_target_3).setDuration(1500).setDesc("x移动")
+                .withClone().moveToY(new YCenterAligner(), v, view_target_1, view_target_2, view_target_3).setDesc("y移动")
+                .with().scaleX(v, view_target_1, view_target_2, view_target_3).setDuration(1500).setDesc("x缩放")
+                .withClone().scaleY(v, view_target_1, view_target_2, view_target_3).setDesc("y缩放")
+                .next().setDuration(500).setDesc("延迟500毫秒")
                 .addListener(new OnEndRemoveView()) //动画完成后移除view
                 .chain().setDebug(true).startAsPop(true);
     }

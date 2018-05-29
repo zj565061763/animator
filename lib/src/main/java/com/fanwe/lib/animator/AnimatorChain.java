@@ -47,7 +47,7 @@ public interface AnimatorChain extends Animator<AnimatorChain>
     /**
      * 设置是否调试模式
      *
-     * @param debug true-调试模式，会输出整个动画链的结构，方便开发调试，可以给每个节点动画设置tag，来加强描述
+     * @param debug true-调试模式，会输出整个动画链的结构，方便开发调试
      * @return
      */
     AnimatorChain setDebug(boolean debug);

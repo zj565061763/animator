@@ -104,8 +104,8 @@ final class SimpleAnimatorChain implements AnimatorChain, Cloneable
 
                 sb.append("(");
 
-                if (!TextUtils.isEmpty(item.getTag()))
-                    sb.append(item.getTag()).append(" ");
+                if (!TextUtils.isEmpty(item.getDesc()))
+                    sb.append(item.getDesc()).append(" ");
 
                 sb.append(item.getPropertyName()).append(":").append(String.valueOf(item.getDuration()));
 
