@@ -2,7 +2,7 @@
 对ObjectAnimator和AnimatorSet进行封装
 
 ## Gradle
-`implementation 'com.fanwe.android:animator:1.1.0'`
+`implementation 'com.fanwe.android:animator:1.1.1'`
 
 ## 关于startAsPop(boolean clone)
 为了解决view没办法超出父布局边界来执行动画的问题，提供了这个方法
