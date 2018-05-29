@@ -7,7 +7,7 @@ android {
         minSdkVersion 15
         targetSdkVersion 22
         versionCode 20180529
-        versionName "1.1.1"
+        versionName "1.1.2"
     }
     buildTypes {
         release {
@@ -29,7 +29,7 @@ publish {
     groupId = 'com.fanwe.android'
 
     artifactId = 'animator'
-    publishVersion = '1.1.1'
+    publishVersion = '1.1.2'
     desc = 'android animator library'
     website = 'https://github.com/zj565061763/animator'
 }

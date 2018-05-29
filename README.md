@@ -2,7 +2,7 @@
 对ObjectAnimator和AnimatorSet进行封装
 
 ## Gradle
-`implementation 'com.fanwe.android:animator:1.1.1'`
+`implementation 'com.fanwe.android:animator:1.1.2'`
 
 ## 关于startAsPop(boolean clone)
 为了解决view没办法超出父布局边界来执行动画的问题，提供了这个方法
@@ -101,11 +101,11 @@ public void onClickBtnAnim(View v)
 public void onClickBtnAnimInside(View v)
 {
     new FNodeAnimator(v)
-            .moveToX(new XCenterAligner(), v, view_target_1, view_target_2, view_target_3).setDuration(1500).setTag("x移动")
-            .withClone().moveToY(new YCenterAligner(), v, view_target_1, view_target_2, view_target_3).setTag("y移动")
-            .with().scaleX(v, view_target_1, view_target_2, view_target_3).setDuration(1500).setTag("x缩放")
-            .withClone().scaleY(v, view_target_1, view_target_2, view_target_3).setTag("y缩放")
-            .next().setDuration(500).setTag("延迟500毫秒")
+            .moveToX(new XCenterAligner(), v, view_target_1, view_target_2, view_target_3).setDuration(1500).setDesc("x移动")
+            .withClone().moveToY(new YCenterAligner(), v, view_target_1, view_target_2, view_target_3).setDesc("y移动")
+            .with().scaleX(v, view_target_1, view_target_2, view_target_3).setDuration(1500).setDesc("x缩放")
+            .withClone().scaleY(v, view_target_1, view_target_2, view_target_3).setDesc("y缩放")
+            .next().setDuration(500).setDesc("延迟500毫秒")
             .addListener(new OnEndRemoveView()) //动画完成后移除view
             .chain().setDebug(true).startAsPop(true);
 }
@@ -119,7 +119,7 @@ public void onclickStart(View v)
         return;
     }
     /**
-     * true-调试模式，会输出整个动画链的结构，方便开发调试，可以给每个节点动画设置tag，来加强描述
+     * true-调试模式，会输出整个动画链的结构，方便开发调试，可以给每个节点动画设置描述
      *
      * 过滤tag：AnimatorChain，demo中的日志输入如下：
      *
@@ -133,10 +133,10 @@ public void onclickStart(View v)
     mAnimatorChain = new FNodeAnimator(fl_rocket_root).chain().setDebug(true);
 
     mAnimatorChain.currentNode()
-            .alpha(0, 1f).setDuration(500).setTag("火箭淡入")
-            .next().setDuration(500).setTag("延迟500毫秒")
-            .next().setTarget(tv_number).scaleX(1f, 0f).setRepeatCount(2).setDuration(1000).setTag("开始数字缩放X")
-            .withClone().scaleY(1f, 0f).setTag("开始数字缩放Y")
+            .alpha(0, 1f).setDuration(500).setDesc("火箭淡入")
+            .next().setDuration(500).setDesc("延迟500毫秒")
+            .next().setTarget(tv_number).scaleX(1f, 0f).setRepeatCount(2).setDuration(1000).setDesc("开始数字缩放X")
+            .withClone().scaleY(1f, 0f).setDesc("开始数字缩放Y")
             .addListener(new FAnimatorListener()
             {
                 @Override
@@ -162,7 +162,7 @@ public void onclickStart(View v)
                     tv_number.setText(String.valueOf(mNumber));
                 }
             })
-            .next().setTarget(fl_rocket_root).translationY(0, -getResources().getDisplayMetrics().heightPixels).setTag("火箭起飞")
+            .next().setTarget(fl_rocket_root).translationY(0, -getResources().getDisplayMetrics().heightPixels).setDesc("火箭起飞")
             .setDuration(3000).setInterpolator(new AccelerateInterpolator())
             .addListener(new OnEndInvisible(), new OnEndReset()) //动画结束隐藏，重置fl_rocket_root
             .addListener(new FAnimatorListener()
@@ -183,8 +183,8 @@ public void onclickStart(View v)
                     animationDrawable.stop(); //停止火箭喷火动画
                 }
             })
-            .with().setTarget(iv_rocket_smoke).alpha(0, 1f).setDuration(3000).setStartDelay(500).setTag("烟雾淡入")
-            .next().alpha(1f, 0).setDuration(500).setTag("烟雾淡出")
+            .with().setTarget(iv_rocket_smoke).alpha(0, 1f).setDuration(3000).setStartDelay(500).setDesc("烟雾淡入")
+            .next().alpha(1f, 0).setDuration(500).setDesc("烟雾淡出")
             .addListener(new OnEndInvisible()) //动画结束隐藏烟雾
             .chain().start();
 }
@@ -222,35 +222,35 @@ public void onclickStart(View v)
 
     mAnimatorChain.currentNode()
             .rotation(-360).setRepeatCount(-1).setDuration(1000)
-            .addListener(new OnEndReset(), new OnEndInvisible()).setTag("下-前轮旋转")
+            .addListener(new OnEndReset(), new OnEndInvisible()).setDesc("下-前轮旋转")
             .withClone().setTarget(iv_down_car_back_tyre)
-            .addListener(new OnEndReset(), new OnEndInvisible()).setTag("下-后轮旋转")
+            .addListener(new OnEndReset(), new OnEndInvisible()).setDesc("下-后轮旋转")
 
             .with().setTarget(fl_down_car).moveToX(carDownX1, carDownX2)
-            .setDuration(1500).setInterpolator(new DecelerateInterpolator()).setTag("X右上角移动到屏幕中央")
-            .withClone().moveToY(carDownY1, carDownY2).setTag("Y右上角移动到屏幕中央")
+            .setDuration(1500).setInterpolator(new DecelerateInterpolator()).setDesc("X右上角移动到屏幕中央")
+            .withClone().moveToY(carDownY1, carDownY2).setDesc("Y右上角移动到屏幕中央")
 
-            .next().setDuration(500).setTag("屏幕中央停止500毫秒")
+            .next().setDuration(500).setDesc("屏幕中央停止500毫秒")
 
             .next().moveToX(carDownX2, carDownX3)
-            .setDuration(1500).setInterpolator(new AccelerateInterpolator()).setTag("X屏幕中央移动到左下角")
+            .setDuration(1500).setInterpolator(new AccelerateInterpolator()).setDesc("X屏幕中央移动到左下角")
             .withClone().moveToY(carDownY2, carDownY3)
-            .addListener(new OnEndInvisible(), new OnEndReset()).setTag("Y屏幕中央移动到左下角")
+            .addListener(new OnEndInvisible(), new OnEndReset()).setDesc("Y屏幕中央移动到左下角")
 
             .next().setTarget(iv_up_car_front_tyre).rotation(360).setRepeatCount(-1).setDuration(1000)
-            .addListener(new OnEndReset(), new OnEndInvisible()).setTag("上-前轮旋转")
+            .addListener(new OnEndReset(), new OnEndInvisible()).setDesc("上-前轮旋转")
             .withClone().setTarget(iv_up_car_back_tyre)
-            .addListener(new OnEndReset(), new OnEndInvisible()).setTag("上-后轮旋转")
+            .addListener(new OnEndReset(), new OnEndInvisible()).setDesc("上-后轮旋转")
 
             .with().setTarget(fl_up_car).moveToX(carUpX1, carUpX2)
-            .setDuration(1500).setInterpolator(new DecelerateInterpolator()).setTag("X左下角移动到屏幕中央")
-            .withClone().moveToY(carUpY1, carUpY2).setTag("Y左下角移动到屏幕中央")
+            .setDuration(1500).setInterpolator(new DecelerateInterpolator()).setDesc("X左下角移动到屏幕中央")
+            .withClone().moveToY(carUpY1, carUpY2).setDesc("Y左下角移动到屏幕中央")
 
-            .next().setDuration(500).setTag("屏幕中央停止500毫秒")
+            .next().setDuration(500).setDesc("屏幕中央停止500毫秒")
 
             .next().moveToX(carUpX2, carUpX3)
-            .setDuration(1500).setInterpolator(new AccelerateInterpolator()).setTag("X屏幕中央移动到右上角")
-            .withClone().moveToY(carUpY2, carUpY3).setTag("Y屏幕中央移动到右上角")
+            .setDuration(1500).setInterpolator(new AccelerateInterpolator()).setDesc("X屏幕中央移动到右上角")
+            .withClone().moveToY(carUpY2, carUpY3).setDesc("Y屏幕中央移动到右上角")
             .addListener(new OnEndInvisible(fl_up_car), new OnEndReset(fl_up_car), new FAnimatorListener()
             {
                 @Override
