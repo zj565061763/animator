@@ -39,7 +39,6 @@ abstract class BaseAnimator<T extends ExtendedPropertyAnimator> implements Exten
 
     public BaseAnimator()
     {
-        mObjectAnimator.setDuration(0);
         mObjectAnimator.setFloatValues(0);
         mObjectAnimator.addListener(new OnStartVisible());
     }
