@@ -1,10 +1,10 @@
 # Animator
 对ObjectAnimator和AnimatorSet进行封装
 
-## Gradle
-`implementation 'com.fanwe.android:animator:1.1.3'`
+# Gradle
+[![](https://jitpack.io/v/zj565061763/animator.svg)](https://jitpack.io/#zj565061763/animator)
 
-## 关于startAsPop(boolean clone)
+# 关于startAsPop(boolean clone)
 为了解决view没办法超出父布局边界来执行动画的问题，提供了这个方法
 
 ```java
@@ -28,12 +28,12 @@
 T startAsPop(boolean clone);
 ```
 
-## 效果
+# 效果
 ![](http://thumbsnap.com/i/sK3VSRT3.gif?0521)
 ![](http://thumbsnap.com/i/cD2NW5lZ.gif?0815)
 ![](http://thumbsnap.com/i/4SvypvW0.gif?0522)
 
-## 简单demo
+# 简单demo
 ```java
 /**
  * 动画view和target在同一个父布局里面
@@ -110,7 +110,7 @@ public void onClickBtnAnimInside(View v)
             .chain().setDebug(true).startAsPop(true);
 }
 ```
-## 火箭动画demo
+# 火箭动画demo
 ```java
 public void onclickStart(View v)
 {
@@ -189,7 +189,7 @@ public void onclickStart(View v)
             .chain().start();
 }
 ```
-## 汽车动画demo
+# 汽车动画demo
 ```java
 public void onclickStart(View v)
 {

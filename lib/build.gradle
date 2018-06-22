@@ -1,14 +1,17 @@
 apply plugin: 'com.android.library'
-apply plugin: 'com.novoda.bintray-release'
+apply plugin: 'com.github.dcendents.android-maven'
+
+group = 'com.github.zj565061763'
 
 android {
     compileSdkVersion 27
     defaultConfig {
         minSdkVersion 15
         targetSdkVersion 22
-        versionCode 20180607
-        versionName "1.1.3"
+        versionCode 20180622
+        versionName "1.1.4"
     }
+
     buildTypes {
         release {
             minifyEnabled false
@@ -17,6 +20,7 @@ android {
     }
 
     lintOptions {
+        checkReleaseBuilds false
         abortOnError false
     }
 }
@@ -24,19 +28,35 @@ android {
 dependencies {
 }
 
-publish {
-    userOrg = 'zj565061763'
-    groupId = 'com.fanwe.android'
-
-    artifactId = 'animator'
-    publishVersion = '1.1.3'
-    desc = 'android animator library'
-    website = 'https://github.com/zj565061763/animator'
-}
-
+// 指定编码
 tasks.withType(Javadoc) {
     options {
         encoding "UTF-8"
         charSet 'UTF-8'
+        failOnError false
     }
+}
+
+// 打包源码
+task sourcesJar(type: Jar) {
+    from android.sourceSets.main.java.srcDirs
+    classifier = 'sources'
+}
+
+task javadoc(type: Javadoc) {
+    failOnError false
+    source = android.sourceSets.main.java.sourceFiles
+    classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
+    classpath += configurations.compile
+}
+
+// 制作文档(Javadoc)
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    classifier = 'javadoc'
+    from javadoc.destinationDir
+}
+
+artifacts {
+    archives sourcesJar
+    archives javadocJar
 }
