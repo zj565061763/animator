@@ -3,7 +3,7 @@ apply plugin: 'com.android.application'
 android {
     compileSdkVersion 27
     defaultConfig {
-        applicationId "com.fanwe.www.animator"
+        applicationId "com.sd.www.animator"
         minSdkVersion 15
         targetSdkVersion 22
         versionCode 1
