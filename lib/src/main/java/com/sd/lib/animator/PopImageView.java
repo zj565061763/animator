@@ -28,7 +28,7 @@ public class PopImageView extends ImageView
      */
     public void setDrawingCacheView(View view)
     {
-        Bitmap bitmap = createViewBitmap(view);
+        final Bitmap bitmap = createViewBitmap(view);
         setImageBitmap(bitmap);
     }
 
@@ -80,15 +80,12 @@ public class PopImageView extends ImageView
     private static Bitmap createViewBitmap(View view)
     {
         if (view == null)
-        {
             return null;
-        }
+
         view.setDrawingCacheEnabled(true);
-        Bitmap drawingCache = view.getDrawingCache();
+        final Bitmap drawingCache = view.getDrawingCache();
         if (drawingCache == null)
-        {
             return null;
-        }
 
         Bitmap bmp = Bitmap.createBitmap(drawingCache);
         view.destroyDrawingCache();
