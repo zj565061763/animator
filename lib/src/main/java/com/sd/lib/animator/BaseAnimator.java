@@ -477,7 +477,7 @@ abstract class BaseAnimator<T extends ExtendedPropertyAnimator> implements Exten
         if (views == null || views.length <= 0)
             return;
 
-        final List<Float> list = new ArrayList<>();
+        final List<Float> list = new ArrayList<>(views.length);
         for (int i = 0; i < views.length; i++)
         {
             final View view = views[i];
