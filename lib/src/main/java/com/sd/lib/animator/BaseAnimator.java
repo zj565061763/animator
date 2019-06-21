@@ -431,44 +431,44 @@ abstract class BaseAnimator<T extends ExtendedPropertyAnimator> implements Exten
         checkCoordinate(coordinate);
         checkTarget();
 
+        if (views == null || views.length <= 0)
+            return;
+
         if (aligner == null)
             aligner = Aligner.DEFAULT;
 
-        if (views != null && views.length > 0)
+        final List<Float> list = new ArrayList<>();
+        for (int i = 0; i < views.length; i++)
         {
-            final List<Float> list = new ArrayList<>();
-            for (int i = 0; i < views.length; i++)
-            {
-                final View view = views[i];
-                if (view == null)
-                    continue;
+            final View view = views[i];
+            if (view == null)
+                continue;
 
-                saveTempLocation(view);
-                if (coordinate == Coordinate.X)
-                {
-                    float value = aligner.align(getTarget(), view, mTempLocation[0]);
-                    list.add(value);
-                } else
-                {
-                    float value = aligner.align(getTarget(), view, mTempLocation[1]);
-                    list.add(value);
-                }
+            saveTempLocation(view);
+            if (coordinate == Coordinate.X)
+            {
+                float value = aligner.align(getTarget(), view, mTempLocation[0]);
+                list.add(value);
+            } else
+            {
+                float value = aligner.align(getTarget(), view, mTempLocation[1]);
+                list.add(value);
+            }
+        }
+
+        final int count = list.size();
+        if (count > 0)
+        {
+            final float[] values = new float[count];
+            for (int i = 0; i < count; i++)
+            {
+                values[i] = list.get(i);
             }
 
-            final int count = list.size();
-            if (count > 0)
-            {
-                final float[] values = new float[count];
-                for (int i = 0; i < count; i++)
-                {
-                    values[i] = list.get(i);
-                }
-
-                if (coordinate == Coordinate.X)
-                    moveToX(values);
-                else
-                    moveToY(values);
-            }
+            if (coordinate == Coordinate.X)
+                moveToX(values);
+            else
+                moveToY(values);
         }
     }
 
