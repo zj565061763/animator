@@ -5,6 +5,7 @@ import android.animation.ObjectAnimator;
 import android.animation.TimeInterpolator;
 import android.animation.ValueAnimator;
 import android.app.Activity;
+import android.os.Build;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.animation.LinearInterpolator;
@@ -390,16 +391,6 @@ abstract class BaseAnimator<T extends ExtendedPropertyAnimator> implements Exten
         return mDesc;
     }
 
-    private int[] mTempLocation;
-
-    private void saveTempLocation(View view)
-    {
-        if (mTempLocation == null)
-            mTempLocation = new int[]{0, 0};
-
-        view.getLocationOnScreen(mTempLocation);
-    }
-
     private void moveTo(Coordinate coordinate, float... values)
     {
         checkCoordinate(coordinate);
@@ -437,39 +428,40 @@ abstract class BaseAnimator<T extends ExtendedPropertyAnimator> implements Exten
         if (aligner == null)
             aligner = Aligner.DEFAULT;
 
-        final List<Float> list = new ArrayList<>();
+        final int[] location = new int[2];
+        final List<Float> list = new ArrayList<>(views.length);
         for (int i = 0; i < views.length; i++)
         {
             final View view = views[i];
-            if (view == null)
+            if (!checkView(view))
                 continue;
 
-            saveTempLocation(view);
+            view.getLocationOnScreen(location);
             if (coordinate == Coordinate.X)
             {
-                float value = aligner.align(getTarget(), view, mTempLocation[0]);
+                float value = aligner.align(getTarget(), view, location[0]);
                 list.add(value);
             } else
             {
-                float value = aligner.align(getTarget(), view, mTempLocation[1]);
+                float value = aligner.align(getTarget(), view, location[1]);
                 list.add(value);
             }
         }
 
         final int count = list.size();
-        if (count > 0)
-        {
-            final float[] values = new float[count];
-            for (int i = 0; i < count; i++)
-            {
-                values[i] = list.get(i);
-            }
+        if (count <= 0)
+            return;
 
-            if (coordinate == Coordinate.X)
-                moveToX(values);
-            else
-                moveToY(values);
+        final float[] values = new float[count];
+        for (int i = 0; i < count; i++)
+        {
+            values[i] = list.get(i);
         }
+
+        if (coordinate == Coordinate.X)
+            moveToX(values);
+        else
+            moveToY(values);
     }
 
     private void scale(Coordinate coordinate, View... views)
@@ -519,16 +511,32 @@ abstract class BaseAnimator<T extends ExtendedPropertyAnimator> implements Exten
         }
     }
 
+
     private void checkTarget()
     {
         if (getTarget() == null)
             throw new NullPointerException("target view must be provided before this, see the Animator.setTarget(View) method");
     }
 
-    private void checkCoordinate(Coordinate coordinate)
+    private static void checkCoordinate(Coordinate coordinate)
     {
         if (coordinate == null)
-            throw new NullPointerException("coordinate is null");
+            throw new IllegalArgumentException("coordinate is null");
+    }
+
+    private static boolean checkView(View view)
+    {
+        if (view == null)
+            return false;
+
+        if (view.getVisibility() == View.GONE)
+            return false;
+
+        final boolean isAttached = Build.VERSION.SDK_INT >= 19 ? view.isAttachedToWindow() : view.getWindowToken() != null;
+        if (!isAttached)
+            return false;
+
+        return true;
     }
 
     private enum Coordinate
