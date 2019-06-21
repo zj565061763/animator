@@ -4,7 +4,7 @@ import android.animation.Animator;
 import android.view.View;
 import android.view.ViewGroup;
 
-public class RemoveListener extends LifecycleListener
+public class RemoveListener extends AnimatorLifecycleListener
 {
     public RemoveListener(Lifecycle lifecycle)
     {
