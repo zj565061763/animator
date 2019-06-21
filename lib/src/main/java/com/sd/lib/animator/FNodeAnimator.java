@@ -7,7 +7,7 @@ import com.sd.lib.animator.listener.api.OnStartVisible;
 /**
  * 节点动画
  */
-public class FNodeAnimator extends BaseAnimator<NodeAnimator> implements NodeAnimator
+public class FNodeAnimator extends BaseExtendedAnimator<NodeAnimator> implements NodeAnimator
 {
     private Type mType;
     private AnimatorChain mChain;
