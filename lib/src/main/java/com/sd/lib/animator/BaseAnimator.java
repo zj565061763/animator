@@ -414,23 +414,23 @@ abstract class BaseAnimator<T extends ExtendedPropertyAnimator> implements Exten
         checkCoordinate(coordinate);
         checkTarget();
 
-        if (values != null && values.length > 0)
-        {
-            saveTargetLocation();
-            final float[] realValues = new float[values.length];
-            for (int i = 0; i < values.length; i++)
-            {
-                if (coordinate == Coordinate.X)
-                    realValues[i] = (values[i] - mTargetLocation[0]) + getTarget().getTranslationX();
-                else
-                    realValues[i] = (values[i] - mTargetLocation[1]) + getTarget().getTranslationY();
-            }
+        if (values == null || values.length <= 0)
+            return;
 
+        saveTargetLocation();
+        final float[] realValues = new float[values.length];
+        for (int i = 0; i < values.length; i++)
+        {
             if (coordinate == Coordinate.X)
-                translationX(realValues);
+                realValues[i] = (values[i] - mTargetLocation[0]) + getTarget().getTranslationX();
             else
-                translationY(realValues);
+                realValues[i] = (values[i] - mTargetLocation[1]) + getTarget().getTranslationY();
         }
+
+        if (coordinate == Coordinate.X)
+            translationX(realValues);
+        else
+            translationY(realValues);
     }
 
     private void moveTo(Coordinate coordinate, Aligner aligner, View... views)
