@@ -27,28 +27,28 @@ class BaseExtendedAnimator<T extends ExtendedPropertyAnimator> extends BaseAnima
     @Override
     public T moveToX(Aligner aligner, View... views)
     {
-        moveTo(Coordinate.X, aligner, views);
+        moveToView(Coordinate.X, aligner, views);
         return (T) this;
     }
 
     @Override
     public T moveToY(Aligner aligner, View... views)
     {
-        moveTo(Coordinate.Y, aligner, views);
+        moveToView(Coordinate.Y, aligner, views);
         return (T) this;
     }
 
     @Override
     public T scaleX(View... views)
     {
-        scale(Coordinate.X, views);
+        scaleToView(Coordinate.X, views);
         return (T) this;
     }
 
     @Override
     public T scaleY(View... views)
     {
-        scale(Coordinate.Y, views);
+        scaleToView(Coordinate.Y, views);
         return (T) this;
     }
 
@@ -93,7 +93,7 @@ class BaseExtendedAnimator<T extends ExtendedPropertyAnimator> extends BaseAnima
             translationY(realValues);
     }
 
-    private void moveTo(final Coordinate coordinate, Aligner aligner, final View... views)
+    private void moveToView(final Coordinate coordinate, Aligner aligner, final View... views)
     {
         checkCoordinate(coordinate);
         checkTarget();
@@ -140,7 +140,7 @@ class BaseExtendedAnimator<T extends ExtendedPropertyAnimator> extends BaseAnima
             moveToY(values);
     }
 
-    private void scale(final Coordinate coordinate, final View... views)
+    private void scaleToView(final Coordinate coordinate, final View... views)
     {
         checkCoordinate(coordinate);
         checkTarget();
