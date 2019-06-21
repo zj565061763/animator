@@ -390,16 +390,7 @@ abstract class BaseAnimator<T extends ExtendedPropertyAnimator> implements Exten
         return mDesc;
     }
 
-    private int[] mTargetLocation;
     private int[] mTempLocation;
-
-    private void saveTargetLocation()
-    {
-        if (mTargetLocation == null)
-            mTargetLocation = new int[]{0, 0};
-
-        getTarget().getLocationOnScreen(mTargetLocation);
-    }
 
     private void saveTempLocation(View view)
     {
@@ -417,14 +408,16 @@ abstract class BaseAnimator<T extends ExtendedPropertyAnimator> implements Exten
         if (values == null || values.length <= 0)
             return;
 
-        saveTargetLocation();
+        final int[] location = new int[2];
+        getTarget().getLocationOnScreen(location);
+
         final float[] realValues = new float[values.length];
         for (int i = 0; i < values.length; i++)
         {
             if (coordinate == Coordinate.X)
-                realValues[i] = (values[i] - mTargetLocation[0]) + getTarget().getTranslationX();
+                realValues[i] = (values[i] - location[0]) + getTarget().getTranslationX();
             else
-                realValues[i] = (values[i] - mTargetLocation[1]) + getTarget().getTranslationY();
+                realValues[i] = (values[i] - location[1]) + getTarget().getTranslationY();
         }
 
         if (coordinate == Coordinate.X)
