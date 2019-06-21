@@ -314,6 +314,21 @@ abstract class BaseAnimator<T extends ExtendedPropertyAnimator> implements Exten
         return mObjectAnimator;
     }
 
+    @Override
+    public T clone()
+    {
+        try
+        {
+            final BaseAnimator clone = (BaseAnimator) super.clone();
+            clone.mObjectAnimator = mObjectAnimator.clone();
+            return (T) clone;
+        } catch (CloneNotSupportedException e)
+        {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
     //---------- PropertyAnimator End ----------
 
     //---------- ExtendedPropertyAnimator Start ----------
@@ -529,18 +544,4 @@ abstract class BaseAnimator<T extends ExtendedPropertyAnimator> implements Exten
     }
 
     //---------- ExtendedPropertyAnimator End ----------
-
-    @Override
-    public T clone()
-    {
-        try
-        {
-            BaseAnimator clone = (BaseAnimator) super.clone();
-            clone.mObjectAnimator = mObjectAnimator.clone();
-            return (T) clone;
-        } catch (CloneNotSupportedException e)
-        {
-        }
-        return null;
-    }
 }
