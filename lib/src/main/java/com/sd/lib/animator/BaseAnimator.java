@@ -474,41 +474,41 @@ abstract class BaseAnimator<T extends ExtendedPropertyAnimator> implements Exten
         if (coordinate == Coordinate.Y && getTarget().getHeight() <= 0)
             return;
 
-        if (views != null && views.length > 0)
+        if (views == null || views.length <= 0)
+            return;
+
+        final List<Float> list = new ArrayList<>();
+        for (int i = 0; i < views.length; i++)
         {
-            final List<Float> list = new ArrayList<>();
-            for (int i = 0; i < views.length; i++)
+            final View view = views[i];
+            if (!checkView(view))
+                continue;
+
+            if (coordinate == Coordinate.X)
             {
-                final View view = views[i];
-                if (view == null)
-                    continue;
-
-                if (coordinate == Coordinate.X)
-                {
-                    float value = ((float) view.getWidth()) / getTarget().getWidth();
-                    list.add(value);
-                } else
-                {
-                    float value = ((float) view.getHeight()) / getTarget().getHeight();
-                    list.add(value);
-                }
-            }
-
-            final int count = list.size();
-            if (count > 0)
+                float value = ((float) view.getWidth()) / getTarget().getWidth();
+                list.add(value);
+            } else
             {
-                final float[] values = new float[count];
-                for (int i = 0; i < count; i++)
-                {
-                    values[i] = list.get(i);
-                }
-
-                if (coordinate == Coordinate.X)
-                    scaleX(values);
-                else
-                    scaleY(values);
+                float value = ((float) view.getHeight()) / getTarget().getHeight();
+                list.add(value);
             }
         }
+
+        final int count = list.size();
+        if (count <= 0)
+            return;
+
+        final float[] values = new float[count];
+        for (int i = 0; i < count; i++)
+        {
+            values[i] = list.get(i);
+        }
+
+        if (coordinate == Coordinate.X)
+            scaleX(values);
+        else
+            scaleY(values);
     }
 
 
