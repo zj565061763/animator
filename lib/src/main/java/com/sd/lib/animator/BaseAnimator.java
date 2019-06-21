@@ -391,7 +391,7 @@ abstract class BaseAnimator<T extends ExtendedPropertyAnimator> implements Exten
         return mDesc;
     }
 
-    private void moveTo(Coordinate coordinate, float... values)
+    private void moveTo(final Coordinate coordinate, final float... values)
     {
         checkCoordinate(coordinate);
         checkTarget();
@@ -417,7 +417,7 @@ abstract class BaseAnimator<T extends ExtendedPropertyAnimator> implements Exten
             translationY(realValues);
     }
 
-    private void moveTo(Coordinate coordinate, Aligner aligner, View... views)
+    private void moveTo(final Coordinate coordinate, Aligner aligner, final View... views)
     {
         checkCoordinate(coordinate);
         checkTarget();
@@ -464,7 +464,7 @@ abstract class BaseAnimator<T extends ExtendedPropertyAnimator> implements Exten
             moveToY(values);
     }
 
-    private void scale(Coordinate coordinate, View... views)
+    private void scale(final Coordinate coordinate, final View... views)
     {
         checkCoordinate(coordinate);
         checkTarget();
@@ -486,11 +486,17 @@ abstract class BaseAnimator<T extends ExtendedPropertyAnimator> implements Exten
 
             if (coordinate == Coordinate.X)
             {
-                float value = ((float) view.getWidth()) / getTarget().getWidth();
+                final float viewWidth = view.getWidth() * view.getScaleX();
+                final float targetWidth = getTarget().getWidth() * getTarget().getScaleX();
+
+                float value = viewWidth / targetWidth * getTarget().getScaleX();
                 list.add(value);
             } else
             {
-                float value = ((float) view.getHeight()) / getTarget().getHeight();
+                final float viewHeight = view.getHeight() * view.getScaleY();
+                final float targetHeight = getTarget().getHeight() * getTarget().getScaleY();
+
+                float value = viewHeight / targetHeight * getTarget().getScaleY();
                 list.add(value);
             }
         }
