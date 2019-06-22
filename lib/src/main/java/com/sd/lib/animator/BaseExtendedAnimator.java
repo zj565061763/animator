@@ -13,14 +13,14 @@ class BaseExtendedAnimator<T extends ExtendedPropertyAnimator> extends BaseAnima
     @Override
     public T moveToX(float... values)
     {
-        moveTo(Coordinate.X, values);
+        moveToInternal(Coordinate.X, values);
         return (T) this;
     }
 
     @Override
     public T moveToY(float... values)
     {
-        moveTo(Coordinate.Y, values);
+        moveToInternal(Coordinate.Y, values);
         return (T) this;
     }
 
@@ -67,7 +67,7 @@ class BaseExtendedAnimator<T extends ExtendedPropertyAnimator> extends BaseAnima
         return mDesc;
     }
 
-    private void moveTo(final Coordinate coordinate, final float... values)
+    private void moveToInternal(final Coordinate coordinate, final float... values)
     {
         checkCoordinate(coordinate);
         checkTarget();
