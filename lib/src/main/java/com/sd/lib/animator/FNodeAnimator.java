@@ -137,7 +137,7 @@ public class FNodeAnimator extends BaseExtendedAnimator<NodeAnimator> implements
 
             final Float value = transform.getValue(getTarget(), item.getView());
             if (value != null)
-                list.add(value);
+                list.add(value + item.getDelta());
         }
 
         final float[] values = listToValue(list);
