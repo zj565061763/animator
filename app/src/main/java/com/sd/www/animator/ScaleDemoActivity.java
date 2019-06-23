@@ -39,11 +39,11 @@ public class ScaleDemoActivity extends AppCompatActivity
     private void scale()
     {
         new FNodeAnimator(fl_video)
-                .scaleXToView(fl_video_target).with().scaleYToView(fl_video_target)
-                .with().configMoveXToView()
+                .scaleToViewX(fl_video_target).with().scaleToViewY(fl_video_target)
+                .with().configMoveToViewX()
                 .newView(fl_video_target).setFutureScale(fl_video_target)
                 .node()
-                .with().configMoveYToView()
+                .with().configMoveToViewY()
                 .newView(fl_video_target).setFutureScale(fl_video_target)
                 .node()
                 .chain().start();
@@ -52,11 +52,11 @@ public class ScaleDemoActivity extends AppCompatActivity
     private void restore()
     {
         new FNodeAnimator(fl_video)
-                .scaleXToView(fl_video_target_1).with().scaleYToView(fl_video_target_1)
-                .with().configMoveXToView()
+                .scaleToViewX(fl_video_target_1).with().scaleToViewY(fl_video_target_1)
+                .with().configMoveToViewX()
                 .newView(fl_video_target_1).setFutureScale(fl_video_target_1)
                 .node()
-                .with().configMoveYToView()
+                .with().configMoveToViewY()
                 .newView(fl_video_target_1).setFutureScale(fl_video_target_1)
                 .node()
                 .chain().start();

@@ -98,7 +98,7 @@ public class FNodeAnimator extends BaseExtendedAnimator<NodeAnimator> implements
     private List<MoveToViewConfig> mListConfigY;
 
     @Override
-    public MoveToViewConfig configMoveXToView()
+    public MoveToViewConfig configMoveToViewX()
     {
         mListConfigY = null;
         if (mListConfigX == null)
@@ -108,7 +108,7 @@ public class FNodeAnimator extends BaseExtendedAnimator<NodeAnimator> implements
     }
 
     @Override
-    public MoveToViewConfig configMoveYToView()
+    public MoveToViewConfig configMoveToViewY()
     {
         mListConfigX = null;
         if (mListConfigY == null)
