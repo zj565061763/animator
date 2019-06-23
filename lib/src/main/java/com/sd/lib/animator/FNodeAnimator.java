@@ -94,39 +94,32 @@ public class FNodeAnimator extends BaseExtendedAnimator<NodeAnimator> implements
         return chain.appendNode(new FNodeAnimator(Type.Next, chain));
     }
 
-    private List<MoveToViewConfig> mListConfigX;
-    private List<MoveToViewConfig> mListConfigY;
+    private boolean mMoveHorizontal;
+    private List<MoveToViewConfig> mListMoveConfig;
 
     @Override
     public MoveToViewConfig configMoveToViewX()
     {
-        mListConfigY = null;
-        if (mListConfigX == null)
-            mListConfigX = new ArrayList<>();
-
-        return new SimpleMoveToViewConfig(true, this, mListConfigX);
+        mMoveHorizontal = true;
+        mListMoveConfig = new ArrayList<>();
+        return new SimpleMoveToViewConfig(true, this, mListMoveConfig);
     }
 
     @Override
     public MoveToViewConfig configMoveToViewY()
     {
-        mListConfigX = null;
-        if (mListConfigY == null)
-            mListConfigY = new ArrayList<>();
-
-        return new SimpleMoveToViewConfig(false, this, mListConfigY);
+        mMoveHorizontal = false;
+        mListMoveConfig = new ArrayList<>();
+        return new SimpleMoveToViewConfig(false, this, mListMoveConfig);
     }
 
     private void checkMoveToViewConfig()
     {
-        if (mListConfigX == null && mListConfigY == null)
+        if (mListMoveConfig == null || mListMoveConfig.isEmpty())
             return;
 
-        if (mListConfigX != null && mListConfigY != null)
-            throw new RuntimeException("Can not config x and y same time");
-
-        final boolean horizontal = mListConfigX != null;
-        final List<MoveToViewConfig> listConfig = horizontal ? mListConfigX : mListConfigY;
+        final boolean horizontal = mMoveHorizontal;
+        final List<MoveToViewConfig> listConfig = mListMoveConfig;
 
         final List<Float> list = new ArrayList<>(listConfig.size());
         for (MoveToViewConfig item : listConfig)
