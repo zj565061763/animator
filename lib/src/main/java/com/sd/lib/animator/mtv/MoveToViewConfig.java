@@ -50,10 +50,4 @@ public interface MoveToViewConfig
      * @return
      */
     NodeAnimator node();
-
-    enum Orientation
-    {
-        Horizontal,
-        Vertical
-    }
 }
