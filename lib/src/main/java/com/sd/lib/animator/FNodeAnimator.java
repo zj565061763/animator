@@ -141,5 +141,7 @@ public class FNodeAnimator extends BaseExtendedAnimator<NodeAnimator> implements
             translationX(values);
         else
             translationY(values);
+
+        mListMoveConfig = null;
     }
 }
