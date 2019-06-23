@@ -1,7 +1,16 @@
 package com.sd.lib.animator;
 
-import android.os.Build;
 import android.view.View;
+
+import com.sd.lib.animator.provider.property.location.LocationValue;
+import com.sd.lib.animator.provider.property.location.ScreenXValue;
+import com.sd.lib.animator.provider.property.location.ScreenYValue;
+import com.sd.lib.animator.provider.transform.location.LocationValueTransform;
+import com.sd.lib.animator.provider.transform.location.ScreenXTransform;
+import com.sd.lib.animator.provider.transform.location.ScreenYTransform;
+import com.sd.lib.animator.provider.transform.scale.ScaleValueTransform;
+import com.sd.lib.animator.provider.transform.scale.ScaleXTransform;
+import com.sd.lib.animator.provider.transform.scale.ScaleYTransform;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,44 +20,44 @@ class BaseExtendedAnimator<T extends ExtendedPropertyAnimator> extends BaseAnima
     private String mDesc;
 
     @Override
-    public T moveToX(float... values)
+    public T moveXTo(float... values)
     {
         moveToInternal(Coordinate.X, values);
         return (T) this;
     }
 
     @Override
-    public T moveToY(float... values)
+    public T moveYTo(float... values)
     {
         moveToInternal(Coordinate.Y, values);
         return (T) this;
     }
 
     @Override
-    public T moveToX(Aligner aligner, View... views)
+    public T moveXToView(float delta, View... views)
     {
-        moveToView(Coordinate.X, aligner, views);
+        moveToViewInternal(Coordinate.X, null, null, delta, views);
         return (T) this;
     }
 
     @Override
-    public T moveToY(Aligner aligner, View... views)
+    public T moveYToView(float delta, View... views)
     {
-        moveToView(Coordinate.Y, aligner, views);
+        moveToViewInternal(Coordinate.Y, null, null, delta, views);
         return (T) this;
     }
 
     @Override
-    public T scaleX(View... views)
+    public T scaleXToView(View... views)
     {
-        scaleToView(Coordinate.X, views);
+        scaleToViewInternal(Coordinate.X, views);
         return (T) this;
     }
 
     @Override
-    public T scaleY(View... views)
+    public T scaleYToView(View... views)
     {
-        scaleToView(Coordinate.Y, views);
+        scaleToViewInternal(Coordinate.Y, views);
         return (T) this;
     }
 
@@ -70,21 +79,23 @@ class BaseExtendedAnimator<T extends ExtendedPropertyAnimator> extends BaseAnima
     private void moveToInternal(final Coordinate coordinate, final float... values)
     {
         checkCoordinate(coordinate);
-        checkTarget();
+        checkTarget(getTarget());
 
         if (values == null || values.length <= 0)
             return;
 
-        final int[] location = new int[2];
-        getTarget().getLocationOnScreen(location);
+        final LocationValue locationValue = coordinate == Coordinate.X ? new ScreenXValue(null) : new ScreenYValue(null);
+        final Float targetLocation = locationValue.getValue(getTarget());
+        if (targetLocation == null)
+            return;
 
         final float[] realValues = new float[values.length];
         for (int i = 0; i < values.length; i++)
         {
             if (coordinate == Coordinate.X)
-                realValues[i] = (values[i] - location[0]) + getTarget().getTranslationX();
+                realValues[i] = (values[i] - targetLocation) + getTarget().getTranslationX();
             else
-                realValues[i] = (values[i] - location[1]) + getTarget().getTranslationY();
+                realValues[i] = (values[i] - targetLocation) + getTarget().getTranslationY();
         }
 
         if (coordinate == Coordinate.X)
@@ -93,35 +104,22 @@ class BaseExtendedAnimator<T extends ExtendedPropertyAnimator> extends BaseAnima
             translationY(realValues);
     }
 
-    private void moveToView(final Coordinate coordinate, Aligner aligner, final View... views)
+    private void moveToViewInternal(final Coordinate coordinate, Float scaleFrom, Float scaleTo, float delta, final View... views)
     {
         checkCoordinate(coordinate);
-        checkTarget();
+        checkTarget(getTarget());
 
         if (views == null || views.length <= 0)
             return;
 
-        if (aligner == null)
-            aligner = Aligner.DEFAULT;
+        final LocationValueTransform transform = coordinate == Coordinate.X ? new ScreenXTransform(scaleFrom, scaleTo) : new ScreenYTransform(scaleFrom, scaleTo);
 
-        final int[] location = new int[2];
         final List<Float> list = new ArrayList<>(views.length);
         for (int i = 0; i < views.length; i++)
         {
-            final View view = views[i];
-            if (!checkView(view))
-                continue;
-
-            view.getLocationOnScreen(location);
-            if (coordinate == Coordinate.X)
-            {
-                float value = aligner.align(getTarget(), view, location[0]);
-                list.add(value);
-            } else
-            {
-                float value = aligner.align(getTarget(), view, location[1]);
-                list.add(value);
-            }
+            final Float value = transform.getValue(getTarget(), views[i]);
+            if (value != null)
+                list.add(value + delta);
         }
 
         final int count = list.size();
@@ -135,46 +133,27 @@ class BaseExtendedAnimator<T extends ExtendedPropertyAnimator> extends BaseAnima
         }
 
         if (coordinate == Coordinate.X)
-            moveToX(values);
+            translationX(values);
         else
-            moveToY(values);
+            translationY(values);
     }
 
-    private void scaleToView(final Coordinate coordinate, final View... views)
+    private void scaleToViewInternal(final Coordinate coordinate, final View... views)
     {
         checkCoordinate(coordinate);
-        checkTarget();
-
-        if (coordinate == Coordinate.X && getTarget().getWidth() <= 0)
-            return;
-        if (coordinate == Coordinate.Y && getTarget().getHeight() <= 0)
-            return;
+        checkTarget(getTarget());
 
         if (views == null || views.length <= 0)
             return;
 
+        final ScaleValueTransform transform = coordinate == Coordinate.X ? new ScaleXTransform() : new ScaleYTransform();
+
         final List<Float> list = new ArrayList<>(views.length);
         for (int i = 0; i < views.length; i++)
         {
-            final View view = views[i];
-            if (!checkView(view))
-                continue;
-
-            if (coordinate == Coordinate.X)
-            {
-                final float viewWidth = view.getWidth() * view.getScaleX();
-                final float targetWidth = getTarget().getWidth() * getTarget().getScaleX();
-
-                float value = viewWidth / targetWidth * getTarget().getScaleX();
+            final Float value = transform.getValue(getTarget(), views[i]);
+            if (value != null)
                 list.add(value);
-            } else
-            {
-                final float viewHeight = view.getHeight() * view.getScaleY();
-                final float targetHeight = getTarget().getHeight() * getTarget().getScaleY();
-
-                float value = viewHeight / targetHeight * getTarget().getScaleY();
-                list.add(value);
-            }
         }
 
         final int count = list.size();
@@ -193,10 +172,9 @@ class BaseExtendedAnimator<T extends ExtendedPropertyAnimator> extends BaseAnima
             scaleY(values);
     }
 
-
-    private void checkTarget()
+    private static void checkTarget(View target)
     {
-        if (getTarget() == null)
+        if (target == null)
             throw new NullPointerException("target view must be provided before this, see the Animator.setTarget(View) method");
     }
 
@@ -206,22 +184,7 @@ class BaseExtendedAnimator<T extends ExtendedPropertyAnimator> extends BaseAnima
             throw new IllegalArgumentException("coordinate is null");
     }
 
-    private static boolean checkView(View view)
-    {
-        if (view == null)
-            return false;
-
-        if (view.getVisibility() == View.GONE)
-            return false;
-
-        final boolean isAttached = Build.VERSION.SDK_INT >= 19 ? view.isAttachedToWindow() : view.getWindowToken() != null;
-        if (!isAttached)
-            return false;
-
-        return true;
-    }
-
-    private enum Coordinate
+    enum Coordinate
     {
         X, Y
     }

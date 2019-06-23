@@ -5,10 +5,8 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
-import com.sd.lib.animator.NodeAnimator;
 import com.sd.lib.animator.FNodeAnimator;
-import com.sd.lib.animator.aligner.XCenterAligner;
-import com.sd.lib.animator.aligner.YCenterAligner;
+import com.sd.lib.animator.NodeAnimator;
 import com.sd.lib.animator.listener.api.OnEndRemoveView;
 import com.sd.lib.animator.listener.api.OnEndReset;
 
@@ -43,7 +41,7 @@ public class SimpleDemoActivity extends AppCompatActivity
                  * 设置动画view的x方向要移动到哪些view的位置
                  * 第一个参数为动画view和对齐view的对齐方式，默认左边对齐，库中还提供了中心点对齐的实现类
                  */
-                .moveToX(new XCenterAligner(), v, view_target_1, view_target_2, view_target_3).setDuration(1500)
+                .moveXToView(0, v, view_target_1, view_target_2, view_target_3).setDuration(1500)
 
                 /**
                  * with()：添加一个新的节点动画，新动画和当前动画同时执行
@@ -58,7 +56,7 @@ public class SimpleDemoActivity extends AppCompatActivity
                  * 设置动画view的y方向要移动到哪些view的位置
                  * 第一个参数为动画view和对齐view的对齐方式，默认顶部对齐，库中还提供了中心点对齐的实现类
                  */
-                .moveToY(new YCenterAligner(), v, view_target_1, view_target_2, view_target_3)
+                .moveYToView(0, v, view_target_1, view_target_2, view_target_3)
 
                 /**
                  * 延迟500毫秒
@@ -94,10 +92,10 @@ public class SimpleDemoActivity extends AppCompatActivity
     public void onClickBtnAnimInside(View v)
     {
         new FNodeAnimator(v)
-                .moveToX(new XCenterAligner(), v, view_target_1, view_target_2, view_target_3).setDuration(1500).setDesc("x移动")
-                .withClone().moveToY(new YCenterAligner(), v, view_target_1, view_target_2, view_target_3).setDesc("y移动")
-                .with().scaleX(v, view_target_1, view_target_2, view_target_3).setDuration(1500).setDesc("x缩放")
-                .withClone().scaleY(v, view_target_1, view_target_2, view_target_3).setDesc("y缩放")
+                .moveXToView(0, v, view_target_1, view_target_2, view_target_3).setDuration(1500).setDesc("x移动")
+                .withClone().moveYToView(0, v, view_target_1, view_target_2, view_target_3).setDesc("y移动")
+                .with().scaleXToView(v, view_target_1, view_target_2, view_target_3).setDuration(1500).setDesc("x缩放")
+                .withClone().scaleYToView(v, view_target_1, view_target_2, view_target_3).setDesc("y缩放")
                 .next().setDuration(500).setDesc("延迟500毫秒")
                 .addListener(new OnEndRemoveView()) //动画完成后移除view
                 .chain().setDebug(true).startAsPop(true);

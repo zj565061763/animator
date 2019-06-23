@@ -20,6 +20,7 @@
         <activity android:name=".SimpleDemoActivity"/>
         <activity android:name=".RocketDemoActivity"/>
         <activity android:name=".CarDemoActivity"/>
+        <activity android:name=".ScaleDemoActivity"/>
 
     </application>
 

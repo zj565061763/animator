@@ -3,6 +3,8 @@ package com.sd.lib.animator;
 import android.view.View;
 
 import com.sd.lib.animator.listener.api.OnStartVisible;
+import com.sd.lib.animator.provider.transform.location.ScreenXTransform;
+import com.sd.lib.animator.provider.transform.scale.ScaleXTransform;
 
 /**
  * 节点动画
@@ -82,5 +84,16 @@ public class FNodeAnimator extends BaseExtendedAnimator<NodeAnimator> implements
     {
         final AnimatorChain chain = chain();
         return chain.appendNode(new FNodeAnimator(Type.Next, chain));
+    }
+
+    public NodeAnimator moveScaleXTo(View view)
+    {
+        final Float scale = new ScaleXTransform().getValue(getTarget(), view);
+        final Float location = new ScreenXTransform(scale, null).getValue(getTarget(), view);
+        if (scale != null && location != null)
+        {
+            return scaleX(scale).with().translationX(location);
+        }
+        return this;
     }
 }

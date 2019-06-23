@@ -28,4 +28,9 @@ public class MainActivity extends AppCompatActivity
     {
         startActivity(new Intent(this, CarDemoActivity.class));
     }
+
+    public void onClickScaleDemo(View v)
+    {
+        startActivity(new Intent(this, ScaleDemoActivity.class));
+    }
 }
