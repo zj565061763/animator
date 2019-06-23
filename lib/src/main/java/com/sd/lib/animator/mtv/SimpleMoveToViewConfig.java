@@ -91,7 +91,7 @@ public class SimpleMoveToViewConfig implements MoveToViewConfig
             throw new IllegalArgumentException("view is null");
 
         final ScaleValueTransform transform = mHorizontal ? new ScaleXTransform() : new ScaleYTransform();
-        final Float scale = transform.getValue(mNodeAnimator.getTarget(), view);
+        final Float scale = transform.getValue(node().getTarget(), view);
         if (scale != null)
             setFutureScale(scale);
         return this;
