@@ -33,7 +33,6 @@ T startAsPop(boolean clone);
 ![](http://thumbsnap.com/i/cD2NW5lZ.gif?0815)
 ![](http://thumbsnap.com/i/4SvypvW0.gif?0522)
 
-```
 # 火箭动画demo
 ```java
 public void onclickStart(View v)
@@ -113,6 +112,7 @@ public void onclickStart(View v)
             .chain().start();
 }
 ```
+
 # 汽车动画demo
 ```java
 public void onclickStart(View v)
