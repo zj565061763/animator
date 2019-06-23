@@ -39,24 +39,6 @@ public class FNodeAnimator extends BaseExtendedAnimator<NodeAnimator> implements
     }
 
     @Override
-    public NodeAnimator start()
-    {
-        if (mChain == null)
-            return super.start();
-        else
-            throw new UnsupportedOperationException("you must call chain().start() instead, because current animator has been added to the chain");
-    }
-
-    @Override
-    public NodeAnimator startAsPop(boolean clone)
-    {
-        if (mChain == null)
-            return super.startAsPop(clone);
-        else
-            throw new UnsupportedOperationException("you must call chain().startAsPop(boolean) instead, because current animator has been added to the chain");
-    }
-
-    @Override
     public final AnimatorChain chain()
     {
         if (mChain == null)
@@ -92,6 +74,24 @@ public class FNodeAnimator extends BaseExtendedAnimator<NodeAnimator> implements
     {
         final AnimatorChain chain = chain();
         return chain.appendNode(new FNodeAnimator(Type.Next, chain));
+    }
+
+    @Override
+    public NodeAnimator start()
+    {
+        if (mChain == null)
+            return super.start();
+        else
+            throw new UnsupportedOperationException("you must call chain().start() instead, because current animator has been added to the chain");
+    }
+
+    @Override
+    public NodeAnimator startAsPop(boolean clone)
+    {
+        if (mChain == null)
+            return super.startAsPop(clone);
+        else
+            throw new UnsupportedOperationException("you must call chain().startAsPop(boolean) instead, because current animator has been added to the chain");
     }
 
     private boolean mMoveHorizontal;
