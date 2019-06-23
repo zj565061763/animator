@@ -14,11 +14,6 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
     }
 
-    public void onClickSimpleDemo(View v)
-    {
-        startActivity(new Intent(this, SimpleDemoActivity.class));
-    }
-
     public void onClickRocketDemo(View v)
     {
         startActivity(new Intent(this, RocketDemoActivity.class));

@@ -1,5 +1,7 @@
 package com.sd.lib.animator;
 
+import com.sd.lib.animator.mtv.MoveToViewConfig;
+
 /**
  * 节点动画
  */
@@ -39,6 +41,10 @@ public interface NodeAnimator extends ExtendedPropertyAnimator<NodeAnimator>
      * @return
      */
     NodeAnimator next();
+
+    MoveToViewConfig configMoveXToView();
+
+    MoveToViewConfig configMoveYToView();
 
     /**
      * 节点类型

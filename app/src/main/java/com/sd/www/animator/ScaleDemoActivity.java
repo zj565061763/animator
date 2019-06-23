@@ -8,27 +8,26 @@ import com.sd.lib.animator.FNodeAnimator;
 
 public class ScaleDemoActivity extends AppCompatActivity
 {
-    private boolean mIsScaled = false;
-
-    private View view_root, fl_video, fl_video_target;
+    private boolean mScale = false;
+    private View fl_video, fl_video_target, fl_video_target_1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scale_demo);
-        view_root = findViewById(R.id.view_root);
         fl_video = findViewById(R.id.fl_video);
         fl_video_target = findViewById(R.id.fl_video_target);
+        fl_video_target_1 = findViewById(R.id.fl_video_target_1);
 
         fl_video.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View v)
             {
-                mIsScaled = !mIsScaled;
+                mScale = !mScale;
 
-                if (mIsScaled)
+                if (mScale)
                     scale();
                 else
                     restore();
@@ -40,30 +39,26 @@ public class ScaleDemoActivity extends AppCompatActivity
     private void scale()
     {
         new FNodeAnimator(fl_video)
-                .moveXToView(0, fl_video_target)
+                .scaleXToView(fl_video_target).with().scaleYToView(fl_video_target)
+                .with().configMoveXToView()
+                .newView(fl_video_target).setFutureScale(fl_video_target)
+                .node()
+                .with().configMoveYToView()
+                .newView(fl_video_target).setFutureScale(fl_video_target)
+                .node()
                 .chain().start();
-
-
-//        new FNodeAnimator(fl_video)
-//                .moveXToView(0, fl_video_target)
-//                .with().moveYTo(new YCenterAligner(), fl_video_target)
-//                .with().scaleXToView(fl_video_target)
-//                .with().scaleY(fl_video_target)
-//                .chain().start();
     }
 
     private void restore()
     {
         new FNodeAnimator(fl_video)
-                .moveXToView(0, view_root)
+                .scaleXToView(fl_video_target_1).with().scaleYToView(fl_video_target_1)
+                .with().configMoveXToView()
+                .newView(fl_video_target_1).setFutureScale(fl_video_target_1)
+                .node()
+                .with().configMoveYToView()
+                .newView(fl_video_target_1).setFutureScale(fl_video_target_1)
+                .node()
                 .chain().start();
-
-
-//        new FNodeAnimator(fl_video)
-//                .moveXToView(0, view_root)
-//                .with().moveYTo(new YCenterAligner(), view_root)
-//                .with().scaleXToView(view_root)
-//                .with().scaleY(view_root)
-//                .chain().start();
     }
 }

@@ -7,13 +7,6 @@
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:onClick="onClickSimpleDemo"
-        android:text="Simple_Demo_Activity"
-        android:textAllCaps="false" />
-
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
         android:onClick="onClickRocketDemo"
         android:text="Rocket_Demo_Activity"
         android:textAllCaps="false" />

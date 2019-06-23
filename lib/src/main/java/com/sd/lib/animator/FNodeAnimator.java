@@ -3,6 +3,14 @@ package com.sd.lib.animator;
 import android.view.View;
 
 import com.sd.lib.animator.listener.api.OnStartVisible;
+import com.sd.lib.animator.mtv.MoveToViewConfig;
+import com.sd.lib.animator.mtv.SimpleMoveToViewConfig;
+import com.sd.lib.animator.provider.transform.location.LocationValueTransform;
+import com.sd.lib.animator.provider.transform.location.ScreenXTransform;
+import com.sd.lib.animator.provider.transform.location.ScreenYTransform;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 节点动画
@@ -53,6 +61,8 @@ public class FNodeAnimator extends BaseExtendedAnimator<NodeAnimator> implements
     {
         if (mChain == null)
             mChain = new SimpleAnimatorChain(this);
+
+        checkMoveToViewConfig();
         return mChain;
     }
 
@@ -82,5 +92,61 @@ public class FNodeAnimator extends BaseExtendedAnimator<NodeAnimator> implements
     {
         final AnimatorChain chain = chain();
         return chain.appendNode(new FNodeAnimator(Type.Next, chain));
+    }
+
+    private List<MoveToViewConfig> mListConfigX;
+    private List<MoveToViewConfig> mListConfigY;
+
+    @Override
+    public MoveToViewConfig configMoveXToView()
+    {
+        mListConfigY = null;
+        if (mListConfigX == null)
+            mListConfigX = new ArrayList<>();
+
+        return new SimpleMoveToViewConfig(true, this, mListConfigX);
+    }
+
+    @Override
+    public MoveToViewConfig configMoveYToView()
+    {
+        mListConfigX = null;
+        if (mListConfigY == null)
+            mListConfigY = new ArrayList<>();
+
+        return new SimpleMoveToViewConfig(false, this, mListConfigY);
+    }
+
+    private void checkMoveToViewConfig()
+    {
+        if (mListConfigX == null && mListConfigY == null)
+            return;
+
+        if (mListConfigX != null && mListConfigY != null)
+            throw new RuntimeException("Can not config x and y same time");
+
+        final boolean horizontal = mListConfigX != null;
+        final List<MoveToViewConfig> listConfig = horizontal ? mListConfigX : mListConfigY;
+
+        final List<Float> list = new ArrayList<>(listConfig.size());
+        for (MoveToViewConfig item : listConfig)
+        {
+            final LocationValueTransform transform = horizontal
+                    ? new ScreenXTransform(item.getFutureScale(), null)
+                    : new ScreenYTransform(item.getFutureScale(), null);
+
+            final Float value = transform.getValue(getTarget(), item.getView());
+            if (value != null)
+                list.add(value);
+        }
+
+        final float[] values = listToValue(list);
+        if (values == null)
+            return;
+
+        if (horizontal)
+            translationX(values);
+        else
+            translationY(values);
     }
 }

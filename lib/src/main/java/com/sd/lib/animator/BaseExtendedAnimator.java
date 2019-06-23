@@ -5,9 +5,6 @@ import android.view.View;
 import com.sd.lib.animator.provider.property.location.LocationValue;
 import com.sd.lib.animator.provider.property.location.ScreenXValue;
 import com.sd.lib.animator.provider.property.location.ScreenYValue;
-import com.sd.lib.animator.provider.transform.location.LocationValueTransform;
-import com.sd.lib.animator.provider.transform.location.ScreenXTransform;
-import com.sd.lib.animator.provider.transform.location.ScreenYTransform;
 import com.sd.lib.animator.provider.transform.scale.ScaleValueTransform;
 import com.sd.lib.animator.provider.transform.scale.ScaleXTransform;
 import com.sd.lib.animator.provider.transform.scale.ScaleYTransform;
@@ -44,20 +41,6 @@ class BaseExtendedAnimator<T extends ExtendedPropertyAnimator> extends BaseAnima
     public T scaleYToView(View... views)
     {
         scaleToViewInternal(Coordinate.Y, views);
-        return (T) this;
-    }
-
-    @Override
-    public T moveXToView(float delta, View... views)
-    {
-        moveToViewInternal(Coordinate.X, null, null, delta, views);
-        return (T) this;
-    }
-
-    @Override
-    public T moveYToView(float delta, View... views)
-    {
-        moveToViewInternal(Coordinate.Y, null, null, delta, views);
         return (T) this;
     }
 
@@ -122,15 +105,9 @@ class BaseExtendedAnimator<T extends ExtendedPropertyAnimator> extends BaseAnima
                 list.add(value);
         }
 
-        final int count = list.size();
-        if (count <= 0)
+        final float[] values = listToValue(list);
+        if (values == null)
             return;
-
-        final float[] values = new float[count];
-        for (int i = 0; i < count; i++)
-        {
-            values[i] = list.get(i);
-        }
 
         if (coordinate == Coordinate.X)
             scaleX(values);
@@ -138,38 +115,18 @@ class BaseExtendedAnimator<T extends ExtendedPropertyAnimator> extends BaseAnima
             scaleY(values);
     }
 
-    private void moveToViewInternal(final Coordinate coordinate, Float scaleFrom, Float scaleTo, float delta, final View... views)
+    protected static float[] listToValue(List<Float> list)
     {
-        checkCoordinate(coordinate);
-        checkTarget(getTarget());
-
-        if (views == null || views.length <= 0)
-            return;
-
-        final LocationValueTransform transform = coordinate == Coordinate.X ? new ScreenXTransform(scaleFrom, scaleTo) : new ScreenYTransform(scaleFrom, scaleTo);
-
-        final List<Float> list = new ArrayList<>(views.length);
-        for (int i = 0; i < views.length; i++)
-        {
-            final Float value = transform.getValue(getTarget(), views[i]);
-            if (value != null)
-                list.add(value + delta);
-        }
+        if (list == null || list.isEmpty())
+            return null;
 
         final int count = list.size();
-        if (count <= 0)
-            return;
-
         final float[] values = new float[count];
         for (int i = 0; i < count; i++)
         {
             values[i] = list.get(i);
         }
-
-        if (coordinate == Coordinate.X)
-            translationX(values);
-        else
-            translationY(values);
+        return values;
     }
 
     private static void checkTarget(View target)
