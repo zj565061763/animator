@@ -104,7 +104,7 @@ public class FNodeAnimator extends BaseExtendedAnimator<NodeAnimator> implements
     {
         mMoveHorizontal = true;
         mListMoveConfig = new ArrayList<>();
-        return new SimpleMoveToViewConfig(true, this, mListMoveConfig);
+        return new SimpleMoveToViewConfig(mMoveHorizontal, this, mListMoveConfig);
     }
 
     @Override
@@ -112,7 +112,7 @@ public class FNodeAnimator extends BaseExtendedAnimator<NodeAnimator> implements
     {
         mMoveHorizontal = false;
         mListMoveConfig = new ArrayList<>();
-        return new SimpleMoveToViewConfig(false, this, mListMoveConfig);
+        return new SimpleMoveToViewConfig(mMoveHorizontal, this, mListMoveConfig);
     }
 
     private void checkMoveToViewConfig()
