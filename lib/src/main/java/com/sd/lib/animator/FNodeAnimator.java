@@ -79,6 +79,7 @@ public class FNodeAnimator extends BaseExtendedAnimator<NodeAnimator> implements
     @Override
     public NodeAnimator start()
     {
+        checkMoveToViewConfig();
         if (mChain == null)
             return super.start();
         else
@@ -88,6 +89,7 @@ public class FNodeAnimator extends BaseExtendedAnimator<NodeAnimator> implements
     @Override
     public NodeAnimator startAsPop(boolean clone)
     {
+        checkMoveToViewConfig();
         if (mChain == null)
             return super.startAsPop(clone);
         else
