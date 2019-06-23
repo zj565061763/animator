@@ -21,6 +21,22 @@ public interface ExtendedPropertyAnimator<T extends ExtendedPropertyAnimator> ex
     T moveYTo(float... values);
 
     /**
+     * 缩放x到views的宽度
+     *
+     * @param views
+     * @return
+     */
+    T scaleXToView(View... views);
+
+    /**
+     * 缩放y到views的高度
+     *
+     * @param views
+     * @return
+     */
+    T scaleYToView(View... views);
+
+    /**
      * 移动到views的屏幕x坐标
      *
      * @param delta
@@ -37,22 +53,6 @@ public interface ExtendedPropertyAnimator<T extends ExtendedPropertyAnimator> ex
      * @return
      */
     T moveYToView(float delta, View... views);
-
-    /**
-     * 缩放x到views的宽度
-     *
-     * @param views
-     * @return
-     */
-    T scaleXToView(View... views);
-
-    /**
-     * 缩放y到views的高度
-     *
-     * @param views
-     * @return
-     */
-    T scaleYToView(View... views);
 
     /**
      * 设置描述

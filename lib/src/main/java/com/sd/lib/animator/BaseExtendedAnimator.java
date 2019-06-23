@@ -34,20 +34,6 @@ class BaseExtendedAnimator<T extends ExtendedPropertyAnimator> extends BaseAnima
     }
 
     @Override
-    public T moveXToView(float delta, View... views)
-    {
-        moveToViewInternal(Coordinate.X, null, null, delta, views);
-        return (T) this;
-    }
-
-    @Override
-    public T moveYToView(float delta, View... views)
-    {
-        moveToViewInternal(Coordinate.Y, null, null, delta, views);
-        return (T) this;
-    }
-
-    @Override
     public T scaleXToView(View... views)
     {
         scaleToViewInternal(Coordinate.X, views);
@@ -58,6 +44,20 @@ class BaseExtendedAnimator<T extends ExtendedPropertyAnimator> extends BaseAnima
     public T scaleYToView(View... views)
     {
         scaleToViewInternal(Coordinate.Y, views);
+        return (T) this;
+    }
+
+    @Override
+    public T moveXToView(float delta, View... views)
+    {
+        moveToViewInternal(Coordinate.X, null, null, delta, views);
+        return (T) this;
+    }
+
+    @Override
+    public T moveYToView(float delta, View... views)
+    {
+        moveToViewInternal(Coordinate.Y, null, null, delta, views);
         return (T) this;
     }
 
@@ -104,40 +104,6 @@ class BaseExtendedAnimator<T extends ExtendedPropertyAnimator> extends BaseAnima
             translationY(realValues);
     }
 
-    private void moveToViewInternal(final Coordinate coordinate, Float scaleFrom, Float scaleTo, float delta, final View... views)
-    {
-        checkCoordinate(coordinate);
-        checkTarget(getTarget());
-
-        if (views == null || views.length <= 0)
-            return;
-
-        final LocationValueTransform transform = coordinate == Coordinate.X ? new ScreenXTransform(scaleFrom, scaleTo) : new ScreenYTransform(scaleFrom, scaleTo);
-
-        final List<Float> list = new ArrayList<>(views.length);
-        for (int i = 0; i < views.length; i++)
-        {
-            final Float value = transform.getValue(getTarget(), views[i]);
-            if (value != null)
-                list.add(value + delta);
-        }
-
-        final int count = list.size();
-        if (count <= 0)
-            return;
-
-        final float[] values = new float[count];
-        for (int i = 0; i < count; i++)
-        {
-            values[i] = list.get(i);
-        }
-
-        if (coordinate == Coordinate.X)
-            translationX(values);
-        else
-            translationY(values);
-    }
-
     private void scaleToViewInternal(final Coordinate coordinate, final View... views)
     {
         checkCoordinate(coordinate);
@@ -170,6 +136,40 @@ class BaseExtendedAnimator<T extends ExtendedPropertyAnimator> extends BaseAnima
             scaleX(values);
         else
             scaleY(values);
+    }
+
+    private void moveToViewInternal(final Coordinate coordinate, Float scaleFrom, Float scaleTo, float delta, final View... views)
+    {
+        checkCoordinate(coordinate);
+        checkTarget(getTarget());
+
+        if (views == null || views.length <= 0)
+            return;
+
+        final LocationValueTransform transform = coordinate == Coordinate.X ? new ScreenXTransform(scaleFrom, scaleTo) : new ScreenYTransform(scaleFrom, scaleTo);
+
+        final List<Float> list = new ArrayList<>(views.length);
+        for (int i = 0; i < views.length; i++)
+        {
+            final Float value = transform.getValue(getTarget(), views[i]);
+            if (value != null)
+                list.add(value + delta);
+        }
+
+        final int count = list.size();
+        if (count <= 0)
+            return;
+
+        final float[] values = new float[count];
+        for (int i = 0; i < count; i++)
+        {
+            values[i] = list.get(i);
+        }
+
+        if (coordinate == Coordinate.X)
+            translationX(values);
+        else
+            translationY(values);
     }
 
     private static void checkTarget(View target)
