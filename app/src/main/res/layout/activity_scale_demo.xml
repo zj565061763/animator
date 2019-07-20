@@ -5,21 +5,12 @@
     android:orientation="vertical">
 
     <FrameLayout
-        android:id="@+id/fl_video"
-        android:layout_width="100px"
-        android:layout_height="100px"
-        android:layout_marginLeft="100px"
-        android:background="@color/colorPrimary" />
-
-    <FrameLayout
         android:id="@+id/fl_video_target"
         android:layout_width="200px"
         android:layout_height="200px"
         android:layout_marginLeft="200px"
         android:layout_marginTop="200px"
-        android:background="@color/colorAccent">
-
-    </FrameLayout>
+        android:background="@color/colorAccent" />
 
     <FrameLayout
         android:id="@+id/fl_video_target_1"
@@ -28,5 +19,12 @@
         android:layout_marginLeft="400px"
         android:layout_marginTop="600px"
         android:background="@color/colorAccent" />
+
+    <FrameLayout
+        android:id="@+id/fl_video"
+        android:layout_width="100px"
+        android:layout_height="100px"
+        android:layout_marginLeft="100px"
+        android:background="@color/colorPrimary" />
 
 </FrameLayout>
