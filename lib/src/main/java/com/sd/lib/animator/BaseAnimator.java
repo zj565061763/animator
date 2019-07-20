@@ -2,6 +2,7 @@ package com.sd.lib.animator;
 
 import android.animation.Animator;
 import android.animation.ObjectAnimator;
+import android.animation.PropertyValuesHolder;
 import android.animation.TimeInterpolator;
 import android.animation.ValueAnimator;
 import android.app.Activity;
@@ -19,7 +20,10 @@ class BaseAnimator<T extends PropertyAnimator> implements PropertyAnimator<T>
 
     public BaseAnimator()
     {
-        mObjectAnimator.setFloatValues(0);
+        final PropertyValuesHolder[] valuesHolders = mObjectAnimator.getValues();
+        if (valuesHolders == null || valuesHolders.length <= 0)
+            mObjectAnimator.setFloatValues(0);
+
         mObjectAnimator.addListener(new OnStartVisible());
     }
 
