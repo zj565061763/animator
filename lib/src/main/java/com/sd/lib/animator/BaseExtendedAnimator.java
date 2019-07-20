@@ -161,11 +161,11 @@ abstract class BaseExtendedAnimator<T extends ExtendedPropertyAnimator> extends 
 
     protected final void checkMoveToViewConfig()
     {
-        if (mListMoveConfig == null || mListMoveConfig.isEmpty())
-            return;
-
         final boolean horizontal = mMoveHorizontal;
         final List<MoveToViewConfig> listConfig = mListMoveConfig;
+
+        if (listConfig == null || listConfig.isEmpty())
+            return;
 
         final List<Float> list = new ArrayList<>(listConfig.size());
         for (MoveToViewConfig item : listConfig)
