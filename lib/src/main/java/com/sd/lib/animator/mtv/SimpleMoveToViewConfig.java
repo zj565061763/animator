@@ -110,6 +110,19 @@ public class SimpleMoveToViewConfig implements MoveToViewConfig
     }
 
     @Override
+    public MoveToViewConfig setTargetFutureScale(View view)
+    {
+        if (view == null)
+            throw new IllegalArgumentException("view is null");
+
+        final ScaleValueTransform transform = mHorizontal ? new ScaleXTransform() : new ScaleYTransform();
+        final Float scale = transform.getValue(getView(), view);
+
+        setTargetFutureScale(scale);
+        return this;
+    }
+
+    @Override
     public NodeAnimator node()
     {
         return mNodeAnimator;

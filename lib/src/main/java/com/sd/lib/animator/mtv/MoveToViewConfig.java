@@ -81,6 +81,16 @@ public interface MoveToViewConfig
     MoveToViewConfig setTargetFutureScale(Float scale);
 
     /**
+     * 缩放值由目标view和参数view计算出
+     * <p>
+     * {@link #setTargetFutureScale(Float)}
+     *
+     * @param view
+     * @return
+     */
+    MoveToViewConfig setTargetFutureScale(View view);
+
+    /**
      * 返回config所在的节点动画对象
      *
      * @return
