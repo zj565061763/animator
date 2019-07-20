@@ -98,6 +98,7 @@ public class SimpleMoveToViewConfig implements MoveToViewConfig
 
         final ScaleValueTransform transform = mHorizontal ? new ScaleXTransform() : new ScaleYTransform();
         final Float scale = transform.getValue(node().getTarget(), view);
+
         setFutureScale(scale);
         return this;
     }
