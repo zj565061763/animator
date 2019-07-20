@@ -3,14 +3,6 @@ package com.sd.lib.animator;
 import android.view.View;
 
 import com.sd.lib.animator.listener.api.OnStartVisible;
-import com.sd.lib.animator.mtv.MoveToViewConfig;
-import com.sd.lib.animator.mtv.SimpleMoveToViewConfig;
-import com.sd.lib.animator.provider.transform.location.LocationValueTransform;
-import com.sd.lib.animator.provider.transform.location.ScreenXTransform;
-import com.sd.lib.animator.provider.transform.location.ScreenYTransform;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * 节点动画
@@ -96,54 +88,9 @@ public class FNodeAnimator extends BaseExtendedAnimator<NodeAnimator> implements
             throw new UnsupportedOperationException("you must call chain().startAsPop(boolean) instead, because current animator has been added to the chain");
     }
 
-    private boolean mMoveHorizontal;
-    private List<MoveToViewConfig> mListMoveConfig;
-
     @Override
-    public MoveToViewConfig moveXToView()
+    protected NodeAnimator getNodeAnimator()
     {
-        mMoveHorizontal = true;
-        mListMoveConfig = new ArrayList<>();
-        return new SimpleMoveToViewConfig(mMoveHorizontal, this, mListMoveConfig);
-    }
-
-    @Override
-    public MoveToViewConfig moveYToView()
-    {
-        mMoveHorizontal = false;
-        mListMoveConfig = new ArrayList<>();
-        return new SimpleMoveToViewConfig(mMoveHorizontal, this, mListMoveConfig);
-    }
-
-    private void checkMoveToViewConfig()
-    {
-        if (mListMoveConfig == null || mListMoveConfig.isEmpty())
-            return;
-
-        final boolean horizontal = mMoveHorizontal;
-        final List<MoveToViewConfig> listConfig = mListMoveConfig;
-
-        final List<Float> list = new ArrayList<>(listConfig.size());
-        for (MoveToViewConfig item : listConfig)
-        {
-            final LocationValueTransform transform = horizontal
-                    ? new ScreenXTransform(item.getFutureScale(), null)
-                    : new ScreenYTransform(item.getFutureScale(), null);
-
-            final Float value = transform.getValue(getTarget(), item.getView());
-            if (value != null)
-                list.add(value + item.getDelta());
-        }
-
-        final float[] values = listToValue(list);
-        if (values == null)
-            return;
-
-        if (horizontal)
-            translationX(values);
-        else
-            translationY(values);
-
-        mListMoveConfig = null;
+        return this;
     }
 }

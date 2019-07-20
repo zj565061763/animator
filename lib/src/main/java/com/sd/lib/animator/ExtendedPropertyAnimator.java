@@ -2,6 +2,8 @@ package com.sd.lib.animator;
 
 import android.view.View;
 
+import com.sd.lib.animator.mtv.MoveToViewConfig;
+
 public interface ExtendedPropertyAnimator<T extends ExtendedPropertyAnimator> extends PropertyAnimator<T>
 {
     /**
@@ -35,6 +37,20 @@ public interface ExtendedPropertyAnimator<T extends ExtendedPropertyAnimator> ex
      * @return
      */
     T scaleYToView(View... views);
+
+    /**
+     * 移动x到View
+     *
+     * @return
+     */
+    MoveToViewConfig moveXToView();
+
+    /**
+     * 移动y到View
+     *
+     * @return
+     */
+    MoveToViewConfig moveYToView();
 
     /**
      * 设置描述

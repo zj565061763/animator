@@ -2,9 +2,14 @@ package com.sd.lib.animator;
 
 import android.view.View;
 
+import com.sd.lib.animator.mtv.MoveToViewConfig;
+import com.sd.lib.animator.mtv.SimpleMoveToViewConfig;
 import com.sd.lib.animator.provider.property.location.LocationValue;
 import com.sd.lib.animator.provider.property.location.ScreenXValue;
 import com.sd.lib.animator.provider.property.location.ScreenYValue;
+import com.sd.lib.animator.provider.transform.location.LocationValueTransform;
+import com.sd.lib.animator.provider.transform.location.ScreenXTransform;
+import com.sd.lib.animator.provider.transform.location.ScreenYTransform;
 import com.sd.lib.animator.provider.transform.scale.ScaleValueTransform;
 import com.sd.lib.animator.provider.transform.scale.ScaleXTransform;
 import com.sd.lib.animator.provider.transform.scale.ScaleYTransform;
@@ -12,7 +17,7 @@ import com.sd.lib.animator.provider.transform.scale.ScaleYTransform;
 import java.util.ArrayList;
 import java.util.List;
 
-class BaseExtendedAnimator<T extends ExtendedPropertyAnimator> extends BaseAnimator<T> implements ExtendedPropertyAnimator<T>
+abstract class BaseExtendedAnimator<T extends ExtendedPropertyAnimator> extends BaseAnimator<T> implements ExtendedPropertyAnimator<T>
 {
     private String mDesc;
 
@@ -132,4 +137,59 @@ class BaseExtendedAnimator<T extends ExtendedPropertyAnimator> extends BaseAnima
         if (target == null)
             throw new NullPointerException("target view must be provided before this, see the Animator.setTarget(View) method");
     }
+
+    //---------- move to view ----------
+
+    private boolean mMoveHorizontal;
+    private List<MoveToViewConfig> mListMoveConfig;
+
+    @Override
+    public MoveToViewConfig moveXToView()
+    {
+        mMoveHorizontal = true;
+        mListMoveConfig = new ArrayList<>();
+        return new SimpleMoveToViewConfig(mMoveHorizontal, getNodeAnimator(), mListMoveConfig);
+    }
+
+    @Override
+    public MoveToViewConfig moveYToView()
+    {
+        mMoveHorizontal = false;
+        mListMoveConfig = new ArrayList<>();
+        return new SimpleMoveToViewConfig(mMoveHorizontal, getNodeAnimator(), mListMoveConfig);
+    }
+
+    protected final void checkMoveToViewConfig()
+    {
+        if (mListMoveConfig == null || mListMoveConfig.isEmpty())
+            return;
+
+        final boolean horizontal = mMoveHorizontal;
+        final List<MoveToViewConfig> listConfig = mListMoveConfig;
+
+        final List<Float> list = new ArrayList<>(listConfig.size());
+        for (MoveToViewConfig item : listConfig)
+        {
+            final LocationValueTransform transform = horizontal
+                    ? new ScreenXTransform(item.getFutureScale(), null)
+                    : new ScreenYTransform(item.getFutureScale(), null);
+
+            final Float value = transform.getValue(getTarget(), item.getView());
+            if (value != null)
+                list.add(value + item.getDelta());
+        }
+
+        final float[] values = listToValue(list);
+        if (values == null)
+            return;
+
+        if (horizontal)
+            translationX(values);
+        else
+            translationY(values);
+
+        mListMoveConfig = null;
+    }
+
+    protected abstract NodeAnimator getNodeAnimator();
 }
