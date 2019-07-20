@@ -17,14 +17,14 @@ class BaseExtendedAnimator<T extends ExtendedPropertyAnimator> extends BaseAnima
     private String mDesc;
 
     @Override
-    public T moveToX(float... values)
+    public T moveX(float... values)
     {
         moveToInternal(Coordinate.X, values);
         return (T) this;
     }
 
     @Override
-    public T moveToY(float... values)
+    public T moveY(float... values)
     {
         moveToInternal(Coordinate.Y, values);
         return (T) this;
