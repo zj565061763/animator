@@ -26,7 +26,7 @@ public interface ExtendedPropertyAnimator<T extends ExtendedPropertyAnimator> ex
      * @param views
      * @return
      */
-    T scaleToViewX(View... views);
+    T scaleXToView(View... views);
 
     /**
      * 缩放y到views的高度
@@ -34,7 +34,7 @@ public interface ExtendedPropertyAnimator<T extends ExtendedPropertyAnimator> ex
      * @param views
      * @return
      */
-    T scaleToViewY(View... views);
+    T scaleYToView(View... views);
 
     /**
      * 设置描述

@@ -31,14 +31,14 @@ class BaseExtendedAnimator<T extends ExtendedPropertyAnimator> extends BaseAnima
     }
 
     @Override
-    public T scaleToViewX(View... views)
+    public T scaleXToView(View... views)
     {
         scaleToViewInternal(Coordinate.X, views);
         return (T) this;
     }
 
     @Override
-    public T scaleToViewY(View... views)
+    public T scaleYToView(View... views)
     {
         scaleToViewInternal(Coordinate.Y, views);
         return (T) this;

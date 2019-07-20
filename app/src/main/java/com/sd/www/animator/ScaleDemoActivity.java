@@ -39,8 +39,8 @@ public class ScaleDemoActivity extends AppCompatActivity
     private void scale()
     {
         new FNodeAnimator(fl_video)
-                .scaleToViewX(fl_video_target) // 缩放到目标view的x
-                .with().scaleToViewY(fl_video_target) // 缩放到目标view的y
+                .scaleXToView(fl_video_target) // 缩放到目标view的x
+                .with().scaleYToView(fl_video_target) // 缩放到目标view的y
                 .with().configMoveToViewX() // 配置移动到目标view的x
                 .newView(fl_video_target).setFutureScale(fl_video_target) // 添加一个移动目标view，并设置目标view未来的缩放目标
                 .node() // 返回node节点
@@ -53,7 +53,7 @@ public class ScaleDemoActivity extends AppCompatActivity
     private void restore()
     {
         new FNodeAnimator(fl_video)
-                .scaleToViewX(fl_video_target_1).with().scaleToViewY(fl_video_target_1)
+                .scaleXToView(fl_video_target_1).with().scaleYToView(fl_video_target_1)
                 .with().configMoveToViewX()
                 .newView(fl_video_target_1).setFutureScale(fl_video_target_1)
                 .node()
