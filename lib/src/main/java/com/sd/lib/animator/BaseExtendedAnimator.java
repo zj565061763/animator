@@ -148,7 +148,7 @@ abstract class BaseExtendedAnimator<T extends ExtendedAnimator> extends BaseAnim
     {
         mMoveHorizontal = true;
         mListMoveConfig = new ArrayList<>();
-        return new SimpleMoveToViewConfig(mMoveHorizontal, getNodeAnimator(), mListMoveConfig);
+        return newMoveToViewConfig();
     }
 
     @Override
@@ -156,10 +156,23 @@ abstract class BaseExtendedAnimator<T extends ExtendedAnimator> extends BaseAnim
     {
         mMoveHorizontal = false;
         mListMoveConfig = new ArrayList<>();
-        return new SimpleMoveToViewConfig(mMoveHorizontal, getNodeAnimator(), mListMoveConfig);
+        return newMoveToViewConfig();
     }
 
-    protected final void checkMoveToViewConfig()
+    private MoveToViewConfig newMoveToViewConfig()
+    {
+        return new SimpleMoveToViewConfig(mMoveHorizontal, getNodeAnimator(), mListMoveConfig)
+        {
+            @Override
+            public NodeAnimator node()
+            {
+                checkMoveToViewConfig();
+                return super.node();
+            }
+        };
+    }
+
+    private void checkMoveToViewConfig()
     {
         final boolean horizontal = mMoveHorizontal;
         final List<MoveToViewConfig> listConfig = mListMoveConfig;
