@@ -54,7 +54,7 @@ public interface MoveToViewConfig
     MoveToViewConfig setFutureScale(float scale);
 
     /**
-     * 缩放值由当前动画view和目标view计算出
+     * 缩放值由当前动画view和参数view计算出
      * <p>
      * {@link #setFutureScale(float)}
      *
