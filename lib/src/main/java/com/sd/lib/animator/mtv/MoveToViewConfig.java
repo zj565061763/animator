@@ -21,11 +21,18 @@ public interface MoveToViewConfig
     int getDelta();
 
     /**
-     * 移动到目标view后，当前动画view的缩放值
+     * 移动到目标view后，动画view的缩放值
      *
      * @return
      */
     Float getFutureScale();
+
+    /**
+     * 移动到目标view后，目标view的缩放值
+     *
+     * @return
+     */
+    Float getTargetFutureScale();
 
     /**
      * 移动到目标view
@@ -44,9 +51,9 @@ public interface MoveToViewConfig
     MoveToViewConfig setDelta(int delta);
 
     /**
-     * 设置移动到目标view后，当前动画view的缩放值
+     * 设置移动到目标view后，动画view的缩放值
      * <p>
-     * 如果移动到目标view后当前动画view有缩放值的话，应该设置缩放值，才能计算正确的移动位置
+     * 如果移动到目标view后动画view有缩放值的话，应该设置缩放值，才能计算正确的移动位置
      *
      * @param scale
      * @return
@@ -54,7 +61,7 @@ public interface MoveToViewConfig
     MoveToViewConfig setFutureScale(Float scale);
 
     /**
-     * 缩放值由当前动画view和参数view计算出
+     * 缩放值由动画view和参数view计算出
      * <p>
      * {@link #setFutureScale(Float)}
      *
@@ -62,6 +69,16 @@ public interface MoveToViewConfig
      * @return
      */
     MoveToViewConfig setFutureScale(View view);
+
+    /**
+     * 设置移动到目标view后，目标view的缩放值
+     * <p>
+     * 如果移动到目标view后目标view有缩放值的话，应该设置缩放值，才能计算正确的移动位置
+     *
+     * @param scale
+     * @return
+     */
+    MoveToViewConfig setTargetFutureScale(Float scale);
 
     /**
      * 返回config所在的节点动画对象

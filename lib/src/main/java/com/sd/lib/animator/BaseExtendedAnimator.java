@@ -171,8 +171,8 @@ abstract class BaseExtendedAnimator<T extends ExtendedAnimator> extends BaseAnim
         for (MoveToViewConfig item : listConfig)
         {
             final LocationValueTransform transform = horizontal
-                    ? new ScreenXTransform(item.getFutureScale(), null)
-                    : new ScreenYTransform(item.getFutureScale(), null);
+                    ? new ScreenXTransform(item.getFutureScale(), item.getTargetFutureScale())
+                    : new ScreenYTransform(item.getFutureScale(), item.getTargetFutureScale());
 
             final Float value = transform.getValue(getTarget(), item.getView());
             if (value != null)
