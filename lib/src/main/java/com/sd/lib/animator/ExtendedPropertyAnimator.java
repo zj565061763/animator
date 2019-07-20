@@ -10,7 +10,7 @@ public interface ExtendedPropertyAnimator<T extends ExtendedPropertyAnimator> ex
      * @param values
      * @return
      */
-    T moveX(float... values);
+    T screenX(float... values);
 
     /**
      * 移动到屏幕y坐标
@@ -18,7 +18,7 @@ public interface ExtendedPropertyAnimator<T extends ExtendedPropertyAnimator> ex
      * @param values
      * @return
      */
-    T moveY(float... values);
+    T screenY(float... values);
 
     /**
      * 缩放x到views的宽度

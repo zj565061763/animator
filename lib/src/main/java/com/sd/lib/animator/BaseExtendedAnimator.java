@@ -17,16 +17,16 @@ class BaseExtendedAnimator<T extends ExtendedPropertyAnimator> extends BaseAnima
     private String mDesc;
 
     @Override
-    public T moveX(float... values)
+    public T screenX(float... values)
     {
-        moveToInternal(Coordinate.X, values);
+        screenInternal(Coordinate.X, values);
         return (T) this;
     }
 
     @Override
-    public T moveY(float... values)
+    public T screenY(float... values)
     {
-        moveToInternal(Coordinate.Y, values);
+        screenInternal(Coordinate.Y, values);
         return (T) this;
     }
 
@@ -59,7 +59,7 @@ class BaseExtendedAnimator<T extends ExtendedPropertyAnimator> extends BaseAnima
         return mDesc;
     }
 
-    private void moveToInternal(final Coordinate coordinate, final float... values)
+    private void screenInternal(final Coordinate coordinate, final float... values)
     {
         checkCoordinate(coordinate);
         checkTarget(getTarget());
