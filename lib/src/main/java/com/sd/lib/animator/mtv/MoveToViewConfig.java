@@ -25,7 +25,7 @@ public interface MoveToViewConfig
      *
      * @return
      */
-    float getFutureScale();
+    Float getFutureScale();
 
     /**
      * 移动到目标view
@@ -46,17 +46,17 @@ public interface MoveToViewConfig
     /**
      * 设置移动到目标view后，当前动画view的缩放值
      * <p>
-     * 如果移动到目标值view后当前动画view有缩放值的话，应该设置缩放值，才能计算正确的移动位置
+     * 如果移动到目标view后当前动画view有缩放值的话，应该设置缩放值，才能计算正确的移动位置
      *
      * @param scale
      * @return
      */
-    MoveToViewConfig setFutureScale(float scale);
+    MoveToViewConfig setFutureScale(Float scale);
 
     /**
      * 缩放值由当前动画view和参数view计算出
      * <p>
-     * {@link #setFutureScale(float)}
+     * {@link #setFutureScale(Float)}
      *
      * @param view
      * @return

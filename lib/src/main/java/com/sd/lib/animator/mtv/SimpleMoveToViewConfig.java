@@ -17,7 +17,7 @@ public class SimpleMoveToViewConfig implements MoveToViewConfig
 
     private View mView;
     private int mDelta;
-    private float mFutureScale;
+    private Float mFutureScale;
 
     public SimpleMoveToViewConfig(boolean horizontal, NodeAnimator nodeAnimator, List<MoveToViewConfig> listConfig)
     {
@@ -45,7 +45,7 @@ public class SimpleMoveToViewConfig implements MoveToViewConfig
     }
 
     @Override
-    public float getFutureScale()
+    public Float getFutureScale()
     {
         return mFutureScale;
     }
@@ -78,7 +78,7 @@ public class SimpleMoveToViewConfig implements MoveToViewConfig
     }
 
     @Override
-    public MoveToViewConfig setFutureScale(float scale)
+    public MoveToViewConfig setFutureScale(Float scale)
     {
         mFutureScale = scale;
         return this;
@@ -92,8 +92,7 @@ public class SimpleMoveToViewConfig implements MoveToViewConfig
 
         final ScaleValueTransform transform = mHorizontal ? new ScaleXTransform() : new ScaleYTransform();
         final Float scale = transform.getValue(node().getTarget(), view);
-        if (scale != null)
-            setFutureScale(scale);
+        setFutureScale(scale);
         return this;
     }
 
