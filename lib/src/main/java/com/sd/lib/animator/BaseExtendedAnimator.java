@@ -19,28 +19,28 @@ class BaseExtendedAnimator<T extends ExtendedPropertyAnimator> extends BaseAnima
     @Override
     public T screenX(float... values)
     {
-        screenInternal(Coordinate.X, values);
+        screenInternal(true, values);
         return (T) this;
     }
 
     @Override
     public T screenY(float... values)
     {
-        screenInternal(Coordinate.Y, values);
+        screenInternal(false, values);
         return (T) this;
     }
 
     @Override
     public T scaleXToView(View... views)
     {
-        scaleToViewInternal(Coordinate.X, views);
+        scaleToViewInternal(true, views);
         return (T) this;
     }
 
     @Override
     public T scaleYToView(View... views)
     {
-        scaleToViewInternal(Coordinate.Y, views);
+        scaleToViewInternal(false, views);
         return (T) this;
     }
 
@@ -59,15 +59,14 @@ class BaseExtendedAnimator<T extends ExtendedPropertyAnimator> extends BaseAnima
         return mDesc;
     }
 
-    private void screenInternal(final Coordinate coordinate, final float... values)
+    private void screenInternal(final boolean x, final float... values)
     {
-        checkCoordinate(coordinate);
         checkTarget(getTarget());
 
         if (values == null || values.length <= 0)
             return;
 
-        final LocationValue locationValue = coordinate == Coordinate.X ? new ScreenXValue(null) : new ScreenYValue(null);
+        final LocationValue locationValue = x ? new ScreenXValue(null) : new ScreenYValue(null);
         final Float targetLocation = locationValue.getValue(getTarget());
         if (targetLocation == null)
             return;
@@ -75,27 +74,26 @@ class BaseExtendedAnimator<T extends ExtendedPropertyAnimator> extends BaseAnima
         final float[] realValues = new float[values.length];
         for (int i = 0; i < values.length; i++)
         {
-            if (coordinate == Coordinate.X)
+            if (x)
                 realValues[i] = (values[i] - targetLocation) + getTarget().getTranslationX();
             else
                 realValues[i] = (values[i] - targetLocation) + getTarget().getTranslationY();
         }
 
-        if (coordinate == Coordinate.X)
+        if (x)
             translationX(realValues);
         else
             translationY(realValues);
     }
 
-    private void scaleToViewInternal(final Coordinate coordinate, final View... views)
+    private void scaleToViewInternal(final boolean x, final View... views)
     {
-        checkCoordinate(coordinate);
         checkTarget(getTarget());
 
         if (views == null || views.length <= 0)
             return;
 
-        final ScaleValueTransform transform = coordinate == Coordinate.X ? new ScaleXTransform() : new ScaleYTransform();
+        final ScaleValueTransform transform = x ? new ScaleXTransform() : new ScaleYTransform();
 
         final List<Float> list = new ArrayList<>(views.length);
         for (int i = 0; i < views.length; i++)
@@ -109,7 +107,7 @@ class BaseExtendedAnimator<T extends ExtendedPropertyAnimator> extends BaseAnima
         if (values == null)
             return;
 
-        if (coordinate == Coordinate.X)
+        if (x)
             scaleX(values);
         else
             scaleY(values);
@@ -133,16 +131,5 @@ class BaseExtendedAnimator<T extends ExtendedPropertyAnimator> extends BaseAnima
     {
         if (target == null)
             throw new NullPointerException("target view must be provided before this, see the Animator.setTarget(View) method");
-    }
-
-    private static void checkCoordinate(Coordinate coordinate)
-    {
-        if (coordinate == null)
-            throw new IllegalArgumentException("coordinate is null");
-    }
-
-    enum Coordinate
-    {
-        X, Y
     }
 }
