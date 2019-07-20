@@ -42,9 +42,9 @@ public interface NodeAnimator extends ExtendedPropertyAnimator<NodeAnimator>
      */
     NodeAnimator next();
 
-    MoveToViewConfig configMoveToViewX();
+    MoveToViewConfig moveXToView();
 
-    MoveToViewConfig configMoveToViewY();
+    MoveToViewConfig moveYToView();
 
     /**
      * 节点类型

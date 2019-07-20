@@ -100,7 +100,7 @@ public class FNodeAnimator extends BaseExtendedAnimator<NodeAnimator> implements
     private List<MoveToViewConfig> mListMoveConfig;
 
     @Override
-    public MoveToViewConfig configMoveToViewX()
+    public MoveToViewConfig moveXToView()
     {
         mMoveHorizontal = true;
         mListMoveConfig = new ArrayList<>();
@@ -108,7 +108,7 @@ public class FNodeAnimator extends BaseExtendedAnimator<NodeAnimator> implements
     }
 
     @Override
-    public MoveToViewConfig configMoveToViewY()
+    public MoveToViewConfig moveYToView()
     {
         mMoveHorizontal = false;
         mListMoveConfig = new ArrayList<>();
