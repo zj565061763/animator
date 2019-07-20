@@ -59,14 +59,14 @@ class BaseExtendedAnimator<T extends ExtendedPropertyAnimator> extends BaseAnima
         return mDesc;
     }
 
-    private void screenInternal(final boolean x, final float... values)
+    private void screenInternal(final boolean horizontal, final float... values)
     {
         checkTarget(getTarget());
 
         if (values == null || values.length <= 0)
             return;
 
-        final LocationValue locationValue = x ? new ScreenXValue(null) : new ScreenYValue(null);
+        final LocationValue locationValue = horizontal ? new ScreenXValue(null) : new ScreenYValue(null);
         final Float targetLocation = locationValue.getValue(getTarget());
         if (targetLocation == null)
             return;
@@ -74,26 +74,26 @@ class BaseExtendedAnimator<T extends ExtendedPropertyAnimator> extends BaseAnima
         final float[] realValues = new float[values.length];
         for (int i = 0; i < values.length; i++)
         {
-            if (x)
+            if (horizontal)
                 realValues[i] = (values[i] - targetLocation) + getTarget().getTranslationX();
             else
                 realValues[i] = (values[i] - targetLocation) + getTarget().getTranslationY();
         }
 
-        if (x)
+        if (horizontal)
             translationX(realValues);
         else
             translationY(realValues);
     }
 
-    private void scaleToViewInternal(final boolean x, final View... views)
+    private void scaleToViewInternal(final boolean horizontal, final View... views)
     {
         checkTarget(getTarget());
 
         if (views == null || views.length <= 0)
             return;
 
-        final ScaleValueTransform transform = x ? new ScaleXTransform() : new ScaleYTransform();
+        final ScaleValueTransform transform = horizontal ? new ScaleXTransform() : new ScaleYTransform();
 
         final List<Float> list = new ArrayList<>(views.length);
         for (int i = 0; i < views.length; i++)
@@ -107,7 +107,7 @@ class BaseExtendedAnimator<T extends ExtendedPropertyAnimator> extends BaseAnima
         if (values == null)
             return;
 
-        if (x)
+        if (horizontal)
             scaleX(values);
         else
             scaleY(values);
