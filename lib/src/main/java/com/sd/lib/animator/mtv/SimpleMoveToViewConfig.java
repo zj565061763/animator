@@ -15,7 +15,7 @@ public class SimpleMoveToViewConfig implements MoveToViewConfig
     private final NodeAnimator mNodeAnimator;
     private final List<MoveToViewConfig> mListConfig;
 
-    private View mView;
+    private View mTarget;
     private int mDelta;
     private Float mFutureScale;
     private Float mTargetFutureScale;
@@ -34,9 +34,9 @@ public class SimpleMoveToViewConfig implements MoveToViewConfig
     }
 
     @Override
-    public View getView()
+    public View getTarget()
     {
-        return mView;
+        return mTarget;
     }
 
     @Override
@@ -64,13 +64,13 @@ public class SimpleMoveToViewConfig implements MoveToViewConfig
 
         if (mListConfig.isEmpty())
         {
-            mView = view;
+            mTarget = view;
             mListConfig.add(this);
             return this;
         } else
         {
             final SimpleMoveToViewConfig config = new SimpleMoveToViewConfig(mHorizontal, mNodeAnimator, mListConfig);
-            config.mView = view;
+            config.mTarget = view;
             mListConfig.add(config);
             return config;
         }
@@ -117,7 +117,7 @@ public class SimpleMoveToViewConfig implements MoveToViewConfig
             throw new IllegalArgumentException("view is null");
 
         final ScaleValueTransform transform = mHorizontal ? new ScaleXTransform() : new ScaleYTransform();
-        final Float scale = transform.getValue(getView(), view);
+        final Float scale = transform.getValue(getTarget(), view);
 
         setTargetFutureScale(scale);
         return this;

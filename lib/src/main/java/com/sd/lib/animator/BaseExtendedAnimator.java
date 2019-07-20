@@ -174,7 +174,7 @@ abstract class BaseExtendedAnimator<T extends ExtendedAnimator> extends BaseAnim
                     ? new ScreenXTransform(item.getFutureScale(), item.getTargetFutureScale())
                     : new ScreenYTransform(item.getFutureScale(), item.getTargetFutureScale());
 
-            final Float value = transform.getValue(getTarget(), item.getView());
+            final Float value = transform.getValue(getTarget(), item.getTarget());
             if (value != null)
                 list.add(value + item.getDelta());
         }

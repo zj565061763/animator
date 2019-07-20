@@ -11,7 +11,7 @@ public interface MoveToViewConfig
      *
      * @return
      */
-    View getView();
+    View getTarget();
 
     /**
      * 偏移量
