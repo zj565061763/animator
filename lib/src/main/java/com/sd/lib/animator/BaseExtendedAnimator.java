@@ -118,7 +118,7 @@ abstract class BaseExtendedAnimator<T extends ExtendedAnimator> extends BaseAnim
             scaleY(values);
     }
 
-    protected static float[] listToValue(List<Float> list)
+    private static float[] listToValue(List<Float> list)
     {
         if (list == null || list.isEmpty())
             return null;
