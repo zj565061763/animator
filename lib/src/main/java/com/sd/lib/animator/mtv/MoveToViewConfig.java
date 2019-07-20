@@ -7,7 +7,7 @@ import com.sd.lib.animator.NodeAnimator;
 public interface MoveToViewConfig
 {
     /**
-     * 设置的View
+     * 目标view
      *
      * @return
      */
@@ -21,19 +21,19 @@ public interface MoveToViewConfig
     int getDelta();
 
     /**
-     * 设置的移动后的缩放值
+     * 移动到目标view后，当前动画view的缩放值
      *
      * @return
      */
     float getFutureScale();
 
     /**
-     * 移动到某个view
+     * 移动到目标view
      *
      * @param view
      * @return
      */
-    MoveToViewConfig newView(View view);
+    MoveToViewConfig newTarget(View view);
 
     /**
      * 设置偏移量
@@ -44,9 +44,9 @@ public interface MoveToViewConfig
     MoveToViewConfig setDelta(int delta);
 
     /**
-     * 设置移动后的缩放值
+     * 设置移动到目标view后，当前动画view的缩放值
      * <p>
-     * 如果移动到目标值后当前动画view有缩放值的话，应该设置缩放值，才能计算正确的移动位置
+     * 如果移动到目标值view后当前动画view有缩放值的话，应该设置缩放值，才能计算正确的移动位置
      *
      * @param scale
      * @return

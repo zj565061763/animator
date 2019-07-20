@@ -51,7 +51,7 @@ public class SimpleMoveToViewConfig implements MoveToViewConfig
     }
 
     @Override
-    public MoveToViewConfig newView(View view)
+    public MoveToViewConfig newTarget(View view)
     {
         if (view == null)
             throw new IllegalArgumentException("view is null");

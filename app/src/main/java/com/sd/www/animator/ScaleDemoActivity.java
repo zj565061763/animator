@@ -42,10 +42,10 @@ public class ScaleDemoActivity extends AppCompatActivity
                 .scaleXToView(fl_video_target) // 缩放到目标view的x
                 .with().scaleYToView(fl_video_target) // 缩放到目标view的y
                 .with().moveXToView() // 配置移动到目标view的x
-                .newView(fl_video_target).setFutureScale(fl_video_target) // 添加一个移动目标view，并设置目标view未来的缩放目标
+                .newTarget(fl_video_target).setFutureScale(fl_video_target) // 添加一个移动目标view，并设置目标view未来的缩放目标
                 .node() // 返回node节点
                 .with().moveYToView() // 配置移动到目标view的y
-                .newView(fl_video_target).setFutureScale(fl_video_target) // 添加一个移动目标view，并设置目标view未来的缩放目标
+                .newTarget(fl_video_target).setFutureScale(fl_video_target) // 添加一个移动目标view，并设置目标view未来的缩放目标
                 .node() // 返回node节点
                 .chain().start(); // 开始整个链条动画
     }
@@ -55,10 +55,10 @@ public class ScaleDemoActivity extends AppCompatActivity
         new FNodeAnimator(fl_video)
                 .scaleXToView(fl_video_target_1).with().scaleYToView(fl_video_target_1)
                 .with().moveXToView()
-                .newView(fl_video_target_1).setFutureScale(fl_video_target_1)
+                .newTarget(fl_video_target_1).setFutureScale(fl_video_target_1)
                 .node()
                 .with().moveYToView()
-                .newView(fl_video_target_1).setFutureScale(fl_video_target_1)
+                .newTarget(fl_video_target_1).setFutureScale(fl_video_target_1)
                 .node()
                 .chain().start();
     }
