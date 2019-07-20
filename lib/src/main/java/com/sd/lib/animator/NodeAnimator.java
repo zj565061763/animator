@@ -3,7 +3,7 @@ package com.sd.lib.animator;
 /**
  * 节点动画
  */
-public interface NodeAnimator extends ExtendedPropertyAnimator<NodeAnimator>
+public interface NodeAnimator extends ExtendedAnimator<NodeAnimator>
 {
     /**
      * 返回节点类型{@link Type}

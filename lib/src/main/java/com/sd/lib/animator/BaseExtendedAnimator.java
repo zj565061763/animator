@@ -17,7 +17,7 @@ import com.sd.lib.animator.provider.transform.scale.ScaleYTransform;
 import java.util.ArrayList;
 import java.util.List;
 
-abstract class BaseExtendedAnimator<T extends ExtendedPropertyAnimator> extends BaseAnimator<T> implements ExtendedPropertyAnimator<T>
+abstract class BaseExtendedAnimator<T extends ExtendedAnimator> extends BaseAnimator<T> implements ExtendedAnimator<T>
 {
     private String mDesc;
 

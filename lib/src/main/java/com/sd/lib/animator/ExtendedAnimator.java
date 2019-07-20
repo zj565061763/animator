@@ -4,7 +4,7 @@ import android.view.View;
 
 import com.sd.lib.animator.mtv.MoveToViewConfig;
 
-public interface ExtendedPropertyAnimator<T extends ExtendedPropertyAnimator> extends PropertyAnimator<T>
+public interface ExtendedAnimator<T extends ExtendedAnimator> extends PropertyAnimator<T>
 {
     /**
      * 移动到屏幕x坐标
