@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
 import com.sd.lib.animator.FNodeAnimator;
+import com.sd.lib.animator.mtv.pshifter.AlignCenterPositionShifter;
 
 public class ScaleDemoActivity extends AppCompatActivity
 {
@@ -30,7 +31,7 @@ public class ScaleDemoActivity extends AppCompatActivity
                 if (mScale)
                     scale();
                 else
-                    restore();
+                    move();
 
             }
         });
@@ -50,15 +51,14 @@ public class ScaleDemoActivity extends AppCompatActivity
                 .chain().start(); // 开始整个链条动画
     }
 
-    private void restore()
+    private void move()
     {
         new FNodeAnimator(fl_video)
-                .scaleXToView(fl_video_target_1).with().scaleYToView(fl_video_target_1)
-                .with().moveXToView()
-                .newTarget(fl_video_target_1).setFutureScale(fl_video_target_1)
+                .moveXToView()
+                .newTarget(fl_video_target_1).setPositionShifter(new AlignCenterPositionShifter()) // 配置位置转移器，设置动画View和目标View水平方向中心对齐
                 .node()
                 .with().moveYToView()
-                .newTarget(fl_video_target_1).setFutureScale(fl_video_target_1)
+                .newTarget(fl_video_target_1).setPositionShifter(new AlignCenterPositionShifter())  // 配置位置转移器，设置动画View和目标View竖直方向中心对齐
                 .node()
                 .chain().start();
     }
