@@ -20,6 +20,8 @@ public class SimpleMoveToViewConfig implements MoveToViewConfig
     private Float mFutureScale;
     private Float mTargetFutureScale;
 
+    private PositionShifter mPositionShifter;
+
     public SimpleMoveToViewConfig(boolean horizontal, NodeAnimator nodeAnimator, List<MoveToViewConfig> listConfig)
     {
         if (nodeAnimator == null)
@@ -51,9 +53,16 @@ public class SimpleMoveToViewConfig implements MoveToViewConfig
         return mFutureScale;
     }
 
+    @Override
     public Float getTargetFutureScale()
     {
         return mTargetFutureScale;
+    }
+
+    @Override
+    public PositionShifter getPositionShifter()
+    {
+        return mPositionShifter;
     }
 
     @Override
@@ -120,6 +129,13 @@ public class SimpleMoveToViewConfig implements MoveToViewConfig
         final Float scale = transform.getValue(getTarget(), view);
 
         setTargetFutureScale(scale);
+        return this;
+    }
+
+    @Override
+    public MoveToViewConfig setPositionShifter(PositionShifter shifter)
+    {
+        mPositionShifter = shifter;
         return this;
     }
 

@@ -3,6 +3,7 @@ package com.sd.lib.animator;
 import android.view.View;
 
 import com.sd.lib.animator.mtv.MoveToViewConfig;
+import com.sd.lib.animator.mtv.PositionShifter;
 import com.sd.lib.animator.mtv.SimpleMoveToViewConfig;
 import com.sd.lib.animator.provider.property.location.LocationValue;
 import com.sd.lib.animator.provider.property.location.ScreenXValue;
@@ -189,7 +190,27 @@ abstract class BaseExtendedAnimator<T extends ExtendedAnimator> extends BaseAnim
 
             final Float value = transform.getValue(getTarget(), item.getTarget());
             if (value != null)
-                list.add(value + item.getDelta());
+            {
+                float finalValue = value + item.getDelta();
+
+                final PositionShifter shifter = item.getPositionShifter();
+                if (shifter != null)
+                {
+                    final PositionShifter.Params params = new PositionShifter.Params(
+                            finalValue,
+                            getTarget(),
+                            item.getFutureScale(),
+                            item.getTarget(),
+                            item.getTargetFutureScale(),
+                            horizontal
+                    );
+                    final float shiftValue = shifter.shift(params);
+
+                    finalValue += shiftValue;
+                }
+
+                list.add(finalValue);
+            }
         }
 
         final float[] values = listToValue(list);

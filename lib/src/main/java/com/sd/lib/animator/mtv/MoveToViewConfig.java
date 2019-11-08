@@ -35,6 +35,13 @@ public interface MoveToViewConfig
     Float getTargetFutureScale();
 
     /**
+     * {@link PositionShifter}
+     *
+     * @return
+     */
+    PositionShifter getPositionShifter();
+
+    /**
      * 移动到目标view
      *
      * @param view
@@ -89,6 +96,14 @@ public interface MoveToViewConfig
      * @return
      */
     MoveToViewConfig setTargetFutureScale(View view);
+
+    /**
+     * 设置位置转移器
+     *
+     * @param shifter
+     * @return
+     */
+    MoveToViewConfig setPositionShifter(PositionShifter shifter);
 
     /**
      * 返回config所在的节点动画对象
