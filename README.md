@@ -1,5 +1,5 @@
 # Animator
-对ObjectAnimator和AnimatorSet进行封装，节点动画通过next()和with()方法可以组拼一整个动画链，逻辑更清晰。
+对ObjectAnimator和AnimatorSet进行封装，节点动画通过next()和with()方法可以组拼一个动画链，逻辑更清晰。
 
 # Gradle
 [![](https://jitpack.io/v/zj565061763/animator.svg)](https://jitpack.io/#zj565061763/animator)
