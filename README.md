@@ -13,19 +13,19 @@
 节点动画[FNodeAnimator](https://github.com/zj565061763/animator/blob/master/lib/src/main/java/com/sd/lib/animator/NodeAnimator.java)几个比较重要的方法解释:
 
 * with()
-<br>
+
 返回一个新的节点动画，新的节点动画和上一个节点动画同时执行
 
 * next()
-<br>
+
 返回一个新的节点动画，新的节点动画会在上一个节点动画执行完成之后执行
 
 * node()
-<br>
+
 返回最后一个节点动画对象
 
 * chain()
-<br>
+
 返回整个动画链对象
 
 # 关于移动到某个目标View
