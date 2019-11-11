@@ -46,11 +46,11 @@ private void scale()
     new FNodeAnimator(fl_video)
             .scaleXToView(fl_video_target) // 缩放到目标view的x
             .with().scaleYToView(fl_video_target) // 缩放到目标view的y
-            .with().moveXToView() // 配置移动到目标view的x
-            .newTarget(fl_video_target).setFutureScale(fl_video_target) // 添加一个移动目标view，并设置目标view未来的缩放目标
+            .with().moveXToView() // 返回一个配置对象，可以配置移动到目标view的x所需要的参数
+            .newTarget(fl_video_target).setFutureScale(fl_video_target) // 添加一个移动目标view，并设置目标view未来x的缩放目标
             .node() // 返回node节点
-            .with().moveYToView() // 配置移动到目标view的y
-            .newTarget(fl_video_target).setFutureScale(fl_video_target) // 添加一个移动目标view，并设置目标view未来的缩放目标
+            .with().moveYToView() // 返回一个配置对象，可以配置移动到目标view的y所需要的参数
+            .newTarget(fl_video_target).setFutureScale(fl_video_target) // 添加一个移动目标view，并设置目标view未来y的缩放目标
             .node() // 返回node节点
             .chain().start(); // 开始整个链条动画
 }
