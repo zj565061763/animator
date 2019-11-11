@@ -24,8 +24,8 @@ public class MainActivity extends AppCompatActivity
         startActivity(new Intent(this, CarDemoActivity.class));
     }
 
-    public void onClickScaleDemo(View v)
+    public void onClickCubeDemo(View v)
     {
-        startActivity(new Intent(this, ScaleDemoActivity.class));
+        startActivity(new Intent(this, CubeDemoActivity.class));
     }
 }

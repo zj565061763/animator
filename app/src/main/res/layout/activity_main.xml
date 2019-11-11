@@ -7,6 +7,13 @@
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:onClick="onClickCubeDemo"
+        android:text="Cube_Demo_Activity"
+        android:textAllCaps="false" />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:onClick="onClickRocketDemo"
         android:text="Rocket_Demo_Activity"
         android:textAllCaps="false" />
@@ -16,13 +23,6 @@
         android:layout_height="wrap_content"
         android:onClick="onClickCarDemo"
         android:text="Car_Demo_Activity"
-        android:textAllCaps="false" />
-
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:onClick="onClickScaleDemo"
-        android:text="Scale_Demo_Activity"
         android:textAllCaps="false" />
 
 </LinearLayout>

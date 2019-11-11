@@ -7,7 +7,7 @@ import android.view.View;
 import com.sd.lib.animator.FNodeAnimator;
 import com.sd.lib.animator.mtv.pshifter.AlignCenterPositionShifter;
 
-public class ScaleDemoActivity extends AppCompatActivity
+public class CubeDemoActivity extends AppCompatActivity
 {
     private boolean mScale = false;
     private View fl_video, fl_video_target, fl_video_target_1;
@@ -16,7 +16,7 @@ public class ScaleDemoActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_scale_demo);
+        setContentView(R.layout.activity_cube_demo);
         fl_video = findViewById(R.id.fl_video);
         fl_video_target = findViewById(R.id.fl_video_target);
         fl_video_target_1 = findViewById(R.id.fl_video_target_1);
