@@ -5,9 +5,9 @@
 [![](https://jitpack.io/v/zj565061763/animator.svg)](https://jitpack.io/#zj565061763/animator)
 
 # 效果
-![](https://thumbsnap.com/i/TkMoPGYo.gif?1111)
 ![](http://thumbsnap.com/i/cD2NW5lZ.gif?0815)
 ![](http://thumbsnap.com/i/4SvypvW0.gif?0522)
+![](https://thumbsnap.com/i/TkMoPGYo.gif?1111)
 
 # 方块demo
 ```java
