@@ -10,7 +10,7 @@
 ![](https://thumbsnap.com/i/TkMoPGYo.gif?1111)
 
 # 节点动画
-节点动画[FNodeAnimator]{https://github.com/zj565061763/animator/blob/master/lib/src/main/java/com/sd/lib/animator/FNodeAnimator.java}几个比较重要的方法解释:
+节点动画[FNodeAnimator](https://github.com/zj565061763/animator/blob/master/lib/src/main/java/com/sd/lib/animator/NodeAnimator.java)几个比较重要的方法解释:
 
 * with()
 调用这个方法之后会返回一个新的节点动画，新的节点动画和上一个节点动画同时执行
