@@ -31,7 +31,7 @@
 如果不希望左上角对齐的话，开发者可以通过[PositionShifter](https://github.com/zj565061763/animator/blob/master/lib/src/main/java/com/sd/lib/animator/mtv/PositionShifter.java)接口设置偏移量，
 具体的使用方法参考下面的方块demo
 
-关于不在同一个父容器的解决方案，参考文末的
+关于不在同一个父容器的解决方案，参考文末的startAsPop
 
 # 方块demo
 ```java
