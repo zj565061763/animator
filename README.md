@@ -35,6 +35,10 @@
 
 # 方块demo
 ```java
+
+/**
+ * 缩放平移
+ */
 private void scale()
 {
     new FNodeAnimator(fl_video)
@@ -49,6 +53,9 @@ private void scale()
             .chain().start(); // 开始整个链条动画
 }
 
+/**
+ * 平移
+ */
 private void move()
 {
     new FNodeAnimator(fl_video)
