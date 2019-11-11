@@ -1,5 +1,5 @@
 # Animator
-对ObjectAnimator和AnimatorSet进行封装
+对ObjectAnimator和AnimatorSet进行封装，节点动画通过next()和with()方法可以组拼一整个动画链，逻辑更清晰。
 
 # Gradle
 [![](https://jitpack.io/v/zj565061763/animator.svg)](https://jitpack.io/#zj565061763/animator)
@@ -29,9 +29,38 @@ T startAsPop(boolean clone);
 ```
 
 # 效果
-![](http://thumbsnap.com/i/sK3VSRT3.gif?0521)
+![](https://thumbsnap.com/i/TkMoPGYo.gif?1111)
 ![](http://thumbsnap.com/i/cD2NW5lZ.gif?0815)
 ![](http://thumbsnap.com/i/4SvypvW0.gif?0522)
+
+# 方块demo
+```java
+private void scale()
+{
+    new FNodeAnimator(fl_video)
+            .scaleXToView(fl_video_target) // 缩放到目标view的x
+            .with().scaleYToView(fl_video_target) // 缩放到目标view的y
+            .with().moveXToView() // 配置移动到目标view的x
+            .newTarget(fl_video_target).setFutureScale(fl_video_target) // 添加一个移动目标view，并设置目标view未来的缩放目标
+            .node() // 返回node节点
+            .with().moveYToView() // 配置移动到目标view的y
+            .newTarget(fl_video_target).setFutureScale(fl_video_target) // 添加一个移动目标view，并设置目标view未来的缩放目标
+            .node() // 返回node节点
+            .chain().start(); // 开始整个链条动画
+}
+
+private void move()
+{
+    new FNodeAnimator(fl_video)
+            .moveXToView()
+            .newTarget(fl_video_target_1).setPositionShifter(new AlignCenterPositionShifter()) // 配置位置转移器，设置动画View和目标View水平方向中心对齐
+            .node()
+            .with().moveYToView()
+            .newTarget(fl_video_target_1).setPositionShifter(new AlignCenterPositionShifter())  // 配置位置转移器，设置动画View和目标View竖直方向中心对齐
+            .node()
+            .chain().start();
+}
+```
 
 # 火箭动画demo
 ```java
