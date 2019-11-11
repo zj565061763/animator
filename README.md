@@ -9,6 +9,32 @@
 ![](http://thumbsnap.com/i/4SvypvW0.gif?0522)
 ![](https://thumbsnap.com/i/TkMoPGYo.gif?1111)
 
+# 节点动画
+节点动画[FNodeAnimator]{https://github.com/zj565061763/animator/blob/master/lib/src/main/java/com/sd/lib/animator/FNodeAnimator.java}几个比较重要的方法解释:
+
+* with()
+调用这个方法之后会返回一个新的节点动画，新的节点动画和上一个节点动画同时执行
+
+* next()
+调用这个方法之后会返回一个新的节点动画，新的节点动画会在上一个节点动画执行完成之后执行
+
+* node()
+调用这个方法之后会返回到最后一个节点动画对象
+
+* chain()
+调用这个方法之后得到整个动画链对象
+
+# 关于移动到某个目标View
+动画View移动到某个目标View是一个比较复杂的逻辑，包括水平方向和竖直方向，默认是左上角对齐。<br>
+由于View是可以缩放的，在执行动画之后有可能动画View和目标View都发生了缩放，所以要保证动画执行之后动画View和目标View的位置关系是正确的，需要考虑以下情况之后才可以计算出正确的偏移量：
+
+* 动画View和目标View的未来缩放值，即动画执行之后的缩放值
+* 动画View和目标View的缩放锚点
+
+如果不希望左上角对齐的话，开发者可以通过[PositionShifter](https://github.com/zj565061763/animator/blob/master/lib/src/main/java/com/sd/lib/animator/mtv/PositionShifter.java)接口设置偏移量，
+具体的使用方法参考下面的方块demo
+
+
 # 方块demo
 ```java
 private void scale()
