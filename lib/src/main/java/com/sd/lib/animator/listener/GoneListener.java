@@ -19,7 +19,10 @@ public class GoneListener extends AnimatorLifecycleListener
     public void onAnimationLifecycle(Animator animator)
     {
         final View target = getTarget();
-        if (target != null)
+        if (target == null)
+            return;
+
+        if (target.getVisibility() != View.GONE)
             target.setVisibility(View.GONE);
     }
 }
