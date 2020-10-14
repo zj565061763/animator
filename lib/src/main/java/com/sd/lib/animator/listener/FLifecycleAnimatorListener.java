@@ -3,16 +3,16 @@ package com.sd.lib.animator.listener;
 import android.animation.Animator;
 import android.view.View;
 
-public abstract class AnimatorLifecycleListener extends FAnimatorListener
+public abstract class FLifecycleAnimatorListener extends FAnimatorListener
 {
     private final Lifecycle mLifecycle;
 
-    public AnimatorLifecycleListener(Lifecycle lifecycle)
+    public FLifecycleAnimatorListener(Lifecycle lifecycle)
     {
         this(lifecycle, null);
     }
 
-    public AnimatorLifecycleListener(Lifecycle lifecycle, View target)
+    public FLifecycleAnimatorListener(Lifecycle lifecycle, View target)
     {
         super(target);
         mLifecycle = lifecycle;

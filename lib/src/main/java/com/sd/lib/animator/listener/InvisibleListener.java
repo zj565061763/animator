@@ -3,7 +3,7 @@ package com.sd.lib.animator.listener;
 import android.animation.Animator;
 import android.view.View;
 
-public class InvisibleListener extends AnimatorLifecycleListener
+public class InvisibleListener extends FLifecycleAnimatorListener
 {
     public InvisibleListener(Lifecycle lifecycle)
     {

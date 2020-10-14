@@ -3,7 +3,7 @@ package com.sd.lib.animator.listener;
 import android.animation.Animator;
 import android.view.View;
 
-public class ResetListener extends AnimatorLifecycleListener
+public class ResetListener extends FLifecycleAnimatorListener
 {
     public ResetListener(Lifecycle lifecycle)
     {
